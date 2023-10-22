@@ -1,6 +1,3 @@
-
-
-# docker run -p 30333:30333 -p 9944:9944 parity/polkadot:latest --alice --validator --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain westend-dev 
 PORT = 9944
 
 def start_relay_chain(plan, args):
