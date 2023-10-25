@@ -1,0 +1,34 @@
+{
+  "chain-type": "local",
+  "relaychain": {
+    "name": "polkadot",
+    "nodes": [
+      {
+        "name": "alice",
+        "node-type": "validator",
+        "port": 9944
+      },
+      {
+        "name": "bob",
+        "node-type": "full",
+        "port": 9945
+      }
+    ]
+  },
+
+  "para": {
+    "acala": {
+      "id": 2000,
+      "nodes": [
+        {
+          "name": "alice",
+          "node-type": "collatoral"
+        },
+        {
+          "name": "bob",
+          "node-type": "full"
+        }
+      ]
+    }
+  }
+}
