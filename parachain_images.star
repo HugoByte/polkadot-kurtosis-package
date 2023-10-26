@@ -1,4 +1,4 @@
-"This Dictionary is for polkadot package, containing parachain and their respective docker images"
+"This Dictionary is for polkadot package, containing parachain, relaychain and their respective docker images"
 parachain_images = {
     "acala": "acala-node:latest",
     "ajuna" : "ajuna/parachain-ajuna:latest",
@@ -6,7 +6,7 @@ parachain_images = {
     "centrifuge" : "centrifugeio/centrifuge-chain",
     "clover": "cloverio/clover-para:v0.1.24",
     "frequency"  : "frequencychain/collator-node-local:latest",
-    "integritee":"integritee/integritee-node:latest",
+    "integritee":"integritee/parachain:latest",
     "interlay" : "interlayhq/interbtc:latest",
     "kilt-spiritnet	": "kiltprotocol/kilt-node:latest",
     "kylin":"kylinnetworks/kylin-collator:latest",
