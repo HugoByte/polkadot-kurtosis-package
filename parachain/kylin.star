@@ -4,7 +4,6 @@ def kylin_run(plan,args):
     parachain = plan.add_service(
         name="interrelay",
         config= ServiceConfig(
-            # image = "kylinnetworks/kylin-collator:latest",
             image = "kylinnetworks/kylin-collator:ro-v0.9.30",
             files={
                 "/app":"output"
