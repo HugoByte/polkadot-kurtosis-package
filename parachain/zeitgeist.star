@@ -1,5 +1,16 @@
 def run_zeitgeist(plan):
-    exec_command = ["--chain=dev", "--rpc-port=9933","--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--execution=wasm", "--tmp", "--", "--chain=/app/rococo-local.json", "--execution=wasm"]
+    exec_command = [
+        "--chain=dev", 
+        "--rpc-port=9933",
+        "--rpc-external", 
+        "--rpc-cors=all", 
+        "--rpc-methods=unsafe", 
+        "--execution=wasm", 
+        "--tmp", 
+        "--", 
+        "--chain=/app/rococo-local.json", 
+        "--execution=wasm"
+    ]
     zeitgeist_service_config = ServiceConfig(
         image = "zeitgeistpm/zeitgeist-node-parachain",
         files = {
