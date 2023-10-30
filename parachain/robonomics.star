@@ -1,6 +1,7 @@
-def run_centriguge(plan, args):
+def run_robonomics(plan):
     exec_command = [
-        "--chain=/app/centrifuge-raw-spec.json",
+        "robonomics",
+        "--chain=dev",
         "--collator",
         "--rpc-external",
         "--rpc-cors=all",
@@ -10,8 +11,8 @@ def run_centriguge(plan, args):
         "--chain=/app/rococo-local.json",
         "--execution=wasm",
     ]
-    centifuge_service_config = ServiceConfig(
-        image = "centrifugeio/centrifuge-chain:test-main-latest",
+    robonomics_service_config = ServiceConfig(
+        image = "robonomics/robonomics:latest",
         files = {
             "/app": "configs",
         },
@@ -25,4 +26,4 @@ def run_centriguge(plan, args):
         },
         cmd = exec_command,
     )
-    plan.add_service(name = "centrifuge-node", config = centifuge_service_config)
+    plan.add_service(name = "robonomics-node", config = robonomics_service_config)

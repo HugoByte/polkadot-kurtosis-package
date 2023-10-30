@@ -31,7 +31,7 @@ def start_relay_chain_local(plan, name, port):
         config = ServiceConfig(
             image = "parity/polkadot:v0.9.31",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "polkadot": PortSpec(9944, transport_protocol = "TCP"),
