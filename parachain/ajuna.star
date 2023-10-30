@@ -5,7 +5,7 @@ def run_ajuna(plan, args):
         config = ServiceConfig(
             image = "ajuna/parachain-bajun:latest",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "parachain": PortSpec(8846, transport_protocol = "TCP"),

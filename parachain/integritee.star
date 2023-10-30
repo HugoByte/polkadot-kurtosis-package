@@ -3,7 +3,7 @@ def run_integritee(plan, args):
     integritee_service_config = ServiceConfig(
         image = "integritee/parachain",
         files = {
-            "/app": "output",
+            "/app": "configs",
         },
         ports = {
             "9944": PortSpec(9944, transport_protocol = "TCP"),

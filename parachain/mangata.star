@@ -3,7 +3,7 @@ def run_mangata(plan):
     mangata_service_config = ServiceConfig(
         image = "mangatasolutions/mangata-node:ci-e2e-jobs-fix-MGX-785-fast",
         files = {
-            "/app": "output",
+            "/app": "configs",
         },
         ports = {
             "9944": PortSpec(9944, transport_protocol = "TCP"),
