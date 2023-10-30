@@ -1,4 +1,4 @@
-def run_integritee(plan, args):
+def run_mangata(plan, args):
     exec_command = ["--chain=rococo-local", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp", "--", "--chain=/app/rococo-local.json", "--execution=wasm"]
     mangata_service_config = ServiceConfig(
         image = "mangatasolutions/mangata-node:ci-e2e-jobs-fix-MGX-785-fast",
