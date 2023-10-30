@@ -1,7 +1,7 @@
 def run_pendulum(plan):
     exec_command = ["--chain=dev", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp"]
-    moonbeam_service_config = ServiceConfig(
-        image = "moonbeamfoundation/moonbeam:sha-32933811",
+    pendulum_service_config = ServiceConfig(
+        image = "pendulumchain/pendulum-collator:latest",
         files = {
             "/app": "configs",
         },
@@ -15,4 +15,4 @@ def run_pendulum(plan):
         },
         cmd = exec_command,
     )
-    plan.add_service(name = "acala-node", config = moonbeam_service_config)
+    plan.add_service(name = "pendulum-node", config = pendulum_service_config)
