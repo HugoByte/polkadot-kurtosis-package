@@ -13,7 +13,7 @@ def run_centriguge(plan, args):
     centifuge_service_config = ServiceConfig(
         image = "centrifugeio/centrifuge-chain:test-main-latest",
         files = {
-            "/app": "output",
+            "/app": "configs",
         },
         ports = {
             "9944": PortSpec(9944, transport_protocol = "TCP"),
