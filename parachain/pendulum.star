@@ -1,5 +1,15 @@
 def run_pendulum(plan):
-    exec_command = ["--chain=dev", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp", "--", "--wasm-execution=compiled", "--chain=/app/rococo-local.json"]
+    exec_command = [
+        "--chain=dev", 
+        "--collator", 
+        "--rpc-external", 
+        "--rpc-cors=all", 
+        "--rpc-methods=unsafe", 
+        "--tmp", 
+        "--", 
+        "--wasm-execution=compiled", 
+        "--chain=/app/rococo-local.json"
+    ]
     pendulum_service_config = ServiceConfig(
         image = "pendulumchain/pendulum-collator:latest",
         files = {
