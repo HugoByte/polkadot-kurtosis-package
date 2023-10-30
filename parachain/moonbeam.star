@@ -1,5 +1,11 @@
-def run(plan):
-    exec_command = ["--chain=dev", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp"]
+def run_moonbeam(plan):
+    exec_command = ["--chain=dev", 
+    "--collator", 
+    "--rpc-external", 
+    "--rpc-cors=all", 
+    "--rpc-methods=unsafe", 
+    "--tmp"
+    ]
     moonbeam_service_config = ServiceConfig(
         image = "moonbeamfoundation/moonbeam:sha-32933811",
         files = {
