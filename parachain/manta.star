@@ -9,7 +9,7 @@ def run_manta(plan, args):
         config = ServiceConfig(
             image = "mantanetwork/manta:latest",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "parachain": PortSpec(9944, transport_protocol = "TCP"),
@@ -29,7 +29,7 @@ def run_calamari(plan, args):
         config = ServiceConfig(
             image = "mantanetwork/manta:latest",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "parachain": PortSpec(9944, transport_protocol = "TCP"),
