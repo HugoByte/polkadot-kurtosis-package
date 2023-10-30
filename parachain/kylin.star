@@ -21,7 +21,7 @@ def run_kylin(plan, args):
         config = ServiceConfig(
             image = "kylinnetworks/kylin-collator:ro-v0.9.30",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "parachain": PortSpec(9944, transport_protocol = "TCP"),
