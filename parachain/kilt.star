@@ -1,5 +1,19 @@
 def run_kilt(plan):
-    exec_command = ["--chain=dev", "--alice", "--rpc-port=9933","--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--execution=wasm", "--tmp", "--", "--chain=/app/rococo-local.json", "--execution=wasm"]
+
+    exec_command = [
+    "--chain=dev", 
+    "--alice", 
+    "--rpc-port=9933",
+    "--rpc-external", 
+    "--rpc-cors=all", 
+    "--rpc-methods=unsafe", 
+    "--execution=wasm", 
+    "--tmp",
+    "--", 
+    "--chain=/app/rococo-local.json", 
+    "--execution=wasm"
+    ]
+
     kilt_service_config = ServiceConfig(
         image = "kiltprotocol/kilt-node:latest",
         files = {
