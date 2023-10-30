@@ -20,7 +20,7 @@ def run_parallel(plan, args):
         config = ServiceConfig(
             image = "parallelfinance/parallel:latest",
             files = {
-                "/app": "output",
+                "/app": "configs",
             },
             ports = {
                 "parachain": PortSpec(9944, transport_protocol = "TCP"),
