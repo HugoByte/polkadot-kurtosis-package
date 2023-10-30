@@ -1,6 +1,15 @@
-def run(plan):
-    exec_command = ["--chain=local", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp", "--", "--chain=/app/rococo-local.json", "--execution=wasm"]
-
+def run_nodle(plan):
+    exec_command = [
+    "--chain=local",
+     "--collator", 
+     "--rpc-external", 
+     "--rpc-cors=all", 
+     "--rpc-methods=unsafe", 
+     "--tmp", 
+     "--", 
+     "--chain=/app/rococo-local.json", 
+     "--execution=wasm"
+    ]
     nodle_service_config = ServiceConfig(
         image = "nodlecode/chain:latest",
         files = {
