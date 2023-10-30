@@ -6,7 +6,7 @@ def interrelay_run(plan,args):
         config= ServiceConfig(
             image = "interlayhq/interbtc:latest",
             files={
-                "/app":"output"
+                "/app":"configs"
             },
             ports = {
                 "parachain" : PortSpec(9944, transport_protocol="TCP"),
