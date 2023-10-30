@@ -1,5 +1,15 @@
 def run_karura(plan):
-    exec_command = ["--chain=dev", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp", "--", "--chain=/app/rococo-local.json", "--execution=wasm"]
+    exec_command = [
+        "--chain=dev", 
+        "--collator", 
+        "--rpc-external", 
+        "--rpc-cors=all", 
+        "--rpc-methods=unsafe", 
+        "--tmp", 
+        "--", 
+        "--chain=/app/rococo-local.json", 
+        "--execution=wasm"
+    ]
 
     karura_service_config = ServiceConfig(
         image = "acala/karura-node:latest",
