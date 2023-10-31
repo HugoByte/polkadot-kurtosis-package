@@ -6,6 +6,7 @@ def run_robonomics(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
+        "--unsafe-ws-external",
         "--tmp",
         "--",
         "--chain=/app/rococo-local.json",
