@@ -9,7 +9,7 @@ def run_khala(plan, args):
         config = ServiceConfig(
             image = "phalanetwork/khala-node:latest",
             ports = {
-                "parachain": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             files = {
                 "/app": "configs",
@@ -29,7 +29,7 @@ def run_phala(plan, args):
         config = ServiceConfig(
             image = "phalanetwork/phala-node:latest",
             ports = {
-                "parachain": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             files = {
                 "/app": "configs",
