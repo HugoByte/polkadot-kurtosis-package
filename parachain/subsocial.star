@@ -12,7 +12,7 @@ def run_subsocial(plan, args):
                 "/app": "configs",
             },
             ports = {
-                "parachain": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             entrypoint = exec_command,
         ),

@@ -16,12 +16,12 @@ def run_centriguge(plan, args):
             "/app": "configs",
         },
         ports = {
-            "9944": PortSpec(9944, transport_protocol = "TCP"),
-            "9933": PortSpec(9933, transport_protocol = "TCP"),
+            "ws": PortSpec(9944, transport_protocol = "TCP"),
+            "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
         public_ports = {
-            "9944": PortSpec(9432, transport_protocol = "TCP"),
-            "9933": PortSpec(9431, transport_protocol = "TCP"),
+            "ws": PortSpec(9432, transport_protocol = "TCP"),
+            "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
     )
