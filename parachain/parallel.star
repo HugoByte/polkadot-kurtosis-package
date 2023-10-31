@@ -6,7 +6,7 @@ def run_parallel(plan, args):
         "--port",
         "30333",
         "--rpc-port",
-        "9944",
+        "ws",
         "--rpc-external",
         "--rpc-cors",
         "all",
@@ -23,7 +23,7 @@ def run_parallel(plan, args):
                 "/app": "configs",
             },
             ports = {
-                "parachain": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
         ),

@@ -24,7 +24,7 @@ def run_kylin(plan, args):
                 "/app": "configs",
             },
             ports = {
-                "parachain": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
         ),
