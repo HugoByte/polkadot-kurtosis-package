@@ -6,6 +6,7 @@ def run_moonbeam(plan):
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
         "--tmp",
+        "--unsafe-rpc-external",
     ]
     moonbeam_service_config = ServiceConfig(
         image = "moonbeamfoundation/moonbeam:sha-32933811",
