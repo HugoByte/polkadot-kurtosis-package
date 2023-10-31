@@ -51,5 +51,5 @@ def run_ajuna(plan, args):
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
-        ),
+        )
     )
