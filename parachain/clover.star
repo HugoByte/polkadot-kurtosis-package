@@ -1,6 +1,6 @@
-def run_litentry(plan):
+def run_clover(plan):
     exec_command = [
-        "--chain=litentry-dev", 
+        "--chain=dev", 
         "--rpc-port=9933",
         "--rpc-external", 
         "--rpc-cors=all", 
@@ -12,18 +12,19 @@ def run_litentry(plan):
         "--chain=/app/rococo-local.json", 
         "--execution=wasm"
     ]
-    litentry_service_config = ServiceConfig(
-        image = "litentry/litentry-parachain:latest",
+    clover_service_config = ServiceConfig(
+        image = "cloverio/clover-para:v0.1.24",
         files = {
             "/app":"configs"
         },
         ports = {
-            "9944": PortSpec(9944, transport_protocol="TCP"),
-            "9933": PortSpec(9933, transport_protocol="TCP")
+            "ws": PortSpec(9944, transport_protocol="TCP"),
+            "tcp": PortSpec(9933, transport_protocol="TCP")
         },
         cmd = exec_command,
+        entrypoint=["/opt/clover/bin/clover"]
     )
 
-    service_details = plan.add_service(name="litentry-node", config=litentry_service_config)
+    service_details = plan.add_service(name="clover-node", config=clover_service_config)
 
     return service_details 
