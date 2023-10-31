@@ -7,6 +7,7 @@ def run_litentry(plan):
         "--rpc-methods=unsafe",
         "--execution=wasm",
         "--tmp",
+        "--unsafe-ws-external",
         "--",
         "--chain=/app/rococo-local.json",
         "--execution=wasm",
@@ -20,13 +21,12 @@ def run_litentry(plan):
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
-        },
         cmd = exec_command,
     )
-    plan.add_service(name = "litentry-node", config = litentry_service_config)
+
+    service_details = plan.add_service(name = "litentry-node", config = litentry_service_config)
+
+    return service_details
 
 def run_litmus(plan, args):
     exec_command = [
