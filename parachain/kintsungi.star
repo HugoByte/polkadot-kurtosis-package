@@ -1,9 +1,6 @@
 def run_kintsungi(plan,args):
 
     exec_command = [
-        "bin/sh",
-        "-c",
-        "/usr/local/bin/interbtc-parachain", 
         "--chain=dev", 
         "--wasm-execution=compiled", 
         "--force-authoring",
@@ -24,9 +21,9 @@ def run_kintsungi(plan,args):
                 "/app":"configs"
             },
             ports = {
-                "tcp" : PortSpec(9944, transport_protocol="TCP"),
+                "ws" : PortSpec(9944, transport_protocol="TCP"),
             },
-            entrypoint=exec_command
+            cmd=exec_command
         )  
     )
 
