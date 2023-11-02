@@ -18,7 +18,6 @@
 
   "para": {
     "acala": {
-      "id": 2000,
       "nodes": [
         {
           "name": "alice",
