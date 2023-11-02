@@ -21,6 +21,6 @@ def run_pendulum(plan):
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
-        # entrypoint = ["/usr/local/bin/pendulum-collator"]
+        entrypoint = ["/usr/local/bin/pendulum-collator"]
     )
     plan.add_service(name = "pendulum-node", config = pendulum_service_config)
