@@ -5,6 +5,7 @@ def run_altair(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
+        "--unsafe-ws-external",
         "--execution=wasm",
         "--tmp",
         "--",
@@ -25,5 +26,6 @@ def run_altair(plan):
             "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/centrifuge-chain"]
     )
     plan.add_service(name = "altair-node", config = altair_service_config)

@@ -5,6 +5,7 @@ def run_nodle(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
+        "--unsafe-ws-external",
         "--tmp",
         "--",
         "--chain=/app/rococo-local.json",
@@ -24,5 +25,6 @@ def run_nodle(plan):
             "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["nodle-parachain"]
     )
     plan.add_service(name = "nodle-node", config = nodle_service_config)

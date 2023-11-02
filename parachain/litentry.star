@@ -22,6 +22,7 @@ def run_litentry(plan):
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/litentry-collator"] 
     )
 
     service_details = plan.add_service(name = "litentry-node", config = litentry_service_config)
@@ -52,4 +53,5 @@ def run_litmus(plan, args):
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/litentry-collator"] 
     ))

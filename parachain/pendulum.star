@@ -5,7 +5,8 @@ def run_pendulum(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
-        "--tmp",
+        "--unsafe-ws-external",
+        "--tmp",        
         "--",
         "--wasm-execution=compiled",
         "--chain=/app/rococo-local.json",
@@ -19,10 +20,7 @@ def run_pendulum(plan):
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
-        },
         cmd = exec_command,
+        # entrypoint = ["/usr/local/bin/pendulum-collator"]
     )
     plan.add_service(name = "pendulum-node", config = pendulum_service_config)

@@ -5,6 +5,7 @@ def run_kilt(plan):
         "--rpc-port=9933",
         "--rpc-external",
         "--rpc-cors=all",
+        "--unsafe-ws-external",
         "--rpc-methods=unsafe",
         "--execution=wasm",
         "--tmp",
@@ -16,16 +17,12 @@ def run_kilt(plan):
     kilt_service_config = ServiceConfig(
         image = "kiltprotocol/kilt-node:latest",
         files = {
-            "/app": "config",
+            "/app": "configs",
         },
         ports = {
-            "ws": PortSpec(9944, transport_protocol = "TCP"),
-            "rpc": PortSpec(9933, transport_protocol = "TCP"),
-        },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
+            "ws": PortSpec(9944, transport_protocol = "TCP")
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/node-executable"]
     )
     plan.add_service(name = "kilt-node", config = kilt_service_config)
