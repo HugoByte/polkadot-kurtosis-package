@@ -11,3 +11,8 @@ def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, pa
     build_spec.create_edit_and_build_spec(plan, constant.EDIT_BUILD_SPEC, constant.CURL_JQ_IMAGE, chain_name, command, constant.PLAIN_BUILD_SPEC)
 
     create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_name, constant.EDIT_BUILD_SPEC)
+
+def create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_name, build_file):
+    command = ExecRecipe(command = ["bin/sh", "-c", "{0} build-spec --chain=/build/{1}.json --raw --disable-default-bootnode > /tmp/{1}-raw.json".format(binary, chain_name)])
+
+    build_spec.create_edit_and_build_spec(plan, constant.RAW_BUILD_SPEC, image, "{0}-raw".format(chain_name), command, build_file)
