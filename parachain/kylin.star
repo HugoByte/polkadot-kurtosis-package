@@ -1,10 +1,11 @@
-def run_kylin(plan, args):
+def run_kylin(plan):
     exec_command = [
         "--base-path=/kylin/data",
         "--chain=dev",
         "--ws-external",
         "--rpc-external",
         "--rpc-cors=all",
+        "--unsafe-ws-external",
         "--name=parachain-2010-0",
         "--collator",
         "--rpc-methods=unsafe",
@@ -27,5 +28,6 @@ def run_kylin(plan, args):
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
+            entrypoint = ["/usr/local/bin/kylin-collator"]
         ),
     )

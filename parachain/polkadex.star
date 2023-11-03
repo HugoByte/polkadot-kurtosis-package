@@ -5,6 +5,7 @@ def run_polkadex(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
+        "--unsafe-ws-external",
         "--tmp",
         "--",
         "--execution=wasm",
@@ -27,5 +28,6 @@ def run_polkadex(plan):
             "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/parachain-polkadex-node"]
     )
     plan.add_service(name = "acala-node", config = polkadex_service_config)

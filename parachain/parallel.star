@@ -26,5 +26,7 @@ def run_parallel(plan, args):
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
+            entrypoint = ["/parallel/.entrypoint.sh"]
         ),
+
     )

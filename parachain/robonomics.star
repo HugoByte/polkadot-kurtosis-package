@@ -1,6 +1,5 @@
 def run_robonomics(plan):
     exec_command = [
-        "robonomics",
         "--chain=dev",
         "--collator",
         "--rpc-external",
@@ -22,5 +21,6 @@ def run_robonomics(plan):
             "tcp": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/robonomics"]
     )
     plan.add_service(name = "robonomics-node", config = robonomics_service_config)
