@@ -20,5 +20,6 @@ def run_mangata(plan):
             "tcp": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/mangata/node"]
     )
     plan.add_service(name = "mangata-node", config = mangata_service_config)

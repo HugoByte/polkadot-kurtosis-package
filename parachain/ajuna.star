@@ -23,6 +23,7 @@ def run_bajun(plan, args):
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
+            entrypoint= ["/usr/local/bin/ajuna"]
         ),
     )
 
@@ -51,5 +52,6 @@ def run_ajuna(plan, args):
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
             },
             cmd = exec_command,
+            entrypoint =["/usr/local/bin/ajuna"]
         )
     )

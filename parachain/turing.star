@@ -23,6 +23,7 @@ def run_turing(plan):
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["./oak-collator"]
     )
 
     service_details = plan.add_service(name = "turing-node", config = turing_service_config)

@@ -1,8 +1,21 @@
 def run_acala(plan):
-    exec_command = ["--chain=/app/acala-raw.json", "--collator", "--rpc-external", "--rpc-cors=all", "--rpc-methods=unsafe", "--tmp", "--instant-sealing"]
+    exec_command = [
+        "--chain=dev", 
+        "--collator", 
+        "--rpc-cors=all", 
+        "--rpc-port=9933", 
+        "--rpc-methods=unsafe", 
+        "--unsafe-rpc-external",
+        "--unsafe-ws-external",
+        "--tmp", 
+        "--execution=wasm",
+        "--",
+        "--chain=/app/rococo-local.json",
+        "--execution=wasm"
+        ]
 
     acala_service_config = ServiceConfig(
-        image = "acala/acala-node:latest",
+        image = "acala/mandala-node:latest",
         files = {
             "/app": "configs",
         },
@@ -10,10 +23,7 @@ def run_acala(plan):
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
-        },
         cmd = exec_command,
+        entrypoint= ["/usr/local/bin/acala"]
     )
     plan.add_service(name = "acala-node", config = acala_service_config)

@@ -5,6 +5,7 @@ def run_zeitgeist(plan):
         "--rpc-external",
         "--rpc-cors=all",
         "--rpc-methods=unsafe",
+        "--unsafe-ws-external",
         "--execution=wasm",
         "--tmp",
         "--",
@@ -20,10 +21,7 @@ def run_zeitgeist(plan):
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "rpc": PortSpec(9933, transport_protocol = "TCP"),
         },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
-        },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/zeitgeist"]
     )
     plan.add_service(name = "zeitgeist-node", config = zeitgeist_service_config)

@@ -7,6 +7,9 @@ def run_moonbeam(plan):
         "--rpc-methods=unsafe",
         "--tmp",
         "--unsafe-rpc-external",
+        "--",
+        "--wasm-execution=compiled",
+        "--chain=/app/rococo-local.json"
     ]
     moonbeam_service_config = ServiceConfig(
         image = "moonbeamfoundation/moonbeam:sha-32933811",
@@ -15,13 +18,9 @@ def run_moonbeam(plan):
         },
         ports = {
             "ws": PortSpec(9944, transport_protocol = "TCP"),
-            "rpc": PortSpec(9933, transport_protocol = "TCP"),
-        },
-        public_ports = {
-            "ws": PortSpec(9432, transport_protocol = "TCP"),
-            "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/moonbeam/moonbeam"]
     )
     plan.add_service(name = "acala-node", config = moonbeam_service_config)
 
@@ -34,6 +33,9 @@ def run_moonriver(plan, args):
         "--rpc-methods=unsafe",
         "--tmp",
         "--unsafe-rpc-external",
+        "--",
+        "--wasm-execution=compiled",
+        "--chain=/app/rococo-local.json"
     ]
     plan.add_service(name = "moonriver-node", config = ServiceConfig(
         image = "moonbeamfoundation/moonbeam:sha-519bd694",
@@ -44,4 +46,5 @@ def run_moonriver(plan, args):
             "9944": PortSpec(9944, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/moonbeam/moonbeam"]
     ))

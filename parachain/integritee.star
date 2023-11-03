@@ -14,5 +14,6 @@ def run_integritee(plan, args):
             "rpc": PortSpec(9431, transport_protocol = "TCP"),
         },
         cmd = exec_command,
+        entrypoint = ["/usr/local/bin/integritee-collator"]
     )
     plan.add_service(name = "intigreeti-node", config = integritee_service_config)
