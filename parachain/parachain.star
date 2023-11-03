@@ -18,6 +18,7 @@ def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, pa
 
 def create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_name, build_file):
     build_spec.create_service_for_build_spec(plan, constant.RAW_BUILD_SPEC, image, build_file)
+
     command = ExecRecipe(command = [
         "bin/sh",
         "-c",
