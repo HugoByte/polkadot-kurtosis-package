@@ -8,7 +8,7 @@ parachain_images = {
     "ajuna": {
         "image": "ajuna/parachain-ajuna:latest",
         "entrypoint": "/usr/local/bin/ajuna",
-        "base": ["local","testnet","mainnet"]
+        "base": ["dev","testnet","mainnet"]
     },
 
     "bifrost": {

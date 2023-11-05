@@ -33,7 +33,7 @@ def start_relay_chains_local(plan, args):
     return relay_detail
 
 def start_relay_chain_local(plan, name, port):
-    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/rococo-local.json --validator --ws-external --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm".format(name)]
+    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-rococo-local.json --validator --ws-external --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm".format(name)]
     service_details = plan.add_service(
         name = "polkadot-{0}".format(name),
         config = ServiceConfig(
