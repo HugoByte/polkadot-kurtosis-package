@@ -7,8 +7,6 @@
     "register": "node register.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@polkadot/api": "^7.6.1",
     "@polkadot/util": "^8.7.1",

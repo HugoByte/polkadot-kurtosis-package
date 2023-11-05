@@ -12,11 +12,9 @@ const run = async () => {
       provider: wsProvider,
     });
     const keyring = new Keyring({ type: "sr25519" });
-
     const nextParaId = await (
       await api.query.registrar.nextFreeParaId()
     ).toString();
-
     console.log("para_id: ", nextParaId);
     const alice = keyring.addFromUri(seed);
 
