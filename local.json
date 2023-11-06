@@ -17,11 +17,11 @@
   },
 
   "para": {
-    "acala": {
+    "bifrost": {
       "nodes": [
         {
           "name": "alice",
-          "node-type": "collatoral"
+          "node-type": "collator"
         },
         {
           "name": "bob",

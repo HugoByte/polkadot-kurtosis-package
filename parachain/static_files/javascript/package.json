@@ -1,0 +1,15 @@
+{
+  "name": "kurtosis-polkadot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "register": "node register.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@polkadot/api": "^7.6.1",
+    "@polkadot/util": "^8.7.1",
+    "@polkadot/util-crypto": "^8.3.3"
+  }
+}

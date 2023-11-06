@@ -5,12 +5,10 @@ def run(plan, args):
     plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
     service_details = {"relaychains": {}, "parachains": {}}
     if args["chain-type"] == "local":
-        service_details["relaychains"] = relay_chain.start_relay_chains_local(plan, args)
+        relay_chain_details = relay_chain.start_relay_chains_local(plan, args)
+        service_details["relaychains"] = relay_chain_details
 
-        image = "bifrostnetwork/bifrost:bifrost-v0.9.66"
-        binary = "/usr/local/bin/bifrost"
-        chain_name = "bifrost-local"
-        parachain.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, para_id = 200)
+        parachain.start_nodes(plan, args, relay_chain_details["relay_service_alice"].ip_address)
 
     else:
         relay_chain.start_relay_chain(plan, args)
