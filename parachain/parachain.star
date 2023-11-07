@@ -45,3 +45,4 @@ def start_nodes(plan, args, relay_chain_ip):
     for parachain in parachains:
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
         start_local_parachain_node(plan, parachain, para_id)
+        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain)
