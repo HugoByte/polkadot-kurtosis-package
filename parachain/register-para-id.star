@@ -10,24 +10,19 @@ def register_para_id(plan, alice_ip):
 
     return para_id["output"]
 
-
-def onboard_genesis_state_and_wasm(plan, para_id):
+def onboard_genesis_state_and_wasm(plan, para_id, chain_name):
     service = plan.add_service(
         name = "upload-genesis-file",
         config = ServiceConfig(
             image = constant.NODE_IMAGE,
             files = {
-                "/app" : "configs",
+                "/app": "configs",
                 "/build": constant.RAW_BUILD_SPEC,
-                "/javascript" : "javascript"
+                "/javascript": "javascript",
             },
             entrypoint = ["/bin/sh"],
         ),
     )
 
     plan.exec(service_name = service.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /javascript && npm i "]))
-    plan.exec(service_name = service.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /javascript &&  node onboard ws://{0}:9944 //Alice {1} {2} {3}".format(alice_ip, para_id)]))
-
-
-
-    
+    plan.exec(service_name = service.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /javascript &&  node onboard ws://{0}:9944 //Alice {1} /build/{2}-genesis-state /build/{2}-genesis-wasm".format(alice_ip, para_id, chain_name)]))
