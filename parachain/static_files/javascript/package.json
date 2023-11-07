@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "register": "node register.js"
+    "register": "node register.js",
+    "onboard": "node onboard.js"
   },
   "keywords": [],
   "dependencies": {
