@@ -1,5 +1,5 @@
 {
-  "chain-type": "local",
+  "chain-type": "testnet",
   "relaychain": {
     "name": "polkadot",
     "nodes": [
