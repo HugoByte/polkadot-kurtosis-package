@@ -9,7 +9,7 @@ def run_bifrost_kusama(plan):
         "--collator",
         "--rpc-methods=unsafe",
         "--force-authoring",
-        "--execution=wasm"
+        "--execution=wasm",
     ]
     plan.add_service(
         name = "bifrost",
