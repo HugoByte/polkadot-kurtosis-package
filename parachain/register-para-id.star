@@ -10,7 +10,7 @@ def register_para_id(plan, alice_ip):
 
     return para_id["output"]
 
-def onboard_genesis_state_and_wasm(plan, para_id, chain_name):
+def onboard_genesis_state_and_wasm(plan, para_id, chain_name, alice_ip):
     service = plan.add_service(
         name = "upload-genesis-file",
         config = ServiceConfig(

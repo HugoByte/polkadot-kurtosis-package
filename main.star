@@ -12,5 +12,6 @@ def run(plan, args):
 
     else:
         relay_chain.start_relay_chain(plan, args)
+        parachain.run_testnet(plan, args, "encointer")
 
     return service_details
