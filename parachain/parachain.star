@@ -45,4 +45,43 @@ def start_nodes(plan, args, relay_chain_ip):
     for parachain in parachains:
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
         start_local_parachain_node(plan, parachain, para_id)
-        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain)
+        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
+
+def run_testnet_node_with_entrypoint(plan, args, image, chain_name, execute_command):
+    service_config = ServiceConfig(
+        image = image,
+        ports = {
+            "ws": PortSpec(9944, transport_protocol = "TCP"),
+        },
+        files = {
+            "/app": "configs",
+        },
+        entrypoint = execute_command,
+    )
+
+    plan.add_service(name = "{0}".format(chain_name), config = service_config)
+
+def run_testnet_node_with_command(plan, args, image, chain_name, execute_command):
+    service_config = ServiceConfig(
+        image = image,
+        ports = {
+            "ws": PortSpec(9944, transport_protocol = "TCP"),
+        },
+        files = {
+            "/app": "configs",
+        },
+        cmd = execute_command,
+    )
+
+    plan.add_service(name = "{0}".format(chain_name), config = service_config)
+
+def run_testnet(plan, args, parachain):
+    parachain_details = parachain_list.testnet_chains[parachain]
+    image = parachain_details["image"]
+    command = parachain_details["command"]
+
+    if parachain in constant.TEST_CHAIN:
+        run_testnet_node_with_entrypoint(plan, args, image, parachain, command)
+
+    else:
+        run_testnet_node_with_command(plan, args, image, parachain, command)
