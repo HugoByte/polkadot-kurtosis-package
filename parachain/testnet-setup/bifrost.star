@@ -1,23 +1,26 @@
 def run_bifrost(plan):
     exec_command = [
+        "--base-path=/data",
         "--chain=/app/bifrost-k-rococo.json",
-        "--port=30333",
-        "--rpc-port=9933",
+        "--ws-external",
+        "--rpc-external",
         "--rpc-cors=all",
-        "--rpc-external"
-    ] 
-
-    service_config = ServiceConfig(
-        image = "bifrostnetwork/bifrost:bifrost-v0.9.66",
-        files = {
-            "/app": "configs",
-        },
-        ports = {
-            "rpc": PortSpec(9933, transport_protocol = "TCP"),
-            "ws": PortSpec(30333, transport_protocol = "TCP"),
-        },
-        cmd = exec_command,
-        entrypoint =["/usr/local/bin/bifrost"]
+        "--collator",
+        "--rpc-methods=unsafe",
+        "--force-authoring",
+        "--execution=wasm",
+    ]
+    plan.add_service(
+        name = "bifrost",
+        config = ServiceConfig(
+            image = "bifrostnetwork/bifrost:bifrost-v0.9.66",
+            files = {
+                "/app": "configs",
+            },
+            ports = {
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
+            },
+            cmd = exec_command,
+            entrypoint = ["/usr/local/bin/bifrost"],
+        ),
     )
-
-    plan.add_service(name="bifrost-node", config = service_config)
