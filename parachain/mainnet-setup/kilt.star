@@ -22,4 +22,4 @@ def run_kilt(plan):
         cmd = exec_command,
         entrypoint = ["/usr/local/bin/node-executable"]
     )
-    plan.add_service(name = "kilt-mainnet-node", config = kilt_service_config)
+    plan.add_service(name = "kilt-node", config = kilt_service_config)
