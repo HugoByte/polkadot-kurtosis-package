@@ -1,7 +1,7 @@
-def run_bifrost_polkadot(plan):
+def run_bifrost_kusama(plan):
     exec_command = [
         "--base-path=/data",
-        "--chain=/app/bifrost-polkadot.json",
+        "--chain=/app/bifrost-kusama.json",
         "--ws-external",
         "--rpc-external",
         "--rpc-cors=all",
@@ -9,7 +9,7 @@ def run_bifrost_polkadot(plan):
         "--collator",
         "--rpc-methods=unsafe",
         "--force-authoring",
-        "--execution=wasm"
+        "--execution=wasm",
     ]
     plan.add_service(
         name = "bifrost",
