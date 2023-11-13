@@ -53,7 +53,7 @@ def start_nodes(plan, args, relay_chain_ip):
 #     image = parachain_details["image"]
 #     command = parachain_details["command"]
 
-#     if parachain in constant.TEST_CHAIN:
+#     if parachain in constant.BINARY_COMMAND_CHAINS:
 #         node_setup.run_testnet_node_with_entrypoint(plan, args, image, parachain, command)
 
 #     else:
@@ -109,10 +109,10 @@ def run_testnet_mainnet(plan, args, parachain):
         if node["node-type"] == "collator":
             command = command + ["--collator"]
 
-        if parachain in constant.CHIAIN_COMMAND:
+        if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
 
-        if parachain in constant.TEST_CHAIN:
+        if parachain in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
             command = [binary] + command
 
