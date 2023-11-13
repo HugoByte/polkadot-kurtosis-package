@@ -48,17 +48,6 @@ def start_nodes(plan, args, relay_chain_ip):
         start_local_parachain_node(plan, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
 
-# def run_testnet(plan, args, parachain):
-#     parachain_details = parachain_list.testnet_chains[parachain]
-#     image = parachain_details["image"]
-#     command = parachain_details["command"]
-
-#     if parachain in constant.BINARY_COMMAND_CHAINS:
-#         node_setup.run_testnet_node_with_entrypoint(plan, args, image, parachain, command)
-
-#     else:
-#         node_setup.run_testnet_node_with_command(plan, args, image, parachain, command)
-
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":
         main_chain = "rococo"
