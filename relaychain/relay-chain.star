@@ -1,21 +1,22 @@
-PORT = 9944
-
 def start_relay_chain(plan, args):
     name = args["chain-type"]
-    exec_command = ["bin/sh", "-c", "polkadot --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain rococo-local --name={0} --execution=wasm".format(name)]
-    plan.add_service(
-        name = "polkadot-{0}".format(name),
-        config = ServiceConfig(
-            image = "parity/polkadot:latest",
-            ports = {
-                "polkadot": PortSpec(9944, transport_protocol = "TCP"),
-            },
-            public_ports = {
-                "polkadot": PortSpec(PORT, transport_protocol = "TCP"),
-            },
-            entrypoint = exec_command,
-        ),
-    )
+    chain = args["relaychain"]["name"]
+    for relay_node in args["relaychain"]["nodes"]:
+        port = relay_node["port"]
+        exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm".format(chain, relay_node["name"])]
+        plan.add_service(
+            name = "{0}-{1}".format(name, relay_node["name"]),
+            config = ServiceConfig(
+                image = "parity/polkadot:latest",
+                ports = {
+                    "polkadot": PortSpec(9944, transport_protocol = "TCP"),
+                },
+                public_ports = {
+                    "polkadot": PortSpec(port, transport_protocol = "TCP"),
+                },
+                entrypoint = exec_command,
+            ),
+        )
 
 def spawn_multiple_relay(plan, count):
     list = ["alice", "bob", "dave", "charlie"]
