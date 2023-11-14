@@ -1,4 +1,4 @@
-def run_testnet_node_with_entrypoint(plan, args, image, chain_name, execute_command):
+def run_testnet_node_with_entrypoint(plan, image, chain_name, execute_command):
     service_config = ServiceConfig(
         image = image,
         ports = {
@@ -9,10 +9,11 @@ def run_testnet_node_with_entrypoint(plan, args, image, chain_name, execute_comm
         },
         entrypoint = execute_command,
     )
+    parachain = plan.add_service(name = "{0}".format(chain_name), config = service_config)
 
-    plan.add_service(name = "{0}".format(chain_name), config = service_config)
+    return parachain
 
-def run_testnet_node_with_command(plan, args, image, chain_name, execute_command):
+def run_testnet_node_with_command(plan, image, chain_name, execute_command):
     service_config = ServiceConfig(
         image = image,
         ports = {
@@ -23,5 +24,6 @@ def run_testnet_node_with_command(plan, args, image, chain_name, execute_command
         },
         cmd = execute_command,
     )
+    parachain = plan.add_service(name = "{0}".format(chain_name), config = service_config)
 
-    plan.add_service(name = "{0}".format(chain_name), config = service_config)
+    return parachain

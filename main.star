@@ -11,9 +11,12 @@ def run(plan, args):
         parachain.start_nodes(plan, args, relay_chain_details["relay_service_alice"].ip_address)
 
     else:
-        # relay_chain.start_relay_chain(plan, args)
-
+        if len(args["relaychain"]) != 0:
+            relay_node_detals = relay_chain.start_test_main_net_relay_nodes(plan, args)
+            service_details["relaychains"] = relay_node_detals
         for paras in args["para"]:
-            parachain.run_testnet_mainnet(plan, args, paras)
+            parachain_info = parachain.run_testnet_mainnet(plan, args, paras)
+            plan.print(parachain_info)
+            service_details["parachains"] = parachain_info
 
     return service_details

@@ -90,7 +90,7 @@ def run_testnet_mainnet(plan, args, parachain):
             "--unsafe-rpc-external",
             "--unsafe-ws-external",
         ]
-
+    parachain_info = {parachain: {}}
     para_nodes = args["para"][parachain]["nodes"]
     for node in para_nodes:
         command = common_command
@@ -105,7 +105,11 @@ def run_testnet_mainnet(plan, args, parachain):
             binary = parachain_details["entrypoint"]
             command = [binary] + command
 
-            node_setup.run_testnet_node_with_entrypoint(plan, args, image, "{0}-{1}".format(parachain, node["name"]), command)
+            node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}".format(parachain, node["name"]), command)
+            parachain_info[parachain]["parachain_" + node["name"]] = node_details
 
         else:
-            node_setup.run_testnet_node_with_command(plan, args, image, "{0}-{1}".format(parachain, node["name"]), command)
+            node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}".format(parachain, node["name"]), command)
+            parachain_info[parachain]["parachain_" + node["name"]] = node_details
+
+    return parachain_info

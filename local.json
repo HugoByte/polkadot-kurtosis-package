@@ -1,7 +1,7 @@
 {
   "chain-type": "testnet",
   "relaychain": {
-    "name": "polkadot",
+    "name": "rococo",
     "nodes": [
       {
         "name": "alice",
