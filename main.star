@@ -16,7 +16,6 @@ def run(plan, args):
             service_details["relaychains"] = relay_node_detals
         for paras in args["para"]:
             parachain_info = parachain.run_testnet_mainnet(plan, args, paras)
-            plan.print(parachain_info)
             service_details["parachains"] = parachain_info
 
     return service_details
