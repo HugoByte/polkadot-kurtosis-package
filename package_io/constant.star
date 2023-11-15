@@ -15,6 +15,7 @@ DIFFERENT_IMAGES_FOR_MAINNET = {
 DIFFERENT_IMAGES_FOR_TESTNET = {
     "frequency": "frequencychain/parachain-node-rococo",
     "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
+    "karura": "acala/mandala-node:latest"
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc"]
