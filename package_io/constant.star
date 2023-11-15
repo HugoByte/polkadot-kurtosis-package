@@ -4,4 +4,17 @@ EDIT_BUILD_SPEC = "edit-build-spec"
 CURL_JQ_IMAGE = "badouralix/curl-jq"
 NODE_IMAGE = "node:21.1"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
-TEST_CHAIN = ["manta", "khala", "phala"]
+BINARY_COMMAND_CHAINS = ["manta", "khala", "phala"]
+NO_WS_PORT = ["acala", "frequency"]
+
+DIFFERENT_IMAGES_FOR_MAINNET = {
+    "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
+    "frequency": "frequencychain/parachain-node-mainnet",
+    "acala": "acala/acala-node:latest",
+}
+DIFFERENT_IMAGES_FOR_TESTNET = {
+    "frequency": "frequencychain/parachain-node-rococo",
+    "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
+}
+
+CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc"]
