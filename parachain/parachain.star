@@ -100,6 +100,9 @@ def run_testnet_mainnet(plan, args, parachain):
 
         if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
+        
+        if parachain == "kilt-spiritnet" and args["chain-type"] == "testnet":
+            command =  command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
 
         if parachain in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
