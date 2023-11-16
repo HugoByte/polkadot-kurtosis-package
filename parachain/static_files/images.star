@@ -40,10 +40,10 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/interbtc-parachain",
         "base": ["dev", "interlay-testnet-latest", "interlay-latest"],
     },
-    "kilt-spiritnet	": {
+    "kilt-spiritnet": {
         "image": "kiltprotocol/kilt-node:latest",
         "entrypoint": "/usr/local/bin/node-executable",
-        "base": ["dev", "kilt_rococo", "spiritnet"],
+        "base": ["dev", "/node/dev-specs/kilt-parachain/peregrine-kilt.json", "spiritnet"],
     },
     "kylin": {
         "image": "kylinnetworks/kylin-collator:ro-v0.9.30",
@@ -60,7 +60,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/manta",
         "base": ["manta-local", "manta-testnet", "manta"],
     },
-    "moonbeamfoundation/moonbeam": {
+    "moonbeam": {
         "image": "moonbeamfoundation/moonbeam:sha-32933811",
         "entrypoint": "/moonbeam/moonbeam",
         "base": ["dev", "alphanet", "moonbeam"],

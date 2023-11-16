@@ -1,7 +1,7 @@
 {
-  "chain-type": "testnet",
+  "chain-type": "mainnet",
   "relaychain": {
-    "name": "rococo",
+    "name": "polkadot",
     "nodes": [
       {
         "name": "alice",
@@ -17,7 +17,7 @@
   },
 
   "para": {
-    "bifrost": {
+    "kilt-spiritnet": {
       "nodes": [
         {
           "name": "alice",
