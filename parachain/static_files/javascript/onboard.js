@@ -28,12 +28,21 @@ const run = async () => {
       throw err;
     }
 
+    let head_state;
+    try {
+      head_state = fs.readFileSync(header, "utf8");
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+
     let paraGenesisArgs = {
-      genesis_head: header,
+      genesis_head: head_state,
       validation_code: wasm,
       parachain: true,
     };
 
+    console.log(paraGenesisArgs);
     let genesis = api.createType("ParaGenesisArgs", paraGenesisArgs);
 
     const nonce = Number((await api.query.system.account(alice.address)).nonce);
