@@ -33,13 +33,13 @@ def start_local_parachain_node(plan, parachain, para_id):
     chain_name = parachain
     raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
 
-    exec_comexec_commandmand = [
+    for para in args["para"][parachain]["nodes"]:
+        exec_comexec_commandmand = [
         "bin/bash",
         "-c",
-        "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
+        "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, para["name"]),
     ]
-
-    spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
+        spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
 
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
