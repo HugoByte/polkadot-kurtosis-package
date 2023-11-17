@@ -25,7 +25,7 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
 
     return parachain_node
 
-def start_local_parachain_node(plan, parachain, para_id):
+def start_local_parachain_node(plan, args, parachain, para_id):
     parachain_details = parachain_list.parachain_images[parachain]
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
@@ -35,17 +35,17 @@ def start_local_parachain_node(plan, parachain, para_id):
 
     for para in args["para"][parachain]["nodes"]:
         exec_comexec_commandmand = [
-        "bin/bash",
-        "-c",
-        "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, para["name"]),
-    ]
+            "bin/bash",
+            "-c",
+            "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, para["name"]),
+        ]
         spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
 
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
     for parachain in parachains:
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        start_local_parachain_node(plan, parachain, para_id)
+        start_local_parachain_node(plan, args, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
 
 def run_testnet_mainnet(plan, args, parachain):
@@ -100,9 +100,9 @@ def run_testnet_mainnet(plan, args, parachain):
 
         if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
-        
+
         if parachain == "kilt-spiritnet" and args["chain-type"] == "testnet":
-            command =  command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
+            command = command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
 
         if parachain in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
