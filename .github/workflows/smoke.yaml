@@ -1,0 +1,37 @@
+name: smoke-test
+on:
+    workflow_dispatch:
+
+jobs:
+    smoke-test:
+        name: smoke test on all parachains
+        runs-on: "ubuntu-latest"
+    
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Installing Kurtosis CLI if not found in cache
+              run: |
+                if [ ! -f "/usr/bin/kurtosis" ]; then
+                echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+                sudo apt update
+                sudo apt install kurtosis-cli
+                which kurtosis
+                fi
+
+            - name: Cache Kurtosis CLI
+              uses: actions/cache@v2
+              with:
+                path: |
+                  /usr/bin/kurtosis 
+                key: kurtosis-${{ runner.os }}
+                restore-keys: |
+                  kurtosis-
+            
+            - name: Starting the Kurtosis engine
+              run: kurtosis engine start
+            
+            - name: Run parachain
+              run: |
+                kurtosis run . --args-file ./local.json --enclave polkadot
