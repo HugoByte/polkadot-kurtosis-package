@@ -12,7 +12,7 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
         files["/build"] = build_file
 
     parachain_node = plan.add_service(
-        name = "start-{}-node".format(chain_name),
+        name = "start-{}-local-node".format(chain_name),
         config = ServiceConfig(
             image = image,
             files = files,
@@ -39,14 +39,17 @@ def start_local_parachain_node(plan, parachain, para_id):
         "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
     ]
 
-    spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
+    parachain_details = spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
+    return parachain_details
 
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
     for parachain in parachains:
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        start_local_parachain_node(plan, parachain, para_id)
+        parachains = start_local_parachain_node(plan, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
+
+        return parachains
 
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":
@@ -100,19 +103,19 @@ def run_testnet_mainnet(plan, args, parachain):
 
         if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
-        
+
         if parachain == "kilt-spiritnet" and args["chain-type"] == "testnet":
-            command =  command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
+            command = command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
 
         if parachain in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
             command = [binary] + command
 
-            node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}".format(parachain, node["name"]), command)
+            node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), command)
             parachain_info[parachain]["parachain_" + node["name"]] = node_details
 
         else:
-            node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}".format(parachain, node["name"]), command)
+            node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), command)
             parachain_info[parachain]["parachain_" + node["name"]] = node_details
 
     return parachain_info

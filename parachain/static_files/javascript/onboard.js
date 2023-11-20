@@ -42,7 +42,6 @@ const run = async () => {
       parachain: true,
     };
 
-    console.log(paraGenesisArgs);
     let genesis = api.createType("ParaGenesisArgs", paraGenesisArgs);
 
     const nonce = Number((await api.query.system.account(alice.address)).nonce);
