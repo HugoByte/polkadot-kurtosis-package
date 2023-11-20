@@ -31,12 +31,7 @@ jobs:
             
             - name: Starting the Kurtosis engine
               run: kurtosis engine start
-
-            - name: Debug Cache
-              run: |
-                ls -l /usr/bin/kurtosis 
             
-
             # - name: Run parachain
             #   run: |
             #     kurtosis run . --args-file ./local.json --enclave polkadot
