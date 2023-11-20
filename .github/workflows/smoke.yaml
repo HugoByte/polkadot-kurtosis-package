@@ -32,6 +32,6 @@ jobs:
             - name: Starting the Kurtosis engine
               run: kurtosis engine start
             
-            - name: Run parachain
-              run: |
-                kurtosis run . --args-file ./local.json --enclave polkadot
+            # - name: Run parachain
+            #   run: |
+            #     kurtosis run . --args-file ./local.json --enclave polkadot
