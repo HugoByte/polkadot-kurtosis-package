@@ -25,7 +25,7 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
 
     return parachain_node
 
-def start_local_parachain_node(plan, parachain, para_id):
+def start_local_parachain_node(plan, args, parachain, para_id):
     parachain_details = parachain_list.parachain_images[parachain]
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
@@ -38,18 +38,24 @@ def start_local_parachain_node(plan, parachain, para_id):
         "-c",
         "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
     ]
+    parachain_details = {}
+    for node in args["para"][parachain]["nodes"]:
+        parachain_detail = spawn_parachain(plan, "{}-{}".format(chain_name, node["name"]), image, exec_comexec_commandmand, build_file = raw_service.name)
+        parachain_details[node["name"]] = parachain_detail
 
-    parachain_details = spawn_parachain(plan, chain_name, image, exec_comexec_commandmand, build_file = raw_service.name)
+    plan.print(parachain_details)
     return parachain_details
 
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
+    parachain_details = {}
     for parachain in parachains:
+        parachain_details[parachain] = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        parachains = start_local_parachain_node(plan, parachain, para_id)
+        parachain_details[parachain] = start_local_parachain_node(plan, args, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
 
-        return parachains
+    return parachain_details
 
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":
