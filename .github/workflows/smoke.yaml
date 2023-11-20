@@ -11,15 +11,6 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Installing Kurtosis CLI if not found in cache
-              run: |
-                if [ ! -f "/usr/bin/kurtosis" ]; then
-                echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
-                sudo apt update
-                sudo apt install kurtosis-cli
-                which kurtosis
-                fi
-
             - name: Cache Kurtosis CLI
               uses: actions/cache@v2
               with:
@@ -28,6 +19,15 @@ jobs:
                 key: kurtosis-${{ runner.os }}
                 restore-keys: |
                   kurtosis-
+
+            - name: Installing Kurtosis CLI if not found in cache
+              run: |
+                if [ ! -f "/usr/bin/kurtosis" ]; then
+                echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+                sudo apt update
+                sudo apt install kurtosis-cli
+                which kurtosis
+                fi
             
             - name: Starting the Kurtosis engine
               run: kurtosis engine start
