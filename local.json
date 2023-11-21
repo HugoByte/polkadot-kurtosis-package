@@ -1,7 +1,7 @@
 {
   "chain-type": "testnet",
   "relaychain": {
-    "name": "polkadot",
+    "name": "kusama",
     "nodes": [
       {
         "name": "alice",
@@ -17,7 +17,7 @@
   },
 
   "para": {
-    "bifrost": {
+    "acala": {
       "nodes": [
         {
           "name": "alice",

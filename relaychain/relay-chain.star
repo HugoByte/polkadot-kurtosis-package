@@ -45,13 +45,15 @@ def spawn_multiple_relay(plan, count):
 def start_relay_chains_local(plan, args):
     relay_nodes = args["relaychain"]["nodes"]
     relay_detail = {}
+    prometheus_port = 9615
     for node in relay_nodes:
-        service_details = start_relay_chain_local(plan, node["name"], node["port"])
+        service_details = start_relay_chain_local(plan, node["name"], node["port"], prometheus_port)
         relay_detail["relay_service_" + node["name"]] = service_details
+        prometheus_port = prometheus_port + 1
     return relay_detail
 
-def start_relay_chain_local(plan, name, port):
-    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-polkadot.json --validator --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm".format(name)]
+def start_relay_chain_local(plan, name, port, prometheus_port):
+    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-polkadot.json --validator --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm --prometheus-external".format(name)]
     service_details = plan.add_service(
         name = "polkadot-{0}".format(name),
         config = ServiceConfig(
@@ -60,10 +62,12 @@ def start_relay_chain_local(plan, name, port):
                 "/app": "configs",
             },
             ports = {
-                "polkadot": PortSpec(9944, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP"),
+                "prometheus": PortSpec(9615, transport_protocol = "TCP"),
             },
             public_ports = {
-                "polkadot": PortSpec(port, transport_protocol = "TCP"),
+                "ws": PortSpec(port, transport_protocol = "TCP"),
+                "prometheus": PortSpec(prometheus_port, transport_protocol = "TCP"),
             },
             entrypoint = exec_command,
         ),
