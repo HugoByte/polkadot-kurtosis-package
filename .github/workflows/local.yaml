@@ -1,0 +1,36 @@
+name: localnet
+on:
+    workflow_dispatch:
+
+jobs:
+    localnet:
+        name: test all parachains run on localnet
+        runs-on: "ubuntu-latest"
+    
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Installing Kurtosis CLI if not found in cache
+              run: |
+                echo "deb [trusted=yes] https://apt.fury.io/kurtosis-tech/ /" | sudo tee /etc/apt/sources.list.d/kurtosis.list
+                sudo apt update
+                sudo apt install kurtosis-cli
+            
+            - name: Starting the Kurtosis engine
+              run: kurtosis engine start
+
+            - name: Read CSV and loop over items
+              run: |
+                # Read CSV file and extract values
+                while IFS=',' read -r para_chain relay_chain; do
+                  kurtosis clean -a
+                  echo "Processing para chain: $para_chain, relay chain: $relay_chain"
+                  # Call Python script with para_chain and relay_chain as arguments
+                  python ./testdata/generate_json.py --relay "$relay_chain" --para "$para_chain" --network "local"
+                  kurtosis run . --args-file ./testdata/updated_config.json --enclave polkadot
+                done < ./testdata/chain_value.csv
+                
+            
+
+               
