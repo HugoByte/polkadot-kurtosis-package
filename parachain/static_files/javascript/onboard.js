@@ -4,7 +4,6 @@ const fs = require("fs");
 const run = async () => {
   try {
     console.log("Parsing Args ...");
-    // 0 & 1 are command context
     const endpoint = process.argv[2];
     const seed = process.argv[3];
     const id = process.argv[4];
@@ -45,10 +44,6 @@ const run = async () => {
     let genesis = api.createType("ParaGenesisArgs", paraGenesisArgs);
 
     const nonce = Number((await api.query.system.account(alice.address)).nonce);
-
-    console.log(
-      `--- Submitting extrinsic to register parachain ${id}. (nonce: ${nonce}) ---`
-    );
     const sudoCall = await api.tx.sudo
       .sudo(api.tx.parasSudoWrapper.sudoScheduleParaInitialize(id, genesis))
       .signAndSend(alice, { nonce: nonce, era: 0 }, (result) => {
