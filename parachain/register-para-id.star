@@ -8,6 +8,7 @@ def register_para_id(plan, alice_ip):
     plan.exec(service_name = test.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /build &&  node register ws://{0}:9944 //Alice ".format(alice_ip)]))
     para_id = plan.exec(service_name = test.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cat /tmp/para.json | tr -d '\n\r'"]))
 
+    plan.remove_service(test.name)
     return para_id["output"]
 
 def onboard_genesis_state_and_wasm(plan, para_id, chain_name, alice_ip):
@@ -26,3 +27,5 @@ def onboard_genesis_state_and_wasm(plan, para_id, chain_name, alice_ip):
 
     plan.exec(service_name = service.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /javascript && npm i "]))
     plan.exec(service_name = service.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /javascript &&  node onboard ws://{0}:9944 //Alice {1} /build/{2}-genesis-state /build/{2}-genesis-wasm".format(alice_ip, para_id, chain_name)]))
+
+    plan.remove_service(service.name)

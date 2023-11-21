@@ -1,23 +1,10 @@
 {
-  "chain-type": "mainnet",
+  "chain-type": "testnet",
   "relaychain": {
-    "name": "kusama",
-    "nodes": [
-      {
-        "name": "alice",
-        "node-type": "validator",
-        "port": 9944
-      },
-      {
-        "name": "bob",
-        "node-type": "full",
-        "port": 9945
-      }
-    ]
   },
 
   "para": {
-    "acala": {
+    "subsocial": {
       "nodes": [
         {
           "name": "alice",
