@@ -2,22 +2,26 @@ def start_relay_chain(plan, args):
     name = args["chain-type"]
     chain = args["relaychain"]["name"]
     relay_node_details = {}
+    prometheus = 9615
     for relay_node in args["relaychain"]["nodes"]:
         port = relay_node["port"]
-        exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm".format(chain, relay_node["name"])]
+        exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm --prometheus-external".format(chain, relay_node["name"])]
         relay_node_detail = plan.add_service(
             name = "{0}-{1}-{2}".format(name, chain, relay_node["name"]),
             config = ServiceConfig(
                 image = "parity/polkadot:latest",
                 ports = {
-                    "polkadot": PortSpec(9944, transport_protocol = "TCP"),
+                    "ws": PortSpec(9944, transport_protocol = "TCP"),
+                    "prometheus": PortSpec(9615, transport_protocol = "TCP"),
                 },
                 public_ports = {
-                    "polkadot": PortSpec(port, transport_protocol = "TCP"),
+                    "ws": PortSpec(port, transport_protocol = "TCP"),
+                    "prometheus": PortSpec(prometheus, transport_protocol = "TCP"),
                 },
                 entrypoint = exec_command,
             ),
         )
+        prometheus += 1
         relay_node_details["relay_service_" + relay_node["name"]] = relay_node_detail
 
     return relay_node_details
