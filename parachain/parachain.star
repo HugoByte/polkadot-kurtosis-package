@@ -117,6 +117,9 @@ def run_testnet_mainnet(plan, args, parachain):
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
             command = command + ["--collator"]
+        
+        if node["node-type"] == "validator":
+            command = command + ["--validator"]
 
         if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]

@@ -23,7 +23,7 @@ parachain_images = {
     "clover": {
         "image": "cloverio/clover-para:v0.1.24",
         "entrypoint": "/opt/clover/bin/clover",
-        "base": ["dev", "/opt/specs/clover-preview-iris.json", "mainnet"],
+        "base": ["dev", "iris", "clover"],
     },
     "frequency": {
         "image": "frequencychain/collator-node-local:latest",
