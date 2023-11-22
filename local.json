@@ -21,7 +21,7 @@
       "nodes": [
         {
           "name": "alice",
-          "node-type": "collator"
+          "node-type": "validator"
         },
         {
           "name": "bob",
