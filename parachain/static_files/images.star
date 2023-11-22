@@ -40,7 +40,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/interbtc-parachain",
         "base": ["dev", "interlay-testnet-latest", "interlay-latest"],
     },
-    "kilt-spiritnet": {
+    "kilt": {
         "image": "kiltprotocol/kilt-node:latest",
         "entrypoint": "/usr/local/bin/node-executable",
         "base": ["dev", "/node/dev-specs/kilt-parachain/peregrine-kilt.json", "spiritnet"],
@@ -85,7 +85,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/pendulum-collator",
         "base": ["litentry-dev", "foucoco", "pendulum"],
     },
-    "phala-network": {
+    "phala": {
         "image": "litentry/litentry-parachain:latest",
         "entrypoint": "/usr/local/bin/litentry-collator",
         "base": ["dev", "rhala", "phala"],
@@ -105,7 +105,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/zeitgeist",
         "base": ["dev", "battery_station", "zeitgeist"],
     },
-    "encointer-network": {
+    "encointer": {
         "image": "encointer/parachain:1.5.1",
         "entrypoint": "/usr/local/bin/encointer-collator",
         "base": ["encointer-rococo-local", "encointer-rococo", "mainnet"],

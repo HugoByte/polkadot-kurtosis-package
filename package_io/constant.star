@@ -5,7 +5,7 @@ CURL_JQ_IMAGE = "badouralix/curl-jq"
 NODE_IMAGE = "node:21.1"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
 BINARY_COMMAND_CHAINS = ["manta", "khala", "phala"]
-NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer"]
+NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver"]
 
 DIFFERENT_IMAGES_FOR_MAINNET = {
     "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
