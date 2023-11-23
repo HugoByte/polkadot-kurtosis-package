@@ -113,7 +113,7 @@ parachain_images = {
     "altair": {
         "image": "centrifugeio/centrifuge-chain:test-main-latest",
         "entrypoint": "/usr/local/bin/centrifuge-chain",
-        "base": ["altair-local", "catalyst", "centrifuge"],
+        "base": ["altair-local", "catalyst", "altair"],
     },
     "bajun": {
         "image": "ajuna/parachain-bajun:latest",
