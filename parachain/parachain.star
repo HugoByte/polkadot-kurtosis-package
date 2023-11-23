@@ -36,13 +36,13 @@ def start_local_parachain_node(plan, args, parachain_name, para_id):
 
     if parachain in constant.NO_WS_PORT:
         exec_comexec_commandmand = [
-            "bin/bash",
+            "/bin/bash",
             "-c",
             "{0} --chain=/build/{1}-raw.json --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
     else:
         exec_comexec_commandmand = [
-            "bin/bash",
+            "/bin/bash",
             "-c",
             "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]

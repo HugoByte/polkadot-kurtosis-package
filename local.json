@@ -1,5 +1,5 @@
 {
-  "chain-type": "testnet",
+  "chain-type": "local",
   "relaychain": {
     "name": "rococo",
     "nodes": [
@@ -17,7 +17,7 @@
   },
 
   "para": {
-    "clover": {
+    "litentry": {
       "nodes": [
         {
           "name": "alice",
