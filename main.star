@@ -22,5 +22,4 @@ def run(plan, args):
     ip = "{0}:{1}".format(relay_chain_details[0]["service_details"].ip_address, relay_chain_details[0]["service_details"].ports["prometheus"].number)
     prometheus = package.prometheus(plan, args, ip)
     service_details["prometheus"] = prometheus
-    plan.print(service_details["relaychains"])
     return service_details
