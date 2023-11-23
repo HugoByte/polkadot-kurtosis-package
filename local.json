@@ -1,5 +1,5 @@
 {
-  "chain-type": "testnet",
+  "chain-type": "local",
   "relaychain": {
     "name": "kusama",
     "nodes": [

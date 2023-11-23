@@ -44,13 +44,16 @@ def spawn_multiple_relay(plan, count):
 
 def start_relay_chains_local(plan, args):
     relay_nodes = args["relaychain"]["nodes"]
-    relay_detail = {}
+    final_details=[]
     prometheus_port = 9615
     for node in relay_nodes:
+        relay_detail = {}
         service_details = start_relay_chain_local(plan, node["name"], node["port"], prometheus_port)
-        relay_detail["relay_service_" + node["name"]] = service_details
+        relay_detail["service_details"] = service_details
+        relay_detail["service_name"] = "relay_service_" + node["name"]
+        final_details.append(relay_detail)
         prometheus_port = prometheus_port + 1
-    return relay_detail
+    return final_details
 
 def start_relay_chain_local(plan, name, port, prometheus_port):
     exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-polkadot.json --validator --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm --prometheus-external".format(name)]
