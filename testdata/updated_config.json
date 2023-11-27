@@ -1,0 +1,32 @@
+ {
+       "chain-type": "mainnet",
+       "relaychain": {
+         "name": "rococo",
+         "nodes": [
+           {
+             "name": "alice",
+             "node-type": "validator",
+             "port": 9944
+           },
+           {
+             "name": "bob",
+             "node-type": "full",
+             "port": 9945
+           }
+         ]
+       },
+       "para": {
+         "clover": {
+           "nodes": [
+             {
+               "name": "alice",
+               "node-type": "collator"
+             },
+             {
+               "name": "bob",
+               "node-type": "full"
+             }
+           ]
+         }
+       }
+     }

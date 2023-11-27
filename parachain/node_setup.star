@@ -3,6 +3,7 @@ def run_testnet_node_with_entrypoint(plan, image, chain_name, execute_command):
         image = image,
         ports = {
             "ws": PortSpec(9944, transport_protocol = "TCP"),
+            "prometheus": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
         },
         files = {
             "/app": "configs",
@@ -18,6 +19,7 @@ def run_testnet_node_with_command(plan, image, chain_name, execute_command):
         image = image,
         ports = {
             "ws": PortSpec(9944, transport_protocol = "TCP"),
+            "prometheus": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
         },
         files = {
             "/app": "configs",

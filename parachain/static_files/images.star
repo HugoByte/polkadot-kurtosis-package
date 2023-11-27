@@ -116,7 +116,7 @@ parachain_images = {
         "base": ["altair-local", "catalyst", "centrifuge"],
     },
     "bajun": {
-        "image": "ajuna/parachain-bajun:latest",
+        "image": "ajuna/parachain-bajun:0.1.28",
         "entrypoint": "/usr/local/bin/ajuna",
         "base": ["local", "/bajun/rococo/bajun-raw.json", "/bajun/bajun-raw.json"],
     },

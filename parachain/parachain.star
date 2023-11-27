@@ -12,12 +12,13 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
         files["/build"] = build_file
 
     parachain_node = plan.add_service(
-        name = "start-{}-local-node".format(chain_name),
+        name = "{}".format(chain_name),
         config = ServiceConfig(
             image = image,
             files = files,
             ports = {
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
+                "prometheus": PortSpec(9615, transport_protocol = "TCP"),
             },
             entrypoint = command,
         ),
@@ -36,35 +37,38 @@ def start_local_parachain_node(plan, args, parachain_name, para_id):
 
     if parachain in constant.NO_WS_PORT:
         exec_comexec_commandmand = [
-            "/bin/bash",
+            "bin/bash",
             "-c",
-            "{0} --chain=/build/{1}-raw.json --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
+            "{0} --chain=/build/{1}-raw.json --rpc-port=9944 --rpc-external --rpc-cors=all --prometheus-external --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
     else:
         exec_comexec_commandmand = [
-            "/bin/bash",
+            "bin/bash",
             "-c",
-            "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --alice  -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
+            "{0} --chain=/build/{1}-raw.json --ws-port=9944 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
-
-    parachain_details = {}
-    for node in args["para"][parachain_name]["nodes"]:
-        parachain_detail = spawn_parachain(plan, "{}-{}".format(chain_name, node["name"]), image, exec_comexec_commandmand, build_file = raw_service.name)
-        parachain_details[node["name"]] = parachain_detail
-
-    plan.print(parachain_details)
-    return parachain_details
-
+    parachain_final = []
+    parachain_detail = {}
+    for node in args["para"][parachain]["nodes"]:
+        parachain_detail = {}
+        parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
+        parachain_detail["node_details"]=parachain_spawn_detail
+        parachain_detail["nodename"]=node["name"]
+        parachain_final.append(parachain_detail)
+    return parachain_final
+   
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
-    parachain_details = {}
+    final_parachain_details=[]
     for parachain in parachains:
-        parachain_details[parachain] = {}
+        parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        parachain_details[parachain] = start_local_parachain_node(plan, args, parachain, para_id)
-        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain.lower(), relay_chain_ip)
-
-    return parachain_details
+        parachain_details["nodes"] = start_local_parachain_node(plan, args, parachain, para_id)
+        parachain_details["service_name"] = "parachain_service_" + parachain
+        parachain_details["parachain_name"] = parachain
+        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
+        final_parachain_details.append(parachain_details)
+    return final_parachain_details
 
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":
@@ -92,6 +96,7 @@ def run_testnet_mainnet(plan, args, parachain):
             "--chain={0}".format(base),
             "--port=30333",
             "--rpc-port=9944",
+            "--prometheus-external",
             "--rpc-cors=all",
             "--rpc-external",
             "--rpc-methods=unsafe",
@@ -103,6 +108,7 @@ def run_testnet_mainnet(plan, args, parachain):
             "--port=30333",
             "--ws-port=9944",
             "--rpc-port=9933",
+            "--prometheus-external",
             "--rpc-cors=all",
             "--rpc-external",
             "--ws-external",
