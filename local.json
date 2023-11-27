@@ -1,35 +1,31 @@
 {
   "chain-type": "local",
   "relaychain": {
-    "name": "rococo",
+    "name": "kusama",
     "nodes": [
       {
         "name": "alice",
         "node-type": "validator",
-        "port": 9944,
-        "prometheus": false
+        "port": 9944
       },
       {
         "name": "bob",
         "node-type": "full",
-        "port": 9945,
-        "prometheus": true
+        "port": 9945
       }
     ]
   },
 
   "para": {
-    "bajun": {
+    "acala": {
       "nodes": [
         {
           "name": "alice",
-          "node-type": "collator",
-          "prometheus": true
+          "node-type": "collator"
         },
         {
           "name": "bob",
-          "node-type": "full",
-          "prometheus": false
+          "node-type": "full"
         }
       ]
     }

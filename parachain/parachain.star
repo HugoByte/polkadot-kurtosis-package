@@ -38,33 +38,36 @@ def start_local_parachain_node(plan, args, parachain, para_id):
         exec_comexec_commandmand = [
             "bin/bash",
             "-c",
-            "{0} --chain=/build/{1}-raw.json --rpc-external --rpc-cors=all --prometheus-external --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
+            "{0} --chain=/build/{1}-raw.json --rpc-port=9944 --rpc-external --rpc-cors=all --prometheus-external --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
     else:
         exec_comexec_commandmand = [
             "bin/bash",
             "-c",
-            "{0} --chain=/build/{1}-raw.json --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
+            "{0} --chain=/build/{1}-raw.json --ws-port=9944 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
-
-    parachain_details = {}
+    parachain_final = []
+    parachain_detail = {}
     for node in args["para"][parachain]["nodes"]:
-        parachain_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
-        parachain_details["parachain_{}".format(node["name"])] = parachain_detail
-
-    plan.print(parachain_details)
-    return parachain_details
-
+        parachain_detail = {}
+        parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
+        parachain_detail["node_details"]=parachain_spawn_detail
+        parachain_detail["nodename"]=node["name"]
+        parachain_final.append(parachain_detail)
+    return parachain_final
+   
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
-    parachain_details = {}
+    final_parachain_details=[]
     for parachain in parachains:
-        parachain_details[parachain] = {}
+        parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        parachain_details[parachain] = start_local_parachain_node(plan, args, parachain, para_id)
+        parachain_details["nodes"] = start_local_parachain_node(plan, args, parachain, para_id)
+        parachain_details["service_name"] = "parachain_service_" + parachain
+        parachain_details["parachain_name"] = parachain
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
-
-    return parachain_details
+        final_parachain_details.append(parachain_details)
+    return final_parachain_details
 
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":

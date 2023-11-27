@@ -13,9 +13,8 @@ def run(plan, args):
     if args["chain-type"] == "local":
         relay_chain_details = relay_chain.start_relay_chains_local(plan, args)
         service_details["relaychains"] = relay_chain_details
-
-        parchain_details = parachain.start_nodes(plan, args, relay_chain_details["relay_service_alice"].ip_address)
-        service_details["parachains"] = parchain_details
+        parachain_details = parachain.start_nodes(plan, args, relay_chain_details[0]["service_details"].ip_address)
+        service_details["parachains"] = parachain_details
 
     else:
         if len(args["relaychain"]) != 0:
