@@ -15,9 +15,6 @@ def run(plan, args):
         service_details["relaychains"] = relay_chain_details
         parachain_details = parachain.start_nodes(plan, args, relay_chain_details[0]["service_details"].ip_address)
         service_details["parachains"] = parachain_details
-
-        prometheus = package.prometheus(plan, args, ip)
-        service_details["prometheus"] = prometheus
     else:
         if len(args["relaychain"]) != 0:
             relay_node_detals = relay_chain.start_test_main_net_relay_nodes(plan, args)
