@@ -13,18 +13,20 @@
         "name": "bob",
         "node-type": "full",
         "port": 9945,
-        "prometheus": true
+        "prometheus": false
+
       }
     ]
   },
 
   "para": {
-    "acala": {
+    "khala": {
       "nodes": [
         {
           "name": "alice",
-          "node-type": "collator",
-          "prometheus": true
+          "node-type": "validator",
+          "prometheus": false
+
         },
         {
           "name": "bob",

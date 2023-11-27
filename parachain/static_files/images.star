@@ -23,7 +23,7 @@ parachain_images = {
     "clover": {
         "image": "cloverio/clover-para:v0.1.24",
         "entrypoint": "/opt/clover/bin/clover",
-        "base": ["dev", "testnet", "mainnet"],
+        "base": ["dev", "iris", "clover"],
     },
     "frequency": {
         "image": "frequencychain/collator-node-local:latest",
@@ -38,9 +38,9 @@ parachain_images = {
     "interlay": {
         "image": "interlayhq/interbtc:latest",
         "entrypoint": "/usr/local/bin/interbtc-parachain",
-        "base": ["dev", "interlay-testnet-latest", "interlay-latest"],
+        "base": ["interlay-dev", "interlay-testnet-latest", "interlay-latest"],
     },
-    "kilt-spiritnet": {
+    "kilt": {
         "image": "kiltprotocol/kilt-node:latest",
         "entrypoint": "/usr/local/bin/node-executable",
         "base": ["dev", "/node/dev-specs/kilt-parachain/peregrine-kilt.json", "spiritnet"],
@@ -63,7 +63,7 @@ parachain_images = {
     "moonbeam": {
         "image": "moonbeamfoundation/moonbeam:sha-32933811",
         "entrypoint": "/moonbeam/moonbeam",
-        "base": ["dev", "alphanet", "moonbeam"],
+        "base": ["moonbeam-dev", "alphanet", "moonbeam"],
     },
     "moonsama": {
         "image": "moonsama/moonsama-node:latest",
@@ -85,7 +85,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/pendulum-collator",
         "base": ["litentry-dev", "foucoco", "pendulum"],
     },
-    "phala-network": {
+    "phala": {
         "image": "litentry/litentry-parachain:latest",
         "entrypoint": "/usr/local/bin/litentry-collator",
         "base": ["dev", "rhala", "phala"],
@@ -98,14 +98,14 @@ parachain_images = {
     "subsocial": {
         "image": "dappforce/subsocial-parachain:latest",
         "entrypoint": "/usr/local/bin/subsocial-collator",
-        "base": ["local-rococo", "--chain=/app/soonsocial.json", ""],
+        "base": ["local-rococo", "/app/soonsocial.json", ""],
     },
     "zeitgeist": {
         "image": "zeitgeistpm/zeitgeist-node-parachain",
         "entrypoint": "/usr/local/bin/zeitgeist",
         "base": ["dev", "battery_station", "zeitgeist"],
     },
-    "encointer-network": {
+    "encointer": {
         "image": "encointer/parachain:1.5.1",
         "entrypoint": "/usr/local/bin/encointer-collator",
         "base": ["encointer-rococo-local", "encointer-rococo", "mainnet"],
@@ -130,7 +130,7 @@ parachain_images = {
         "entrypoint": "/usr/local/bin/acala",
         "base": ["dev", "mandala-latest", "karura"],
     },
-    "khala network": {
+    "khala": {
         "image": "phalanetwork/khala-node:latest",
         "entrypoint": "/usr/local/bin/khala-node",
         "base": ["khala-dev-2004", "rhala", "khala"],
@@ -138,7 +138,7 @@ parachain_images = {
     "kintsugi-btc": {
         "image": "interlayhq/interbtc:latest",
         "entrypoint": "tini -- /usr/local/bin/interbtc-parachain",
-        "base": ["dev", "kintsugi-testnet-latest", "kintsugi"],
+        "base": ["kintsugi-dev", "kintsugi-testnet-latest", "kintsugi"],
     },
     "litmus": {
         "image": "litentry/litentry-parachain:latest",
@@ -153,7 +153,7 @@ parachain_images = {
     "moonriver": {
         "image": "moonbeamfoundation/moonbeam:sha-519bd694",
         "entrypoint": "/moonbeam/moonbeam",
-        "base": ["dev", "alphanet", "moonriver"],
+        "base": ["moonriver-dev", "alphanet", "moonriver"],
     },
     "robonomics": {
         "image": "robonomics/robonomics:latest",

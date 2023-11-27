@@ -26,7 +26,8 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
 
     return parachain_node
 
-def start_local_parachain_node(plan, args, parachain, para_id):
+def start_local_parachain_node(plan, args, parachain_name, para_id):
+    parachain = parachain_name.lower()
     parachain_details = parachain_list.parachain_images[parachain]
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
@@ -36,13 +37,13 @@ def start_local_parachain_node(plan, args, parachain, para_id):
 
     if parachain in constant.NO_WS_PORT:
         exec_comexec_commandmand = [
-            "bin/bash",
+            "/bin/bash",
             "-c",
             "{0} --chain=/build/{1}-raw.json --rpc-port=9944 --rpc-external --rpc-cors=all --prometheus-external --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
     else:
         exec_comexec_commandmand = [
-            "bin/bash",
+            "/bin/bash",
             "-c",
             "{0} --chain=/build/{1}-raw.json --ws-port=9944 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
@@ -72,6 +73,8 @@ def start_nodes(plan, args, relay_chain_ip):
 def run_testnet_mainnet(plan, args, parachain):
     if args["chain-type"] == "testnet":
         main_chain = "rococo"
+        if parachain == "ajuna":
+            parachain = "bajun"
         parachain_details = parachain_list.parachain_images[parachain]
         image = parachain_details["image"]
         base = parachain_details["base"][1]
@@ -120,6 +123,9 @@ def run_testnet_mainnet(plan, args, parachain):
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
             command = command + ["--collator"]
+        
+        if node["node-type"] == "validator":
+            command = command + ["--validator"]
 
         if parachain in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
