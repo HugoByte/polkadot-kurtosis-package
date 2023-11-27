@@ -23,3 +23,4 @@ def run(plan, args):
     prometheus = package.prometheus(plan, args, ip)
     service_details["prometheus"] = prometheus
     return service_details
+    
