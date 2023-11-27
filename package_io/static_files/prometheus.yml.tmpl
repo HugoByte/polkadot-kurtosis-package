@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: "prometheus"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["localhost:9090"]
+  {{- range $job := .MetricsJobs }}
+  - job_name: "{{ $job.Name }}"
+    {{- if $job.ScrapeInterval }}
+    scrape_interval: {{ $job.ScrapeInterval }}
+    {{- end }}
+    static_configs:
+      - targets: ['{{ $job.Endpoint }}']
+  {{- end }}
