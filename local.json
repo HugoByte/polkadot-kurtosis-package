@@ -6,12 +6,15 @@
       {
         "name": "alice",
         "node-type": "validator",
-        "port": 9944
+        "port": 9944,
+        "prometheus": false
       },
       {
         "name": "bob",
         "node-type": "full",
-        "port": 9945
+        "port": 9945,
+        "prometheus": false
+
       }
     ]
   },
@@ -21,11 +24,14 @@
       "nodes": [
         {
           "name": "alice",
-          "node-type": "validator"
+          "node-type": "validator",
+          "prometheus": false
+
         },
         {
           "name": "bob",
-          "node-type": "full"
+          "node-type": "full",
+          "prometheus": false
         }
       ]
     }
