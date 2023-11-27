@@ -38,7 +38,7 @@ parachain_images = {
     "interlay": {
         "image": "interlayhq/interbtc:latest",
         "entrypoint": "/usr/local/bin/interbtc-parachain",
-        "base": ["dev", "interlay-testnet-latest", "interlay-latest"],
+        "base": ["interlay-dev", "interlay-testnet-latest", "interlay-latest"],
     },
     "kilt": {
         "image": "kiltprotocol/kilt-node:latest",
