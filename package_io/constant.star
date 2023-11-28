@@ -20,4 +20,4 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "subsocial": "dappforce/subsocial-parachain:latest"
 }
 
-CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc"]
+CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex"]

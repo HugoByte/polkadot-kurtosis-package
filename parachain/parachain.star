@@ -92,6 +92,9 @@ def run_testnet_mainnet(plan, args, parachain):
         if parachain in constant.DIFFERENT_IMAGES_FOR_MAINNET:
             image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain]
 
+    if base == None:
+        fail("Tesnet is not there for {}".format(parachain))
+
     if parachain in constant.NO_WS_PORT:
         common_command = [
             "--chain={0}".format(base),

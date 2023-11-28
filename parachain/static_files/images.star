@@ -78,7 +78,7 @@ parachain_images = {
     "parallel": {
         "image": "parallelfinance/parallel:latest",
         "entrypoint": "/parallel/.entrypoint.sh",
-        "base": ["kerria-dev", None, "parallel"],
+        "base": ["parallel-dev", None, "parallel"],
     },
     "pendulum": {
         "image": "pendulumchain/pendulum-collator:latest",
@@ -146,7 +146,7 @@ parachain_images = {
         "base": ["litmus-dev", "rococo", "litmus"],
     },
     "mangata": {
-        "image": "mangatasolutions/mangata-node:ci-e2e-jobs-fix-MGX-785-fast",
+        "image": "mangatasolutions/mangata-node:feature-post-3rdparty-rewards-fast",
         "entrypoint": "/mangata/node",
         "base": ["rococo-local", "mangata-rococo", "mangata-kusama"],
     },
