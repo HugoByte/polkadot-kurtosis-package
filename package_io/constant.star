@@ -17,7 +17,7 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
     "karura": "acala/mandala-node:latest",
     "clover": "cloverio/clover-iris:0.1.15",
-    "subsocial": "dappforce/subsocial-parachain:rococo"
+    "subsocial": "dappforce/subsocial-parachain:latest"
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc"]
