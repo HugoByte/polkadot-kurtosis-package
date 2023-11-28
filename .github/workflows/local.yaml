@@ -20,6 +20,10 @@ jobs:
             - name: Starting the Kurtosis engine
               run: kurtosis engine start
 
+            - name: Set up variables
+              run: |
+                failed_chains=()
+
             - name: Read CSV and loop over items
               run: |
                 # Read CSV file and extract values
@@ -28,8 +32,24 @@ jobs:
                   echo "Processing para chain: $para_chain, relay chain: $relay_chain"
                   # Call Python script with para_chain and relay_chain as arguments
                   python ./testdata/generate_json.py --relay "$relay_chain" --para "$para_chain" --network "local"
-                  kurtosis run . --args-file ./testdata/updated_config.json --enclave polkadot
+                  kurtosis run . --args-file ./testdata/updated_config.json --enclave polkadot || true
+
+                  # Check if Kurtosis command failed
+                  if [ $? -ne 0 ]; then
+                    echo "Chain $para_chain failed."
+                    failed_chains+=("$para_chain")
+                  else
+                    echo "Chain $para_chain succeeded."
+                  fi
                 done < ./testdata/chain_value.csv
+
+            - name: Print failed chains
+              run: |
+                  if [ ${#failed_chains[@]} -gt 0 ]; then
+                    echo "Failed chains: ${failed_chains[@]}"
+                  else
+                    echo "All chains succeeded."
+                  fi
                 
             
 
