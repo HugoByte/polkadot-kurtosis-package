@@ -20,6 +20,10 @@ jobs:
             - name: Starting the Kurtosis engine
               run: kurtosis engine start
 
+            - name: Set up variables
+              run: |
+                failed_chains=()
+
             - name: Read CSV and loop over items
               run: |
                 # Read CSV file and extract values
@@ -33,10 +37,19 @@ jobs:
                   # Check if Kurtosis command failed
                   if [ $? -ne 0 ]; then
                     echo "Chain $para_chain failed."
+                    failed_chains+=("$para_chain")
                   else
                     echo "Chain $para_chain succeeded."
                   fi
                 done < ./testdata/chain_value.csv
+
+            - name: Print failed chains
+              run: |
+                  if [ ${#failed_chains[@]} -gt 0 ]; then
+                    echo "Failed chains: ${failed_chains[@]}"
+                  else
+                    echo "All chains succeeded."
+                  fi
                 
             
 
