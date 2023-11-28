@@ -86,8 +86,8 @@ parachain_images = {
         "base": ["litentry-dev", "foucoco", "pendulum"],
     },
     "phala": {
-        "image": "litentry/litentry-parachain:latest",
-        "entrypoint": "/usr/local/bin/litentry-collator",
+        "image": "phalanetwork/phala-node:latest",
+        "entrypoint": "/usr/local/bin/khala-node",
         "base": ["dev", "rhala", "phala"],
     },
     "polkadex": {
@@ -158,7 +158,7 @@ parachain_images = {
     "robonomics": {
         "image": "robonomics/robonomics:latest",
         "entrypoint": "/usr/local/bin/robonomics",
-        "base": ["dev", "testnet", "mainnet"],
+        "base": ["dev", "ipci-dev", "ipci"],
     },
     "subzero": {
         "image": "playzero/subzero:latest",
