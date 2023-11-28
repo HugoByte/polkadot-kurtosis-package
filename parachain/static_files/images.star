@@ -16,7 +16,7 @@ parachain_images = {
         "base": ["bifrost-local", "bifrost-kusama-rococo", "bifrost-polkadot"],
     },
     "centrifuge": {
-        "image": "centrifugeio/centrifuge-chain:test-main-latest",
+        "image": "centrifugeio/centrifuge-chain:test-PR1628-354d76c-23-11-28",
         "entrypoint": "/usr/local/bin/centrifuge-chain",
         "base": ["centrifuge-local", "catalyst", "centrifuge"],
     },
