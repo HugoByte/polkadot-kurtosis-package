@@ -111,9 +111,9 @@ parachain_images = {
         "base": ["encointer-rococo-local", "encointer-rococo", "mainnet"],
     },
     "altair": {
-        "image": "centrifugeio/centrifuge-chain:test-main-latest",
+        "image": "centrifugeio/centrifuge-chain:test-PR1628-354d76c-23-11-28",
         "entrypoint": "/usr/local/bin/centrifuge-chain",
-        "base": ["altair-local", "catalyst", "centrifuge"],
+        "base": ["altair-local", "catalyst", "altair"],
     },
     "bajun": {
         "image": "ajuna/parachain-bajun:latest",
