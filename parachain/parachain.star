@@ -18,7 +18,7 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
             files = files,
             ports = {
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
-                "prometheus": PortSpec(9615, transport_protocol = "TCP"),
+                "metrics": PortSpec(9615, transport_protocol = "TCP"),
             },
             entrypoint = command,
         ),
@@ -80,16 +80,16 @@ def run_testnet_mainnet(plan, parachain, args):
         base = parachain_details["base"][1]
 
         if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_TESTNET:
-            image = constant.DIFFERENT_IMAGES_FOR_TESTNET[parachain["name"]]
+            image = constant.DIFFERENT_IMAGES_FOR_TESTNET[parachain["name"].lower()]
 
     else:
         main_chain = "polkadot"
-        parachain_details = parachain_list.parachain_images[parachain["name"]]
+        parachain_details = parachain_list.parachain_images[parachain["name"].lower()]
         image = parachain_details["image"]
         base = parachain_details["base"][2]
 
         if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_MAINNET:
-            image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain["name"]]
+            image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain["name"].lower()]
 
 
     if base == None:

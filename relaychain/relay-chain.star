@@ -1,30 +1,34 @@
 def start_relay_chain(plan, args):
     name = args["chain-type"]
     chain = args["relaychain"]["name"]
-    relay_node_details = {}
+    final_details=[]
+    
     prometheus = 9615
     for relay_node in args["relaychain"]["nodes"]:
         port = relay_node["port"]
         exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm --prometheus-external".format(chain, relay_node["name"])]
-        relay_node_detail = plan.add_service(
+        service_details = plan.add_service(
             name = "{0}-{1}-{2}".format(name, chain, relay_node["name"]),
             config = ServiceConfig(
                 image = "parity/polkadot:latest",
                 ports = {
                     "ws": PortSpec(9944, transport_protocol = "TCP"),
-                    "prometheus": PortSpec(9615, transport_protocol = "TCP"),
+                    "metrics": PortSpec(9615, transport_protocol = "TCP"),
                 },
                 public_ports = {
                     "ws": PortSpec(port, transport_protocol = "TCP"),
-                    "prometheus": PortSpec(prometheus, transport_protocol = "TCP"),
+                    "metrics": PortSpec(prometheus, transport_protocol = "TCP"),
                 },
                 entrypoint = exec_command,
             ),
         )
         prometheus += 1
-        relay_node_details["relay_service_" + relay_node["name"]] = relay_node_detail
+        relay_node_details = {}
+        relay_node_details["service_details"] = service_details
+        relay_node_details["service_name"] = service_details.name
+        final_details.append(relay_node_details)
 
-    return relay_node_details
+    return final_details
 
 def start_test_main_net_relay_nodes(plan, args):
     name = args["chain-type"]
@@ -70,11 +74,11 @@ def start_relay_chain_local(plan, name, port, prometheus_port):
             },
             ports = {
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
-                "prometheus": PortSpec(9615, transport_protocol = "TCP"),
+                "metrics": PortSpec(9615, transport_protocol = "TCP"),
             },
             public_ports = {
                 "ws": PortSpec(port, transport_protocol = "TCP"),
-                "prometheus": PortSpec(prometheus_port, transport_protocol = "TCP"),
+                "metrics": PortSpec(prometheus_port, transport_protocol = "TCP"),
             },
             entrypoint = exec_command,
         ),
