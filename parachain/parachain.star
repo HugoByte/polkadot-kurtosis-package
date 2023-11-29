@@ -52,14 +52,14 @@ def start_local_parachain_node(plan, args, parachain_config, para_id):
     for node in parachain_config["nodes"]:
         parachain_detail = {}
         parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
-        parachain_detail["node_details"]=parachain_spawn_detail
-        parachain_detail["nodename"]=node["name"]
+        parachain_detail["node_details"] = parachain_spawn_detail
+        parachain_detail["nodename"] = node["name"]
         parachain_final.append(parachain_detail)
     return parachain_final
-   
+
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
-    final_parachain_details=[]
+    final_parachain_details = []
     for parachain in parachains:
         parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
@@ -91,8 +91,12 @@ def run_testnet_mainnet(plan, parachain, args):
         if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_MAINNET:
             image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain["name"]]
 
+
+    if base == None:
+        fail("Tesnet is not there for {}".format(parachain["name"]))
+
     if parachain["name"] in constant.NO_WS_PORT:
-        common_command = [
+            common_command = [
             "--chain={0}".format(base),
             "--port=30333",
             "--rpc-port=9944",
@@ -118,13 +122,15 @@ def run_testnet_mainnet(plan, parachain, args):
         ]
 
     parachain_info = {parachain["name"]: {}}
+    if parachain == "altair" or "centrifuge":
+        common_command = common_command + ["--database=auto"]
 
     for node in parachain["nodes"]:
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
             command = command + ["--collator"]
-        
+
         if node["node-type"] == "validator":
             command = command + ["--validator"]
 

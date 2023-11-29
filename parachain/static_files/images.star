@@ -16,7 +16,7 @@ parachain_images = {
         "base": ["bifrost-local", "bifrost-kusama-rococo", "bifrost-polkadot"],
     },
     "centrifuge": {
-        "image": "centrifugeio/centrifuge-chain:test-main-latest",
+        "image": "centrifugeio/centrifuge-chain:test-PR1628-354d76c-23-11-28",
         "entrypoint": "/usr/local/bin/centrifuge-chain",
         "base": ["centrifuge-local", "catalyst", "centrifuge"],
     },
@@ -78,7 +78,7 @@ parachain_images = {
     "parallel": {
         "image": "parallelfinance/parallel:latest",
         "entrypoint": "/parallel/.entrypoint.sh",
-        "base": ["kerria-dev", None, "parallel"],
+        "base": ["parallel-dev", None, "parallel"],
     },
     "pendulum": {
         "image": "pendulumchain/pendulum-collator:latest",
@@ -86,8 +86,8 @@ parachain_images = {
         "base": ["litentry-dev", "foucoco", "pendulum"],
     },
     "phala": {
-        "image": "litentry/litentry-parachain:latest",
-        "entrypoint": "/usr/local/bin/litentry-collator",
+        "image": "phalanetwork/phala-node:latest",
+        "entrypoint": "/usr/local/bin/khala-node",
         "base": ["dev", "rhala", "phala"],
     },
     "polkadex": {
@@ -111,9 +111,9 @@ parachain_images = {
         "base": ["encointer-rococo-local", "encointer-rococo", "mainnet"],
     },
     "altair": {
-        "image": "centrifugeio/centrifuge-chain:test-main-latest",
+        "image": "centrifugeio/centrifuge-chain:test-PR1628-354d76c-23-11-28",
         "entrypoint": "/usr/local/bin/centrifuge-chain",
-        "base": ["altair-local", "catalyst", "centrifuge"],
+        "base": ["altair-local", "catalyst", "altair"],
     },
     "bajun": {
         "image": "ajuna/parachain-bajun:latest",
@@ -146,7 +146,7 @@ parachain_images = {
         "base": ["litmus-dev", "rococo", "litmus"],
     },
     "mangata": {
-        "image": "mangatasolutions/mangata-node:ci-e2e-jobs-fix-MGX-785-fast",
+        "image": "mangatasolutions/mangata-node:feature-post-3rdparty-rewards-fast",
         "entrypoint": "/mangata/node",
         "base": ["rococo-local", "mangata-rococo", "mangata-kusama"],
     },
@@ -158,7 +158,7 @@ parachain_images = {
     "robonomics": {
         "image": "robonomics/robonomics:latest",
         "entrypoint": "/usr/local/bin/robonomics",
-        "base": ["dev", "testnet", "mainnet"],
+        "base": ["dev", "ipci-dev", "ipci"],
     },
     "subzero": {
         "image": "playzero/subzero:latest",

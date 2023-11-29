@@ -72,19 +72,20 @@ def get_config(config_files_artifact_name):
 def new_config_template_data(plan, args, service_details):
     metrics_jobs = []
 
-    relay_nodes = args["relaychain"]["nodes"]
-    for node in relay_nodes:
-        if node["prometheus"] == True:
-            endpoint = "{0}:{1}".format(service_details["relaychains"][0]["service_details"].ip_address, service_details["relaychains"][0]["service_details"].ports["prometheus"].number)
+    if len(args["relaychain"]) != 0:
+        relay_nodes = args["relaychain"]["nodes"]
+        for node in relay_nodes:
+            if node["prometheus"] == True:
+                endpoint = "{0}:{1}".format(service_details["relaychains"][0]["service_details"].ip_address, service_details["relaychains"][0]["service_details"].ports["prometheus"].number)
 
-            metrics_jobs.append(
-                new_metrics_job(
-                    job_name = service_details["relaychains"][0]["service_name"],
-                    endpoint = endpoint,
-                    scrape_interval = "5s",
-                ),
-            )
-            plan.print(node["prometheus"])
+                metrics_jobs.append(
+                    new_metrics_job(
+                        job_name = service_details["relaychains"][0]["service_name"],
+                        endpoint = endpoint,
+                        scrape_interval = "5s",
+                    ),
+                )
+                plan.print(node["prometheus"])
 
     for parachain in args["para"]:
         for node in parachain["nodes"]:
