@@ -52,14 +52,14 @@ def start_local_parachain_node(plan, args, parachain_name, para_id):
     for node in args["para"][parachain]["nodes"]:
         parachain_detail = {}
         parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
-        parachain_detail["node_details"]=parachain_spawn_detail
-        parachain_detail["nodename"]=node["name"]
+        parachain_detail["node_details"] = parachain_spawn_detail
+        parachain_detail["nodename"] = node["name"]
         parachain_final.append(parachain_detail)
     return parachain_final
-   
+
 def start_nodes(plan, args, relay_chain_ip):
     parachains = args["para"]
-    final_parachain_details=[]
+    final_parachain_details = []
     for parachain in parachains:
         parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
@@ -71,6 +71,7 @@ def start_nodes(plan, args, relay_chain_ip):
     return final_parachain_details
 
 def run_testnet_mainnet(plan, args, parachain):
+    parachain_config = parachain
     if args["chain-type"] == "testnet":
         main_chain = "rococo"
         if parachain == "ajuna":
@@ -90,6 +91,9 @@ def run_testnet_mainnet(plan, args, parachain):
 
         if parachain in constant.DIFFERENT_IMAGES_FOR_MAINNET:
             image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain]
+
+    if base == None:
+        fail("Tesnet is not there for {}".format(parachain))
 
     if parachain in constant.NO_WS_PORT:
         common_command = [
@@ -117,13 +121,13 @@ def run_testnet_mainnet(plan, args, parachain):
             "--unsafe-ws-external",
         ]
     parachain_info = {parachain: {}}
-    para_nodes = args["para"][parachain]["nodes"]
+    para_nodes = args["para"][parachain_config]["nodes"]
     for node in para_nodes:
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
             command = command + ["--collator"]
-        
+
         if node["node-type"] == "validator":
             command = command + ["--validator"]
 
