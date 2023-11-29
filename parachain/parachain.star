@@ -120,6 +120,9 @@ def run_testnet_mainnet(plan, args, parachain):
             "--unsafe-rpc-external",
             "--unsafe-ws-external",
         ]
+
+    if parachain == "altair" or "centrifuge":
+        common_command = common_command + ["--database=auto"]
     parachain_info = {parachain: {}}
     para_nodes = args["para"][parachain_config]["nodes"]
     for node in para_nodes:
