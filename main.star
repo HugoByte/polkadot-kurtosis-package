@@ -20,7 +20,7 @@ def run(plan, args):
             relay_node_detals = relay_chain.start_test_main_net_relay_nodes(plan, args)
             service_details["relaychains"] = relay_node_detals
         for paras in args["para"]:
-            parachain_info = parachain.run_testnet_mainnet(plan, args, paras)
+            parachain_info = parachain.run_testnet_mainnet(plan, paras, args)
             service_details["parachains"] = parachain_info
 
     prometheus_address = promethues.launch_prometheus(plan, args, service_details, prometheus_template)

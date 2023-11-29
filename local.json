@@ -19,8 +19,9 @@
     ]
   },
 
-  "para": {
-    "khala": {
+  "para": [
+    {
+      "name":"acala",
       "nodes": [
         {
           "name": "alice",
@@ -35,5 +36,5 @@
         }
       ]
     }
-  }
+  ]
 }
