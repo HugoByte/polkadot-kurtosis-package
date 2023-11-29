@@ -31,7 +31,7 @@ def start_test_main_net_relay_nodes(plan, args):
     chain = args["relaychain"]["name"]
     if name == "testnet":
         if chain != "rococo" and chain != "westend":
-            fail("Please provide rococo or westent as relaychain for testnet")
+            fail("Please provide rococo or westend as relaychain for testnet")
     elif name == "mainnet":
         if chain != "polkadot" and chain != "kusama":
             fail("Please provide polkadot or kusama as relaychain for mainnet")
