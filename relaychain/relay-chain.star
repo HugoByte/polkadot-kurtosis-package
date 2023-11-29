@@ -58,7 +58,7 @@ def start_relay_chains_local(plan, args):
         relay_detail = {}
         service_details = start_relay_chain_local(plan, node["name"], node["port"], prometheus_port)
         relay_detail["service_details"] = service_details
-        relay_detail["service_name"] = "relay_service_" + node["name"]
+        relay_detail["service_name"] = service_details.name
         final_details.append(relay_detail)
         prometheus_port = prometheus_port + 1
     return final_details
