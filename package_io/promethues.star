@@ -88,7 +88,7 @@ def new_config_template_data(plan, args, service_details):
                 plan.print(node["prometheus"])
 
     for parachain in args["para"]:
-        for node in args["para"][parachain]["nodes"]:
+        for node in parachain["nodes"]:
             if node["prometheus"] == True:
                 endpoint = "{0}:{1}".format(service_details["parachains"][0]["nodes"][0]["node_details"].ip_address, service_details["parachains"][0]["nodes"][0]["node_details"].ports["prometheus"].number)
 

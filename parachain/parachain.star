@@ -26,8 +26,8 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
 
     return parachain_node
 
-def start_local_parachain_node(plan, args, parachain_name, para_id):
-    parachain = parachain_name.lower()
+def start_local_parachain_node(plan, args, parachain_config, para_id):
+    parachain = parachain_config["name"].lower()
     parachain_details = parachain_list.parachain_images[parachain]
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
@@ -49,7 +49,7 @@ def start_local_parachain_node(plan, args, parachain_name, para_id):
         ]
     parachain_final = []
     parachain_detail = {}
-    for node in args["para"][parachain]["nodes"]:
+    for node in parachain_config["nodes"]:
         parachain_detail = {}
         parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
         parachain_detail["node_details"] = parachain_spawn_detail
@@ -64,39 +64,39 @@ def start_nodes(plan, args, relay_chain_ip):
         parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
         parachain_details["nodes"] = start_local_parachain_node(plan, args, parachain, para_id)
-        parachain_details["service_name"] = "parachain_service_" + parachain
-        parachain_details["parachain_name"] = parachain
-        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain, relay_chain_ip)
+        parachain_details["service_name"] = "parachain_service_" + parachain["name"]
+        parachain_details["parachain_name"] = parachain["name"]
+        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.append(parachain_details)
     return final_parachain_details
 
-def run_testnet_mainnet(plan, args, parachain):
-    parachain_config = parachain
+def run_testnet_mainnet(plan, parachain, args):
     if args["chain-type"] == "testnet":
         main_chain = "rococo"
-        if parachain == "ajuna":
-            parachain = "bajun"
-        parachain_details = parachain_list.parachain_images[parachain]
+        if parachain["name"] == "ajuna":
+            parachain["name"] = "bajun"
+        parachain_details = parachain_list.parachain_images[parachain["name"]]
         image = parachain_details["image"]
         base = parachain_details["base"][1]
 
-        if parachain in constant.DIFFERENT_IMAGES_FOR_TESTNET:
-            image = constant.DIFFERENT_IMAGES_FOR_TESTNET[parachain]
+        if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_TESTNET:
+            image = constant.DIFFERENT_IMAGES_FOR_TESTNET[parachain["name"]]
 
     else:
         main_chain = "polkadot"
-        parachain_details = parachain_list.parachain_images[parachain]
+        parachain_details = parachain_list.parachain_images[parachain["name"]]
         image = parachain_details["image"]
         base = parachain_details["base"][2]
 
-        if parachain in constant.DIFFERENT_IMAGES_FOR_MAINNET:
-            image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain]
+        if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_MAINNET:
+            image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain["name"]]
+
 
     if base == None:
-        fail("Tesnet is not there for {}".format(parachain))
+        fail("Tesnet is not there for {}".format(parachain["name"]))
 
-    if parachain in constant.NO_WS_PORT:
-        common_command = [
+    if parachain["name"] in constant.NO_WS_PORT:
+            common_command = [
             "--chain={0}".format(base),
             "--port=30333",
             "--rpc-port=9944",
@@ -121,11 +121,11 @@ def run_testnet_mainnet(plan, args, parachain):
             "--unsafe-ws-external",
         ]
 
+    parachain_info = {parachain["name"]: {}}
     if parachain == "altair" or "centrifuge":
         common_command = common_command + ["--database=auto"]
-    parachain_info = {parachain: {}}
-    para_nodes = args["para"][parachain_config]["nodes"]
-    for node in para_nodes:
+
+    for node in parachain["nodes"]:
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
@@ -134,21 +134,21 @@ def run_testnet_mainnet(plan, args, parachain):
         if node["node-type"] == "validator":
             command = command + ["--validator"]
 
-        if parachain in constant.CHAIN_COMMAND:
+        if parachain["name"] in constant.CHAIN_COMMAND:
             command = command + ["--", "--chain={0}".format(main_chain)]
 
-        if parachain == "kilt-spiritnet" and args["chain-type"] == "testnet":
+        if parachain["name"] == "kilt-spiritnet" and args["chain-type"] == "testnet":
             command = command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
 
-        if parachain in constant.BINARY_COMMAND_CHAINS:
+        if parachain["name"] in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
             command = [binary] + command
 
-            node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), command)
-            parachain_info[parachain]["parachain_" + node["name"]] = node_details
+            node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
+            parachain_info[parachain["name"]]["parachain_" + node["name"]] = node_details
 
         else:
-            node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), command)
-            parachain_info[parachain]["parachain_" + node["name"]] = node_details
+            node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
+            parachain_info[parachain["name"]]["parachain_" + node["name"]] = node_details
 
     return parachain_info
