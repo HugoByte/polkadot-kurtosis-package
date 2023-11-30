@@ -88,7 +88,7 @@ parachain_images = {
     "phala": {
         "image": "phalanetwork/phala-node:latest",
         "entrypoint": "/usr/local/bin/khala-node",
-        "base": ["dev", "rhala", "phala"],
+        "base": ["phala-dev-2035", "rhala", "phala"],
     },
     "polkadex": {
         "image": "polkadex/parachain:latest",

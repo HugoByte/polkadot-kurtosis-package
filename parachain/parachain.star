@@ -126,7 +126,6 @@ def run_testnet_mainnet(plan, parachain, args):
 
     final_parachain_info = []
     for node in parachain["nodes"]:
-        parachain_info = {}
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
         if node["node-type"] == "collator":
@@ -144,17 +143,17 @@ def run_testnet_mainnet(plan, parachain, args):
         if parachain["name"] in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
             command = [binary] + command
-            parachain_info["service_name"] = "parachain_service_" + parachain["name"]
-            parachain_info["parachain_name"] = parachain["name"]
+            node_info={}
             node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            parachain_info["nodes"] = node_details
-            final_parachain_info.append(parachain_info)
+            node_info["nodename"]=node["name"]
+            node_info["node_details"]=node_details
+            final_parachain_info.append(node_info)
 
         else:
-            parachain_info["service_name"] = "parachain_service_" + parachain["name"]
-            parachain_info["parachain_name"] = parachain["name"]
+            node_info={}
             node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            parachain_info["nodes"] = node_details
-            final_parachain_info.append(parachain_info)
+            node_info["nodename"]=node["name"]
+            node_info["node_details"]=node_details
+            final_parachain_info.append(node_info)
 
     return final_parachain_info

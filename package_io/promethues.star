@@ -94,19 +94,21 @@ def new_config_template_data(plan, args, service_details):
     for parachain in args["para"]:
         for node in parachain["nodes"]:
             if node["prometheus"] == True:
-                 for relay_chain in service_details["relaychains"]:
-                    node_name = relay_chain["service_details"].name
-                    if node_name.endswith(node["name"]):
-                        ip = relay_chain["service_details"].ip_address
-                        port_number = relay_chain["service_details"].ports["metrics"].number
-                        endpoint = "{0}:{1}".format(ip, port_number)
-                        metrics_jobs.append(
-                            new_metrics_job(
-                                job_name = "relay_service_{}".format(node["name"]),
-                                endpoint = endpoint,
-                                scrape_interval = "5s",
-                            ),
-                        )
+                 for para_chain in service_details["parachains"]:
+                    for para_chain_node in para_chain["nodes"]:
+                        service_name = para_chain_node["node_details"].name
+                        string = "{}-{}-{}".format(parachain["name"],node["name"],args["chain-type"])
+                        if string == service_name:
+                            ip = para_chain_node["node_details"].ip_address
+                            port_number = para_chain_node["node_details"].ports["metrics"].number
+                            endpoint = "{0}:{1}".format(ip, port_number)
+                            metrics_jobs.append(
+                                new_metrics_job(
+                                    job_name = "parachain_{}_service_{}".format(parachain["name"],node["name"]),
+                                    endpoint = endpoint,
+                                    scrape_interval = "5s",
+                                ),
+                            )
 
     return {
         "MetricsJobs": metrics_jobs,
