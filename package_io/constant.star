@@ -22,4 +22,4 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "altair": "centrifugeio/centrifuge-chain:main-latest",
 }
 
-CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair"]
+CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics"]
