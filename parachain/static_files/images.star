@@ -163,7 +163,7 @@ parachain_images = {
     "subzero": {
         "image": "playzero/subzero:latest",
         "entrypoint": "/usr/local/bin/subzero",
-        "base": ["dev", "testnet", None],
+        "base": ["dev", None, ""],
     },
     "turing": {
         "image": "oaknetwork/turing:latest",

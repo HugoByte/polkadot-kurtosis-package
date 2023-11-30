@@ -91,12 +91,11 @@ def run_testnet_mainnet(plan, parachain, args):
         if parachain["name"] in constant.DIFFERENT_IMAGES_FOR_MAINNET:
             image = constant.DIFFERENT_IMAGES_FOR_MAINNET[parachain["name"].lower()]
 
-
     if base == None:
         fail("Tesnet is not there for {}".format(parachain["name"]))
 
     if parachain["name"] in constant.NO_WS_PORT:
-            common_command = [
+        common_command = [
             "--chain={0}".format(base),
             "--port=30333",
             "--rpc-port=9944",
@@ -124,6 +123,10 @@ def run_testnet_mainnet(plan, parachain, args):
     if parachain == "altair" or "centrifuge":
         common_command = common_command + ["--database=auto"]
 
+    if parachain["name"] == "subzero" and args["chain-type"] == "mainnet":
+        common_command = [x for x in common_command if x != "--chain="]
+        common_command = [x for x in common_command if x != "--port=30333"]
+
     final_parachain_info = []
     for node in parachain["nodes"]:
         command = common_command
@@ -143,17 +146,17 @@ def run_testnet_mainnet(plan, parachain, args):
         if parachain["name"] in constant.BINARY_COMMAND_CHAINS:
             binary = parachain_details["entrypoint"]
             command = [binary] + command
-            node_info={}
+            node_info = {}
             node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            node_info["nodename"]=node["name"]
-            node_info["node_details"]=node_details
+            node_info["nodename"] = node["name"]
+            node_info["node_details"] = node_details
             final_parachain_info.append(node_info)
 
         else:
-            node_info={}
+            node_info = {}
             node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            node_info["nodename"]=node["name"]
-            node_info["node_details"]=node_details
+            node_info["nodename"] = node["name"]
+            node_info["node_details"] = node_details
             final_parachain_info.append(node_info)
 
     return final_parachain_info
