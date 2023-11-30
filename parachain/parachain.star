@@ -120,6 +120,7 @@ def run_testnet_mainnet(plan, parachain, args):
             "--unsafe-ws-external",
         ]
 
+    parachain_info = {parachain["name"]: {}}
     if parachain == "altair" or "centrifuge":
         common_command = common_command + ["--database=auto"]
 
