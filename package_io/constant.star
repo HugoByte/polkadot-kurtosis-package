@@ -4,7 +4,7 @@ EDIT_BUILD_SPEC = "edit-build-spec"
 CURL_JQ_IMAGE = "badouralix/curl-jq"
 NODE_IMAGE = "hugobyte/parachain-node-modules"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
-BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover", "calamari", "subzero"]
+BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover", "calamari", "subzero", "robonomics"]
 NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair"]
 
 DIFFERENT_IMAGES_FOR_MAINNET = {

@@ -158,7 +158,7 @@ parachain_images = {
     "robonomics": {
         "image": "robonomics/robonomics:latest",
         "entrypoint": "/usr/local/bin/robonomics",
-        "base": ["dev", "ipci-dev", "ipci"],
+        "base": ["alpha-dev", "ipci-dev", "ipci"],
     },
     "subzero": {
         "image": "playzero/subzero:latest",
