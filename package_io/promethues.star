@@ -89,8 +89,7 @@ def new_config_template_data(plan, args, service_details):
                                 scrape_interval = "5s",
                             ),
                         )
-                plan.print(node["prometheus"])
-
+                        
     for parachain in args["para"]:
         for node in parachain["nodes"]:
             if node["prometheus"] == True:
