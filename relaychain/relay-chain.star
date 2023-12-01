@@ -52,6 +52,10 @@ def spawn_multiple_relay(plan, count):
 
 def start_relay_chains_local(plan, args):
     relay_nodes = args["relaychain"]["nodes"]
+
+    if len(relay_nodes) < 2:
+        fail("relay nodes must contain atleast two nodes")
+        
     final_details=[]
     prometheus_port = 9615
     for node in relay_nodes:

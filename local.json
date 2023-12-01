@@ -8,20 +8,13 @@
         "node-type": "validator",
         "port": 9944,
         "prometheus": false
-      },
-      {
-        "name": "bob",
-        "node-type": "full",
-        "port": 9945,
-        "prometheus": false
-
       }
     ]
   },
 
   "para": [
     {
-      "name":"acala",
+      "name":"interlay",
       "nodes": [
         {
           "name": "alice",
