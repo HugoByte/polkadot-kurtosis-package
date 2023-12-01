@@ -1,5 +1,5 @@
 {
-  "chain-type": "local",
+  "chain-type": "testnet",
   "relaychain": {
     "name": "rococo",
     "nodes": [
@@ -8,13 +8,20 @@
         "node-type": "validator",
         "port": 9944,
         "prometheus": false
+      },
+      {
+        "name": "bob",
+        "node-type": "full",
+        "port": 9945,
+        "prometheus": false
+
       }
     ]
   },
 
   "para": [
     {
-      "name":"interlay",
+      "name":"mangata",
       "nodes": [
         {
           "name": "alice",
