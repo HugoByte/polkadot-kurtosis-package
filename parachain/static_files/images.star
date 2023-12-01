@@ -83,12 +83,12 @@ parachain_images = {
     "pendulum": {
         "image": "pendulumchain/pendulum-collator:latest",
         "entrypoint": "/usr/local/bin/pendulum-collator",
-        "base": ["litentry-dev", "foucoco", "pendulum"],
+        "base": ["dev", "foucoco", "pendulum"],
     },
     "phala": {
         "image": "phalanetwork/phala-node:latest",
         "entrypoint": "/usr/local/bin/khala-node",
-        "base": ["dev", "rhala", "phala"],
+        "base": ["phala-dev-2035", "rhala", "phala"],
     },
     "polkadex": {
         "image": "polkadex/parachain:latest",
@@ -158,12 +158,12 @@ parachain_images = {
     "robonomics": {
         "image": "robonomics/robonomics:latest",
         "entrypoint": "/usr/local/bin/robonomics",
-        "base": ["dev", "ipci-dev", "ipci"],
+        "base": ["alpha-dev", "ipci-dev", "ipci"],
     },
     "subzero": {
         "image": "playzero/subzero:latest",
         "entrypoint": "/usr/local/bin/subzero",
-        "base": ["dev", "testnet", None],
+        "base": ["dev", None, ""],
     },
     "turing": {
         "image": "oaknetwork/turing:latest",

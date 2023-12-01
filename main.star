@@ -19,9 +19,15 @@ def run(plan, args):
         if len(args["relaychain"]) != 0:
             relay_node_detals = relay_chain.start_test_main_net_relay_nodes(plan, args)
             service_details["relaychains"] = relay_node_detals
+        final_parachain_detail = []
         for paras in args["para"]:
+            parachain_details={}
+            parachain_details["service_name"] = "parachain_service_" + paras["name"]
+            parachain_details["parachain_name"] = paras["name"]
             parachain_info = parachain.run_testnet_mainnet(plan, paras, args)
-            service_details["parachains"] = parachain_info
+            parachain_details["nodes"] = parachain_info
+            final_parachain_detail.append(parachain_details)
+            service_details["parachains"] = final_parachain_detail
 
     prometheus_address = promethues.launch_prometheus(plan, args, service_details, prometheus_template)
     service_details["prometheus"] = prometheus_address

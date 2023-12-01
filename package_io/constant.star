@@ -2,9 +2,9 @@ PLAIN_BUILD_SPEC = "plain-build-spec"
 RAW_BUILD_SPEC = "raw-build-spec"
 EDIT_BUILD_SPEC = "edit-build-spec"
 CURL_JQ_IMAGE = "badouralix/curl-jq"
-NODE_IMAGE = "node:21.1"
+NODE_IMAGE = "hugobyte/parachain-node-modules"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
-BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover"]
+BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover", "calamari", "subzero", "robonomics"]
 NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair"]
 
 DIFFERENT_IMAGES_FOR_MAINNET = {
@@ -22,4 +22,4 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "altair": "centrifugeio/centrifuge-chain:main-latest",
 }
 
-CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair"]
+CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt"]
