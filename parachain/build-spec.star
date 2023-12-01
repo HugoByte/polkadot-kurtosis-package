@@ -26,21 +26,24 @@ def create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_
         "-c",
         "{0} build-spec --chain=/build/{1}.json --raw --disable-default-bootnode > /tmp/{1}-raw.json".format(binary, chain_name),
     ])
-    plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    result = plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    plan.verify(result["code"], "==", 0)
 
     command = ExecRecipe(command = [
         "/bin/sh",
         "-c",
         "{0} export-genesis-wasm --chain=/tmp/{1}-raw.json  > /tmp/{1}-genesis-wasm".format(binary, chain_name),
     ])
-    plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    result = plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    plan.verify(result["code"], "==", 0)
 
     command = ExecRecipe(command = [
         "/bin/sh",
         "-c",
         "{0} export-genesis-state --chain=/tmp/{1}-raw.json  > /tmp/{1}-genesis-state".format(binary, chain_name),
     ])
-    plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    result = plan.exec(service_name = constant.RAW_BUILD_SPEC, recipe = command)
+    plan.verify(result["code"], "==", 0)
 
     # command = ExecRecipe(command = [
     #     "/bin/sh",

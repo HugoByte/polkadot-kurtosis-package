@@ -19,7 +19,8 @@ def create_service_for_build_spec(plan, service_name, image, build_file):
 def create_edit_and_build_spec(plan, service_name, image, chain_name, command, build_file):
     service = create_service_for_build_spec(plan, service_name, image, build_file)
 
-    plan.exec(service_name = service_name, recipe = command)
+    result = plan.exec(service_name = service_name, recipe = command)
+    plan.verify(result["code"], "==", 0)
 
     plan.store_service_files(service_name = service_name, src = "/tmp/{0}.json".format(chain_name), name = service_name)
 
