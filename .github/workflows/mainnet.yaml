@@ -32,25 +32,11 @@ jobs:
                   echo "Processing para chain: $para_chain, relay chain: $relay_chain"
                   # Call Python script with para_chain and relay_chain as arguments
                   python ./testdata/generate_json.py --relay "$relay_chain" --para "$para_chain" --network "mainnet"
-                  kurtosis run . --args-file ./testdata/updated_config.json --enclave polkadot || true
-
-                  # Check if Kurtosis command failed
-                  if [ $? -ne 0 ]; then
-                    echo "Chain $para_chain failed."
-                    failed_chains+=("$para_chain")
-                  else
-                    echo "Chain $para_chain succeeded."
-                  fi
+                  kurtosis run . --args-file ./testdata/updated_config.json --enclave polkadot || failed_chains+=("$para_chain")
                 done < ./testdata/chain_value.csv
-
-            - name: Print failed chains
-              run: |
-                      if [ ${#failed_chains[@]} -gt 0 ]; then
-                        echo "Failed chains: ${failed_chains[@]}"
-                      else
-                        echo "All chains succeeded."
-                      fi
-                
-            
-
+                if [ ${#failed_chains[@]} -gt 0 ]; then
+                  echo "Failed chains: ${failed_chains[@]}"
+                else
+                  echo "All chains succeeded."
+                fi
                
