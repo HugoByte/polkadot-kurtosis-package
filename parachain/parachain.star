@@ -39,7 +39,7 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
     return parachain_node
 
 def start_local_parachain_node(plan, args, parachain_config, para_id):
-   """Start local parachain nodes based on configuration.
+    """Start local parachain nodes based on configuration.
 
     Args:
         plan (object): The Kurtosis plan.

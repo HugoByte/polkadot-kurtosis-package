@@ -9,7 +9,7 @@ def start_relay_chain(plan, args):
     Returns:
         list: List of dictionaries containing service details of started relay chain nodes.
     """
-   name = args["chain-type"]
+    name = args["chain-type"]
     chain = args["relaychain"]["name"]
     final_details=[]
     
