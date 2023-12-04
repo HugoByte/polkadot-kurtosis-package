@@ -18,9 +18,10 @@ def update_config(original_config, relay_chain, para_chain, network):
         config_data["chain-type"] = "local"
         config_data["relaychain"]["name"] = relay_chain
 
-    name = next(iter(config_data["para"].keys()))
+    for para in config_data["para"]:
+        para["name"] = para_chain
 
-    config_data["para"][para_chain] = config_data["para"].pop(name)
+    # config_data["para"][para_chain] = config_data["para"].pop(name)
     updated_config = json.dumps(config_data, indent=2)
 
     # Optionally, save the updated config to a new file
