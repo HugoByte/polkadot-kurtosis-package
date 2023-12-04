@@ -5,6 +5,16 @@ promethues = import_module("./package_io/promethues.star")
 grafana = import_module("./package_io/grafana.star")
 
 def run(plan, args):
+    """
+    Main function to run the Polkadot relay and parachain setup.
+
+    Args:
+        plan (object): The Kurtosis plan object for orchestrating the test.
+        args (dict): Dictionary containing arguments for configuring the setup.
+
+    Returns:
+        dict: Service details containing information about relay chains, parachains, and Prometheus.
+    """
     plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
 
     prometheus_template = read_file("./package_io/static_files/prometheus.yml.tmpl")

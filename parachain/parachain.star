@@ -5,6 +5,18 @@ parachain_list = import_module("./static_files/images.star")
 node_setup = import_module("./node_setup.star")
 
 def spawn_parachain(plan, chain_name, image, command, build_file):
+    """Spawn a parachain node with specified configuration.
+
+    Args:
+        plan (object): The Kurtosis plan.
+        chain_name (str): Name of the parachain.
+        image (str): Docker image for the parachain node.
+        command (list): Command to execute inside service.
+        build_file (str): Path to the build spec file.
+
+    Returns:
+        dict: The service details of spawned parachain node.
+    """
     files = {
         "/app": "configs",
     }
@@ -27,6 +39,17 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
     return parachain_node
 
 def start_local_parachain_node(plan, args, parachain_config, para_id):
+   """Start local parachain nodes based on configuration.
+
+    Args:
+        plan (object): The Kurtosis plan.
+        args (dict): arguments for configuration.
+        parachain_config (dict): Configuration for the parachain.
+        para_id (int): Parachain ID.
+
+    Returns:
+        list: List of dictionaries containing service details of parachain nodes.
+    """
     parachain = parachain_config["name"].lower()
     parachain_details = parachain_list.parachain_images[parachain]
     image = parachain_details["image"]
@@ -58,6 +81,16 @@ def start_local_parachain_node(plan, args, parachain_config, para_id):
     return parachain_final
 
 def start_nodes(plan, args, relay_chain_ip):
+    """Start multiple parachain nodes.
+
+    Args:
+        plan (object): The kurtosis plan.
+        args (dict): arguments for configuration.
+        relay_chain_ip (str): IP address of the relay chain.
+
+    Returns:
+        list: List of dictionaries containing service details of each parachain.
+    """
     parachains = args["para"]
     final_parachain_details = []
     for parachain in parachains:
@@ -71,6 +104,16 @@ def start_nodes(plan, args, relay_chain_ip):
     return final_parachain_details
 
 def run_testnet_mainnet(plan, parachain, args):
+    """Run a testnet or mainnet based on configuration.
+
+    Args:
+        plan (object): The kurtosis plan.
+        parachain (dict): Configuration for the parachain.
+        args (dict): arguments for configuration.
+
+    Returns:
+        list: List of dictionaries containing details of each parachain node.
+    """
     if args["chain-type"] == "testnet":
         main_chain = "rococo"
         if parachain["name"] == "ajuna":
