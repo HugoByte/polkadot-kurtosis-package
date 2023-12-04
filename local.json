@@ -1,5 +1,5 @@
 {
-  "chain-type": "local",
+  "chain-type": "testnet",
   "relaychain": {
     "name": "rococo",
     "nodes": [
@@ -21,7 +21,7 @@
 
   "para": [
     {
-      "name":"acala",
+      "name":"mangata",
       "nodes": [
         {
           "name": "alice",
@@ -36,5 +36,6 @@
         }
       ]
     }
-  ]
+  ],
+  "explorer": false
 }

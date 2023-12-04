@@ -3,8 +3,19 @@ relay_chain = import_module("./relaychain/relay-chain.star")
 package = import_module("./package_io/build-spec.star")
 promethues = import_module("./package_io/promethues.star")
 grafana = import_module("./package_io/grafana.star")
+explorer = import_module("./package_io/polkadot_js_app.star")
 
 def run(plan, args):
+    """
+    Main function to run the Polkadot relay and parachain setup.
+
+    Args:
+        plan (object): The Kurtosis plan object for orchestrating the test.
+        args (dict): Dictionary containing arguments for configuring the setup.
+
+    Returns:
+        dict: Service details containing information about relay chains, parachains, and Prometheus.
+    """
     plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
 
     prometheus_template = read_file("./package_io/static_files/prometheus.yml.tmpl")
@@ -32,5 +43,9 @@ def run(plan, args):
     prometheus_address = promethues.launch_prometheus(plan, args, service_details, prometheus_template)
     service_details["prometheus"] = prometheus_address
     grafana.launch_grafana(plan, grafana)
+
+    #run the polkadot js App explorer
+    if args["explorer"] == True:
+        service_details["explorer"] = explorer.run_pokadot_js_app(plan, "wss://127.0.0.1:9944")
 
     return service_details
