@@ -1,7 +1,7 @@
 "This Dictionary is for polkadot package, containing parachain and their respective docker images"
 parachain_images = {
     "acala": {
-        "image": "acala/mandala-node:latest",  # NO ws port
+        "image": "acala/acala-node:latest",  # NO ws port
         "entrypoint": "/usr/local/bin/acala",
         "base": ["dev", "mandala-latest", "acala"],
     },
