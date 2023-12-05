@@ -20,6 +20,7 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "clover": "cloverio/clover-iris:0.1.15",
     "subsocial": "dappforce/subsocial-parachain:latest",
     "altair": "centrifugeio/centrifuge-chain:main-latest",
+    "acala": "acala/mandala-node:latest"
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt"]
