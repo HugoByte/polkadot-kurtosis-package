@@ -164,7 +164,7 @@ def run_testnet_mainnet(plan, parachain, args):
         ]
 
     parachain_info = {parachain["name"]: {}}
-    if parachain == "altair" or "centrifuge":
+    if parachain["name"] == "altair" or parachain["name"] == "centrifuge":
         common_command = common_command + ["--database=auto"]
 
     if parachain["name"] == "subzero" and args["chain-type"] == "mainnet":
