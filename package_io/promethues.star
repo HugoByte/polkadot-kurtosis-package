@@ -27,6 +27,10 @@ def launch_prometheus(
         args,
         service_details,
     )
+
+    if len(template_data["MetricsJobs"]) == 0:
+        return "No Prometheus is available"
+
     template_and_data = shared_utils.new_template_and_data(
         config_template,
         template_data,
@@ -89,21 +93,21 @@ def new_config_template_data(plan, args, service_details):
                                 scrape_interval = "5s",
                             ),
                         )
-                        
+
     for parachain in args["para"]:
         for node in parachain["nodes"]:
             if node["prometheus"] == True:
-                 for para_chain in service_details["parachains"]:
+                for para_chain in service_details["parachains"]:
                     for para_chain_node in para_chain["nodes"]:
                         service_name = para_chain_node["node_details"].name
-                        string = "{}-{}-{}".format(parachain["name"],node["name"],args["chain-type"])
+                        string = "{}-{}-{}".format(parachain["name"], node["name"], args["chain-type"])
                         if string == service_name:
                             ip = para_chain_node["node_details"].ip_address
                             port_number = para_chain_node["node_details"].ports["metrics"].number
                             endpoint = "{0}:{1}".format(ip, port_number)
                             metrics_jobs.append(
                                 new_metrics_job(
-                                    job_name = "parachain_{}_service_{}".format(parachain["name"],node["name"]),
+                                    job_name = "parachain_{}_service_{}".format(parachain["name"], node["name"]),
                                     endpoint = endpoint,
                                     scrape_interval = "5s",
                                 ),
