@@ -2,7 +2,6 @@ build_spec = import_module("../package_io/build-spec.star")
 constant = import_module("../package_io/constant.star")
 
 def register_para_id(plan, alice_ip):
-    plan.upload_files(src = "./static_files/javascript", name = "javascript")
     test = build_spec.create_service_for_build_spec(plan, constant.PARA_SLOT_REGISTER_SERVICE_NAME, constant.NODE_IMAGE, "javascript")
     result = plan.exec(service_name = test.name, recipe = ExecRecipe(command = ["/bin/sh", "-c", "cd /build && npm i "]))
     plan.verify(result["code"], "==", 0)
@@ -15,12 +14,12 @@ def register_para_id(plan, alice_ip):
 
 def onboard_genesis_state_and_wasm(plan, para_id, chain_name, alice_ip):
     service = plan.add_service(
-        name = "upload-genesis-file",
+        name = "upload-{}-genesis-file".format(chain_name),
         config = ServiceConfig(
             image = constant.NODE_IMAGE,
             files = {
                 "/app": "configs",
-                "/build": constant.RAW_BUILD_SPEC,
+                "/build": chain_name + "raw",
                 "/javascript": "javascript",
             },
             entrypoint = ["/bin/sh"],
