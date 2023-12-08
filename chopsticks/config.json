@@ -1,7 +1,8 @@
 {
     "parachain": "acala",
     "xcm": {
-        "relaychain": "polakdot",
+        "relaychain": "polkadot",
         "parachains": ["acala", "moonbeam"]
-    }
+    },
+    "explorer": true
 }
