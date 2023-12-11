@@ -2,6 +2,9 @@
     "parachain": "acala",
     "xcm": {
         "relaychain": "polkadot",
-        "parachains": ["acala", "moonbeam"]
+        "parachains": [
+            "acala",
+            "moonbeam"
+        ]
     }
 }
