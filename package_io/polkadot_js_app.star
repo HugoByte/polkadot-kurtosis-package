@@ -21,5 +21,5 @@ def run_pokadot_js_app(plan, ws_url):
             "WS_URL": ws_url,
         }
     )
-    service_details = plan.add_service(name="polkadot-js", config=service_config)
+    service_details = plan.add_service(name="explorer", config=service_config)
     return service_details
