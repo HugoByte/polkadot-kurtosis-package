@@ -3,6 +3,5 @@
     "xcm": {
         "relaychain": "polkadot",
         "parachains": ["acala", "moonbeam"]
-    },
-    "explorer": true
+    }
 }

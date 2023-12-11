@@ -2,7 +2,7 @@
 This package contains code for spawning the chopstick network.
 """
 
-explorer = import_module("github.com/hugobyte/polkadot-kurtosis-package/package_io/polkadot_js_app.star")
+# explorer = import_module("github.com/hugobyte/polkadot-kurtosis-package/package_io/polkadot_js_app.star")
 
 def run(plan, args):
     service_details = {}
@@ -16,8 +16,8 @@ def run(plan, args):
         else:
             fail("xcm needs atleast two parachains")
 
-    if args["explorer"] == True:
-        explorer.run_pokadot_js_app(plan, "ws://127.0.0.1:8000")
+    # if args["explorer"] == True:
+    #     explorer.run_pokadot_js_app(plan, "ws://127.0.0.1:8000")
 
     return service_details
     
