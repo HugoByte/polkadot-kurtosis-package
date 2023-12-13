@@ -1,3 +1,6 @@
+utils = import_module("../package_io/utils.star")
+
+
 def start_relay_chain(plan, args):
     """
     Starts relay chain nodes based on the provided arguments.
@@ -11,7 +14,7 @@ def start_relay_chain(plan, args):
     """
     name = args["chain-type"]
     chain = args["relaychain"]["name"]
-    final_details = []
+    final_details = {}
 
     prometheus = 9615
     for relay_node in args["relaychain"]["nodes"]:
@@ -33,10 +36,16 @@ def start_relay_chain(plan, args):
             ),
         )
         prometheus += 1
+
         relay_node_details = {}
-        relay_node_details["service_details"] = service_details
+        relay_node_details["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", service_details.ports["ws"].number)
+        relay_node_details["endpoint"] = utils.get_service_url("ws", service_details.ip_address, service_details.ports["ws"].number)
+        relay_node_details["endpoint_prometheus"] = utils.get_service_url("tcp" , service_details.ip_address, service_details.ports["metrics"].number)
         relay_node_details["service_name"] = service_details.name
-        final_details.append(relay_node_details)
+        relay_node_details["prometheus_port"] = service_details.ports["metrics"].number
+        relay_node_details["prometheus"] = relay_node["prometheus"]
+        relay_node_details["ip_address"] = service_details.ip_address
+        final_details[service_details.name] = relay_node_details
 
     return final_details
 
@@ -95,15 +104,22 @@ def start_relay_chains_local(plan, args):
     if len(relay_nodes) < 2:
         fail("relay nodes must contain at least two nodes")
 
-    final_details = []
+    final_details = {}
     prometheus_port = 9615
     for node in relay_nodes:
         relay_detail = {}
         service_details = start_relay_chain_local(plan, args, node["name"], node["port"], prometheus_port)
-        relay_detail["service_details"] = service_details
+        relay_detail["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", service_details.ports["ws"].number)
+        relay_detail["endpoint"] = utils.get_service_url("ws", service_details.ip_address, service_details.ports["ws"].number)
+        relay_detail["endpoint_prometheus"] = utils.get_service_url("tcp" , service_details.ip_address, service_details.ports["metrics"].number)
         relay_detail["service_name"] = service_details.name
-        final_details.append(relay_detail)
+        relay_detail["prometheus_port"] = service_details.ports["metrics"].number
+        relay_detail["prometheus"] = node["prometheus"]
+        relay_detail["ip_address"] = service_details.ip_address
+        final_details[service_details.name] = relay_detail
         prometheus_port = prometheus_port + 1
+
+
     return final_details
 
 def start_relay_chain_local(plan, args, name, port, prometheus_port):
