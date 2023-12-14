@@ -82,7 +82,7 @@ def start_local_parachain_node(plan, args, parachain_config, para_id):
         parachain_detail["prometheus_port"] = parachain_spawn_detail.ports["metrics"].number
         parachain_detail["ip_address"] = parachain_spawn_detail.ip_address
         parachain_detail["prometheus"] = node["prometheus"]
-        parachain_detail["node"] = node["node-type"]
+        parachain_detail["node-type"] = node["node-type"]
         parachain_final[parachain_spawn_detail.name] = parachain_detail
     return parachain_final
 
@@ -202,7 +202,7 @@ def run_testnet_mainnet(plan, parachain, args):
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus_port"] = node_details.ports["metrics"].number
             node_info["prometheus"] = node["prometheus"]
-            node_info["node"] = node["node-type"]
+            node_info["node-type"] = node["node-type"]
             final_parachain_info[node_details.name] = node_info
 
         else:
@@ -215,6 +215,6 @@ def run_testnet_mainnet(plan, parachain, args):
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus_port"] = node_details.ports["metrics"].number
             node_info["prometheus"] = node["prometheus"]
-            node_info["node"] = node["node-type"]
+            node_info["node-type"] = node["node-type"]
             final_parachain_info[node_details.name] = node_info
     return final_parachain_info
