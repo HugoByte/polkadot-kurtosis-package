@@ -46,3 +46,9 @@ def read_file_from_service(plan, service_name, filename):
         ),
     )
     return output["output"]
+
+
+def get_service_url(protocol ,ip_address, ports):
+    url = "{0}://{1}:{2}".format(protocol, ip_address, ports)
+    return url
+

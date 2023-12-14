@@ -3,6 +3,7 @@ register_para_slot = import_module("./register-para-id.star")
 constant = import_module("../package_io/constant.star")
 parachain_list = import_module("./static_files/images.star")
 node_setup = import_module("./node_setup.star")
+utils = import_module("../package_io/utils.star")
 
 def spawn_parachain(plan, chain_name, image, command, build_file):
     """Spawn a parachain node with specified configuration.
@@ -70,14 +71,19 @@ def start_local_parachain_node(plan, args, parachain_config, para_id):
             "-c",
             "{0} --chain=/build/{1}-raw.json --ws-port=9944 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
         ]
-    parachain_final = []
-    parachain_detail = {}
+    parachain_final = {}
     for node in parachain_config["nodes"]:
         parachain_detail = {}
         parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
-        parachain_detail["node_details"] = parachain_spawn_detail
-        parachain_detail["nodename"] = node["name"]
-        parachain_final.append(parachain_detail)
+        parachain_detail["service_name"] = parachain_spawn_detail.name
+        parachain_detail["endpoint"] = utils.get_service_url("ws", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
+        parachain_detail["endpoint_prometheus"] = utils.get_service_url("tcp" , parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["metrics"].number)
+        parachain_detail["service_name"] = parachain_spawn_detail.name
+        parachain_detail["prometheus_port"] = parachain_spawn_detail.ports["metrics"].number
+        parachain_detail["ip_address"] = parachain_spawn_detail.ip_address
+        parachain_detail["prometheus"] = node["prometheus"]
+        parachain_detail["node"] = node["node-type"]
+        parachain_final[parachain_spawn_detail.name] = parachain_detail
     return parachain_final
 
 def start_nodes(plan, args, relay_chain_ip):
@@ -92,15 +98,12 @@ def start_nodes(plan, args, relay_chain_ip):
         list: List of dictionaries containing service details of each parachain.
     """
     parachains = args["para"]
-    final_parachain_details = []
+    final_parachain_details = {}
     for parachain in parachains:
-        parachain_details = {}
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
-        parachain_details["nodes"] = start_local_parachain_node(plan, args, parachain, para_id)
-        parachain_details["service_name"] = "parachain_service_" + parachain["name"]
-        parachain_details["parachain_name"] = parachain["name"]
+        parachain_details = start_local_parachain_node(plan, args, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
-        final_parachain_details.append(parachain_details)
+        final_parachain_details.update(parachain_details)
     return final_parachain_details
 
 def run_testnet_mainnet(plan, parachain, args):
@@ -171,7 +174,7 @@ def run_testnet_mainnet(plan, parachain, args):
         common_command = [x for x in common_command if x != "--chain="]
         common_command = [x for x in common_command if x != "--port=30333"]
 
-    final_parachain_info = []
+    final_parachain_info = {}
     for node in parachain["nodes"]:
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
@@ -192,15 +195,26 @@ def run_testnet_mainnet(plan, parachain, args):
             command = [binary] + command
             node_info = {}
             node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            node_info["nodename"] = node["name"]
-            node_info["node_details"] = node_details
-            final_parachain_info.append(node_info)
+            node_info["service_name"] = node_details.name
+            node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
+            node_info["endpoint_prometheus"] = utils.get_service_url("tcp" , node_details.ip_address, node_details.ports["metrics"].number)
+            node_info["service_name"] = node_details.name
+            node_info["ip_address"] = node_details.ip_address
+            node_info["prometheus_port"] = node_details.ports["metrics"].number
+            node_info["prometheus"] = node["prometheus"]
+            node_info["node"] = node["node-type"]
+            final_parachain_info[node_details.name] = node_info
 
         else:
             node_info = {}
             node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
-            node_info["nodename"] = node["name"]
-            node_info["node_details"] = node_details
-            final_parachain_info.append(node_info)
-
+            node_info["service_name"] = node_details.name
+            node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
+            node_info["endpoint_prometheus"] = utils.get_service_url("tcp" , node_details.ip_address, node_details.ports["metrics"].number)
+            node_info["service_name"] = node_details.name
+            node_info["ip_address"] = node_details.ip_address
+            node_info["prometheus_port"] = node_details.ports["metrics"].number
+            node_info["prometheus"] = node["prometheus"]
+            node_info["node"] = node["node-type"]
+            final_parachain_info[node_details.name] = node_info
     return final_parachain_info
