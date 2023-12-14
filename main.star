@@ -4,6 +4,7 @@ package = import_module("./package_io/build-spec.star")
 promethues = import_module("./package_io/promethues.star")
 grafana = import_module("./package_io/grafana.star")
 explorer = import_module("./package_io/polkadot_js_app.star")
+utils = import_module("./package_io/utils.star")
 
 def run(plan, args):
     """
@@ -31,6 +32,9 @@ def run_polkadot_setup(plan, args):
     Returns:
         dict: Service details containing information about relay chains, parachains, and Prometheus.
     """
+
+    utils.check_config_validity(plan, args)
+
     plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
     plan.upload_files(src = "./parachain/static_files/javascript", name = "javascript")
 

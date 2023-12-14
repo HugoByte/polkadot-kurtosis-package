@@ -52,3 +52,22 @@ def get_service_url(protocol ,ip_address, ports):
     url = "{0}://{1}:{2}".format(protocol, ip_address, ports)
     return url
 
+
+def check_config_validity(plan, args):
+    if len(args["relaychain"]) != 0:
+        for node in args["relaychain"]["nodes"]:
+            if len(node) != 0:
+                if node["node-type"] in ["validator",  "full"]:
+                    plan.print("config for relaynodes is valid")
+                else:
+                    return fail("relaychain node-type can be only validator/full")
+    
+    if len(args["para"]) != 0:
+        for para in args["para"]:
+            if len(para["nodes"]) != 0:
+                for node in para["nodes"]:
+                    if node["node-type"] in ["validator",  "full", "collator"]:
+                            plan.print("config for parachain is valid")
+                    else:
+                        return fail("parachain node-type can be only validator/full/collator")
+
