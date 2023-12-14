@@ -29,7 +29,7 @@ def launch_prometheus(
     )
 
     if len(template_data["MetricsJobs"]) == 0:
-        return "No Prometheus is available"
+        return {}
 
     template_and_data = shared_utils.new_template_and_data(
         config_template,

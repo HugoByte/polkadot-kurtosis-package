@@ -16,6 +16,21 @@ def run(plan, args):
     Returns:
         dict: Service details containing information about relay chains, parachains, and Prometheus.
     """
+    service_details = run_polkadot_setup(plan, args)
+    return service_details
+    
+
+def run_polkadot_setup(plan, args):
+    """
+    Main function to run the Polkadot relay and parachain setup.
+
+    Args:
+        plan (object): The Kurtosis plan object for orchestrating the test.
+        args (dict): Dictionary containing arguments for configuring the setup.
+
+    Returns:
+        dict: Service details containing information about relay chains, parachains, and Prometheus.
+    """
     plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
     plan.upload_files(src = "./parachain/static_files/javascript", name = "javascript")
 
@@ -28,7 +43,6 @@ def run(plan, args):
         for key in relay_chain_details:
             polkadot_service_name = key
             break
-        plan.print(polkadot_service_name)
         service_details.update(relay_chain_details)
         parachain_details = parachain.start_nodes(plan, args, relay_chain_details[polkadot_service_name]["ip_address"])
         service_details.update(parachain_details)
@@ -43,10 +57,11 @@ def run(plan, args):
     #run prometheus , if it returs some endpoint then grafana will up
     prometheus_service_details = promethues.launch_prometheus(plan, args, service_details, prometheus_template)
 
-    service_details.update(prometheus_service_details)
-    if prometheus_service_details["prometheus"]["endpoint"].startswith("http://"):
-        grafana_service_details = grafana.launch_grafana(plan, grafana)
-        service_details.update(grafana_service_details)
+    if len(prometheus_service_details) != 0:
+        service_details.update(prometheus_service_details)
+        if prometheus_service_details["prometheus"]["endpoint"].startswith("http://"):
+            grafana_service_details = grafana.launch_grafana(plan, grafana)
+            service_details.update(grafana_service_details)
 
     #run the polkadot js App explorer
     if args["explorer"] == True:
@@ -54,3 +69,4 @@ def run(plan, args):
 
         service_details.update(explorer_service_details)
     return service_details
+    
