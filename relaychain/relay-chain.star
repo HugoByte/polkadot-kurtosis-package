@@ -45,7 +45,7 @@ def start_relay_chain(plan, args):
         relay_node_details["prometheus_port"] = service_details.ports["metrics"].number
         relay_node_details["prometheus"] = relay_node["prometheus"]
         relay_node_details["ip_address"] = service_details.ip_address
-        relay_detail["node-type"] = node["node-type"]
+        relay_node_details["node-type"] = relay_node["node-type"]
         final_details[service_details.name] = relay_node_details
 
     return final_details
