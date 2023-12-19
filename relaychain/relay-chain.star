@@ -16,9 +16,7 @@ def start_relay_chain(plan, args):
     chain = args["relaychain"]["name"]
     final_details = {}
 
-    prometheus = 9615
     for relay_node in args["relaychain"]["nodes"]:
-        port = relay_node["port"]
         exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm --prometheus-external".format(chain, relay_node["name"])]
         service_details = plan.add_service(
             name = "{0}-{1}-{2}".format(name, chain, relay_node["name"]),
@@ -28,17 +26,11 @@ def start_relay_chain(plan, args):
                     "ws": PortSpec(9944, transport_protocol = "TCP"),
                     "metrics": PortSpec(9615, transport_protocol = "TCP"),
                 },
-                public_ports = {
-                    "ws": PortSpec(port, transport_protocol = "TCP"),
-                    "metrics": PortSpec(prometheus, transport_protocol = "TCP"),
-                },
                 entrypoint = exec_command,
             ),
         )
-        prometheus += 1
 
         relay_node_details = {}
-        relay_node_details["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", service_details.ports["ws"].number)
         relay_node_details["endpoint"] = utils.get_service_url("ws", service_details.ip_address, service_details.ports["ws"].number)
         relay_node_details["endpoint_prometheus"] = utils.get_service_url("tcp" , service_details.ip_address, service_details.ports["metrics"].number)
         relay_node_details["service_name"] = service_details.name
@@ -87,7 +79,7 @@ def spawn_multiple_relay(plan, count):
     port = 9944
     for i in range(0, count):
         port = port + count
-        start_relay_chain_local(plan, node_list[i], port)
+        start_relay_chain_local(plan, node_list[i])
 
 def start_relay_chains_local(plan, args):
     """
@@ -106,11 +98,9 @@ def start_relay_chains_local(plan, args):
         fail("relay nodes must contain at least two nodes")
 
     final_details = {}
-    prometheus_port = 9615
     for node in relay_nodes:
         relay_detail = {}
-        service_details = start_relay_chain_local(plan, args, node["name"], node["port"], prometheus_port)
-        relay_detail["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", service_details.ports["ws"].number)
+        service_details = start_relay_chain_local(plan, args, node["name"])
         relay_detail["endpoint"] = utils.get_service_url("ws", service_details.ip_address, service_details.ports["ws"].number)
         relay_detail["endpoint_prometheus"] = utils.get_service_url("tcp" , service_details.ip_address, service_details.ports["metrics"].number)
         relay_detail["service_name"] = service_details.name
@@ -119,20 +109,16 @@ def start_relay_chains_local(plan, args):
         relay_detail["ip_address"] = service_details.ip_address
         relay_detail["node-type"] = node["node-type"]
         final_details[service_details.name] = relay_detail
-        prometheus_port = prometheus_port + 1
-
 
     return final_details
 
-def start_relay_chain_local(plan, args, name, port, prometheus_port):
+def start_relay_chain_local(plan, args, name):
     """
     Starts a local relay chain node based on the provided arguments.
 
     Args:
         plan (object): The Kurtosis plan
         name (str): Name of the relay chain node.
-        port (int): Port number for the relay chain node.
-        prometheus_port (int): Port number for Prometheus.
 
     Returns:
         object: Service details of the started relay chain node.
@@ -148,10 +134,6 @@ def start_relay_chain_local(plan, args, name, port, prometheus_port):
             ports = {
                 "ws": PortSpec(9944, transport_protocol = "TCP"),
                 "metrics": PortSpec(9615, transport_protocol = "TCP"),
-            },
-            public_ports = {
-                "ws": PortSpec(port, transport_protocol = "TCP"),
-                "metrics": PortSpec(prometheus_port, transport_protocol = "TCP"),
             },
             entrypoint = exec_command,
         ),
