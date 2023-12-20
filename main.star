@@ -34,10 +34,9 @@ def run_polkadot_setup(plan, args):
     """
 
     utils.check_config_validity(plan, args)
-
-    plan.upload_files(src = "./parachain/static_files/configs", name = "configs")
-    plan.upload_files(src = "./parachain/static_files/javascript", name = "javascript")
-
+    
+    utils.upload_files(plan)
+    
     prometheus_template = read_file("./package_io/static_files/prometheus.yml.tmpl")
     service_details = {}
 
