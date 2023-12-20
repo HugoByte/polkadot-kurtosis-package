@@ -71,3 +71,7 @@ def check_config_validity(plan, args):
                     else:
                         return fail("parachain node-type can be only validator/full/collator")
 
+def upload_files(plan):
+    plan.upload_files(src = "../parachain/static_files/configs", name = "configs")
+    plan.upload_files(src = "../parachain/static_files/javascript", name = "javascript")
+
