@@ -123,7 +123,7 @@ def start_relay_chain_local(plan, args, name):
     Returns:
         object: Service details of the started relay chain node.
     """
-    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-polkadot.json --validator --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm --prometheus-external".format(name)]
+    exec_command = ["bin/sh", "-c", "polkadot --base-path=/data --chain=/app/raw-polkadot.json --validator --rpc-external --rpc-cors=all --name=alice --{0} --rpc-methods=unsafe --execution=wasm --prometheus-external --insecure-validator-i-know-what-i-do".format(name)]
     service_details = plan.add_service(
         name = "{0}-{1}".format(args["relaychain"]["name"], name),
         config = ServiceConfig(
