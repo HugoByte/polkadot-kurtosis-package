@@ -37,7 +37,6 @@ def run_polkadot_setup(plan, args):
     
     utils.upload_files(plan)
     
-    prometheus_template = read_file("./package_io/static_files/prometheus.yml.tmpl")
     service_details = {}
 
     if args["chain-type"] == "local":
@@ -58,7 +57,7 @@ def run_polkadot_setup(plan, args):
             service_details.update(parachain_info)
 
     #run prometheus , if it returs some endpoint then grafana will up
-    prometheus_service_details = promethues.launch_prometheus(plan, args, service_details, prometheus_template)
+    prometheus_service_details = promethues.launch_prometheus(plan, args, service_details)
 
     if len(prometheus_service_details) != 0:
         service_details.update(prometheus_service_details)
