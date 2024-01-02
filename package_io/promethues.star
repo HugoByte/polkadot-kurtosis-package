@@ -6,6 +6,7 @@ HTTP_PORT_ID = "http"
 HTTP_PORT_NUMBER = 9090
 CONFIG_FILENAME = "prometheus-config.yml"
 CONFIG_DIR_MOUNTPOINT_ON_PROMETHEUS = "/config"
+config_template = read_file("./static_files/prometheus.yml.tmpl")
 
 shared_utils = import_module("./utils.star")
 
@@ -20,8 +21,8 @@ USED_PORTS = {
 def launch_prometheus(
         plan,
         args,
-        service_details,
-        config_template):
+        service_details
+    ):
     template_data = new_config_template_data(
         plan,
         args,
