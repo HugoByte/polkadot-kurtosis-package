@@ -5,7 +5,7 @@ CURL_JQ_IMAGE = "badouralix/curl-jq"
 NODE_IMAGE = "hugobyte/parachain-node-modules"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
 BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover", "calamari", "subzero", "robonomics"]
-NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair", "mangata", "khala", "phala", "turing"]
+NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair", "mangata", "khala", "phala", "turing", "bifrost"]
 
 DIFFERENT_IMAGES_FOR_MAINNET = {
     "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
@@ -20,7 +20,7 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "clover": "cloverio/clover-iris:0.1.15",
     "subsocial": "dappforce/subsocial-parachain:latest",
     "altair": "centrifugeio/centrifuge-chain:main-latest",
-    "acala": "acala/mandala-node:latest"
+    "acala": "acala/mandala-node:latest",
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt"]
