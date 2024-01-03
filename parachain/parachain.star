@@ -30,8 +30,9 @@ def spawn_parachain(plan, chain_name, image, command, build_file):
             image = image,
             files = files,
             ports = {
-                "ws": PortSpec(9944, transport_protocol = "TCP"),
-                "metrics": PortSpec(9615, transport_protocol = "TCP"),
+                "ws": PortSpec(9944, transport_protocol = "TCP", application_protocol = "http"),
+                "metrics": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
+                "lib": PortSpec(30333, transport_protocol = "TCP", application_protocol = "http"),
             },
             entrypoint = command,
         ),
@@ -59,25 +60,25 @@ def start_local_parachain_node(plan, args, parachain_config, para_id):
     chain_name = parachain
     raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
 
-    if parachain in constant.NO_WS_PORT:
-        exec_comexec_commandmand = [
-            "/bin/bash",
-            "-c",
-            "{0} --chain=/build/{1}-raw.json --rpc-port=9944 --rpc-external --rpc-cors=all --prometheus-external --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
-        ]
-    else:
-        exec_comexec_commandmand = [
-            "/bin/bash",
-            "-c",
-            "{0} --chain=/build/{1}-raw.json --ws-port=9944 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={1} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name),
-        ]
     parachain_final = {}
     for node in parachain_config["nodes"]:
         parachain_detail = {}
-        parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"], args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
+        if parachain in constant.NO_WS_PORT:
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9944 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            ]
+        else:
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            ]
+        parachain_spawn_detail = spawn_parachain(plan, "{0}-{1}-{2}".format(parachain, node["name"].lower(), args["chain-type"]), image, exec_comexec_commandmand, build_file = raw_service.name)
         parachain_detail["service_name"] = parachain_spawn_detail.name
         parachain_detail["endpoint"] = utils.get_service_url("ws", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
-        parachain_detail["endpoint_prometheus"] = utils.get_service_url("tcp" , parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["metrics"].number)
+        parachain_detail["endpoint_prometheus"] = utils.get_service_url("tcp", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["metrics"].number)
         parachain_detail["service_name"] = parachain_spawn_detail.name
         parachain_detail["prometheus_port"] = parachain_spawn_detail.ports["metrics"].number
         parachain_detail["ip_address"] = parachain_spawn_detail.ip_address
@@ -197,7 +198,7 @@ def run_testnet_mainnet(plan, parachain, args):
             node_details = node_setup.run_testnet_node_with_entrypoint(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
             node_info["service_name"] = node_details.name
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
-            node_info["endpoint_prometheus"] = utils.get_service_url("tcp" , node_details.ip_address, node_details.ports["metrics"].number)
+            node_info["endpoint_prometheus"] = utils.get_service_url("tcp", node_details.ip_address, node_details.ports["metrics"].number)
             node_info["service_name"] = node_details.name
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus_port"] = node_details.ports["metrics"].number
@@ -210,7 +211,7 @@ def run_testnet_mainnet(plan, parachain, args):
             node_details = node_setup.run_testnet_node_with_command(plan, image, "{0}-{1}-{2}".format(parachain["name"], node["name"], args["chain-type"]), command)
             node_info["service_name"] = node_details.name
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
-            node_info["endpoint_prometheus"] = utils.get_service_url("tcp" , node_details.ip_address, node_details.ports["metrics"].number)
+            node_info["endpoint_prometheus"] = utils.get_service_url("tcp", node_details.ip_address, node_details.ports["metrics"].number)
             node_info["service_name"] = node_details.name
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus_port"] = node_details.ports["metrics"].number

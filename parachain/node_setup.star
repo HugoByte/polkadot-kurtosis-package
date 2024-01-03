@@ -4,6 +4,7 @@ def run_testnet_node_with_entrypoint(plan, image, chain_name, execute_command):
         ports = {
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "metrics": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
+            "lib": PortSpec(30333),
         },
         files = {
             "/app": "configs",
@@ -20,6 +21,7 @@ def run_testnet_node_with_command(plan, image, chain_name, execute_command):
         ports = {
             "ws": PortSpec(9944, transport_protocol = "TCP"),
             "metrics": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
+            "lib": PortSpec(30333),
         },
         files = {
             "/app": "configs",
