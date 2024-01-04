@@ -3,7 +3,7 @@ parachain_images = {
     "acala": {
         "image": "acala/acala-node:latest",  # NO ws port
         "entrypoint": "/usr/local/bin/acala",
-        "base": ["dev", "mandala-latest", "acala"],
+        "base": ["acala-local", "mandala-latest", "acala"],
     },
     "ajuna": {
         "image": "ajuna/parachain-ajuna:latest",
@@ -63,7 +63,7 @@ parachain_images = {
     "moonbeam": {
         "image": "moonbeamfoundation/moonbeam:sha-32933811",
         "entrypoint": "/moonbeam/moonbeam",
-        "base": ["moonbeam-dev", "alphanet", "moonbeam"],
+        "base": ["moonbeam-local", "alphanet", "moonbeam"],
     },
     "moonsama": {
         "image": "moonsama/moonsama-node:latest",
@@ -128,7 +128,7 @@ parachain_images = {
     "karura": {
         "image": "acala/karura-node:latest",
         "entrypoint": "/usr/local/bin/acala",
-        "base": ["dev", "mandala-latest", "karura"],
+        "base": ["karura-local", "mandala-latest", "karura"],
     },
     "khala": {
         "image": "phalanetwork/khala-node:latest",
