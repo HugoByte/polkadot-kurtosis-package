@@ -17,7 +17,19 @@ def start_relay_chain(plan, args):
     final_details = {}
 
     for relay_node in args["relaychain"]["nodes"]:
-        exec_command = ["bin/sh", "-c", "polkadot  --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm --prometheus-external".format(chain, relay_node["name"])]
+
+
+        command = "polkadot --rpc-external --rpc-cors=all --rpc-methods=unsafe --chain {0} --name={1} --execution=wasm --prometheus-external".format(chain, relay_node["name"])
+
+        if relay_node["node-type"] == "validator":
+            command = command + " --validator --insecure-validator-i-know-what-i-do"
+        elif relay_node["node-type"] == "archive":
+            command = command +  " --pruning=archive"
+
+        plan.print(command)
+
+        exec_command = ["bin/sh", "-c", command]
+
         service_details = plan.add_service(
             name = "{0}-{1}-{2}".format(name, chain, relay_node["name"]),
             config = ServiceConfig(
