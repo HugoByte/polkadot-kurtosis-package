@@ -57,7 +57,7 @@ def check_config_validity(plan, args):
     if len(args["relaychain"]) != 0:
         for node in args["relaychain"]["nodes"]:
             if len(node) != 0:
-                if node["node-type"] in ["validator",  "full"]:
+                if node["node-type"] in ["validator",  "full", "archive"]:
                     plan.print("config for relaynodes is valid")
                 else:
                     return fail("relaychain node-type can be only validator/full")

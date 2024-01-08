@@ -19,7 +19,7 @@ def run_testnet_node_with_command(plan, image, chain_name, execute_command):
     service_config = ServiceConfig(
         image = image,
         ports = {
-            "ws": PortSpec(9944, transport_protocol = "TCP"),
+            "ws": PortSpec(9947, transport_protocol = "TCP"),
             "metrics": PortSpec(9615, transport_protocol = "TCP", application_protocol = "http"),
             "lib": PortSpec(30333),
         },
