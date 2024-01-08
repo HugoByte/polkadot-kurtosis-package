@@ -153,7 +153,7 @@ parachain_images = {
     "moonriver": {
         "image": "moonbeamfoundation/moonbeam:sha-519bd694",
         "entrypoint": "/moonbeam/moonbeam",
-        "base": ["moonriver-dev", "alphanet", "moonriver"],
+        "base": ["moonriver-local", "alphanet", "moonriver"],
     },
     "robonomics": {
         "image": "robonomics/robonomics:latest",
