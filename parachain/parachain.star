@@ -145,7 +145,7 @@ def run_testnet_mainnet(plan, parachain, args):
         common_command = [
             "--chain={0}".format(base),
             "--port=30333",
-            "--rpc-port=9944",
+            "--rpc-port=9947",
             "--prometheus-external",
             "--rpc-cors=all",
             "--rpc-external",
