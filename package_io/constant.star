@@ -5,7 +5,7 @@ CURL_JQ_IMAGE = "badouralix/curl-jq"
 NODE_IMAGE = "hugobyte/parachain-node-modules"
 PARA_SLOT_REGISTER_SERVICE_NAME = "para-slot-registration"
 BINARY_COMMAND_CHAINS = ["manta", "khala", "phala", "clover", "calamari", "subzero", "robonomics"]
-NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair", "mangata", "khala", "phala", "turing", "bifrost", "khala", "phala"]
+NO_WS_PORT = ["acala", "frequency", "moonbeam", "karura", "ajuna", "bajun", "centrifuge", "moonsama", "encointer", "moonriver", "altair", "mangata", "khala", "phala", "turing", "bifrost", "khala", "phala", "nodle"]
 
 DIFFERENT_IMAGES_FOR_MAINNET = {
     "centrifuge": "centrifugeio/centrifuge-chain:main-latest",
@@ -24,3 +24,44 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt"]
+
+KUSAMA_PARACHAINS = [ 
+    "altair",
+    "bajun",
+    "bifrost",
+    "calamari",
+    "encointer",
+    "khala",
+    "kintsugi-btc",
+    "litmus",
+    "mangata",
+    "moonriver",
+    "robonomics",
+    "subzero",
+    "turing"
+]
+
+POLKADOT_PARACHAINS = [
+    "acala",
+    "ajuna",
+    "bifrost",
+    "centrifuge",
+    "clover",
+    "frequency",
+    "integritee",
+    "interlay",
+    "karura",
+    "kilt",
+    "kylin",
+    "litentry",
+    "manta",
+    "moonbeam",
+    "moonsama",
+    "nodle",
+    "parallel",
+    "pendulum",
+    "phala",
+    "polkadex",
+    "subsocial",
+    "zeitgeist"
+]

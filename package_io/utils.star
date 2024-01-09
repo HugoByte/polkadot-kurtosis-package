@@ -1,3 +1,5 @@
+constant = import_module("./constant.star")
+
 NOT_PROVIDED_APPLICATION_PROTOCOL = ""
 NOT_PROVIDED_WAIT = "not-provided-wait"
 
@@ -70,7 +72,20 @@ def check_config_validity(plan, args):
                             plan.print("config for parachain is valid")
                     else:
                         return fail("parachain node-type can be only validator/full/collator")
-
+    
+    if args["relaychain"] != {}:
+        chain = args["relaychain"]["name"]
+        if chain == "polkadot":
+            if len(args["para"]) != 0:
+                for para in args["para"]:
+                    if para["name"] not in constant.POLKADOT_PARACHAINS:
+                        return fail("Invalid parachain for POLKADOT")
+        if chain == "kusama":
+            if len(args["para"]) != 0:
+                for para in args["para"]:
+                    if para["name"] not in constant.KUSAMA_PARACHAINS:
+                        return fail("Invalid parachain for KUSAMA")
+                
 def upload_files(plan):
     plan.upload_files(src = "../parachain/static_files/configs", name = "configs")
     plan.upload_files(src = "../parachain/static_files/javascript", name = "javascript")
