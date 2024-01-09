@@ -3,22 +3,22 @@ import { Builder } from "@paraspell/sdk";
 
 async function testRelayToPara() {
   console.log("*".repeat(100));
-  console.log("Demo on Sending tokens from Relay Chain to Para chain. \n");
+  console.log("Demo on Sending tokens from Relaychain to Parachain. \n");
   console.log("*".repeat(100), "\n");
 
-  console.log("Establishing connection to Relay Chain....");
-  let relayWsProvider = new WsProvider("ws://127.0.0.1:34322");
+  console.log("Establishing connection to Relaychain....");
+  let relayWsProvider = new WsProvider("ws://127.0.0.1:32883");
   const relayaAPI = await ApiPromise.create({ provider: relayWsProvider });
 
   const relayBlock = await relayaAPI.rpc.chain.getBlock();
   console.log(
-    "Latest Relay Chain Block Height: ",
+    "Latest Relaychain Block Height: ",
     relayBlock.block.header.number.toHuman(),
     "\n"
   );
 
-  console.log("Establishing connection to Para Chain....");
-  let paraWsProvider = new WsProvider("ws://127.0.0.1:34328");
+  console.log("Establishing connection to Parachain....");
+  let paraWsProvider = new WsProvider("ws://127.0.0.1:32886");
   const paraAPI = await ApiPromise.create({
     provider: paraWsProvider,
     noInitWarn: true,
@@ -46,12 +46,12 @@ async function testRelayToPara() {
   );
 
   console.log(
-    "Building an XCM call to transfer asset from relay chain to Para chain...\n"
+    "Building an XCM call to transfer asset from Relaychain to Parachain...\n"
   );
   const call = Builder(relayaAPI)
-    .to("BifrostPolkadot", 2000) // Destination Parachain and Para ID
+    .to("Karura", 2000) // Destination Parachain and Para ID
     .amount(10000000000000) // Token amount
-    .address("gXCcrjjFX3RPyhHYgwZDmw8oe4JFpd5anko3nTY8VrmnJpe") // AccountId32 or AccountKey20 address
+    .address("oQQwUS5xJwHYbx97jiU1YrnHN1L7PYaD4Uof8un6Hua5EqV") // AccountId32 or AccountKey20 address
     .build(); // Function called to build call
 
   console.log("Getting Alice address to sign and send the transaction.. \n");
