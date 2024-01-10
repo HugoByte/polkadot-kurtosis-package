@@ -57,7 +57,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
         parachain_detail["endpoint"] = utils.get_service_url("ws", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
         parachain_detail["ip_address"] = parachain_spawn_detail.ip_address
         parachain_detail["prometheus"] = node["prometheus"]
-        parachain_detail["node-type"] = node["node-type"]
+        parachain_detail["node_type"] = node["node_type"]
         if node["prometheus"] == True:
             parachain_detail["prometheus_port"] = parachain_spawn_detail.ports["metrics"].number
         if prometheus_port != None:
@@ -171,10 +171,10 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
                 
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
-        if node["node-type"] == "collator":
+        if node["node_type"] == "collator":
             command = command + ["--collator"]
 
-        if node["node-type"] == "validator":
+        if node["node_type"] == "validator":
             command = command + ["--validator"]
 
         if parachain["name"] in constant.CHAIN_COMMAND:
@@ -192,7 +192,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus"] = node["prometheus"]
-            node_info["node-type"] = node["node-type"]
+            node_info["node_type"] = node["node_type"]
             if node["prometheus"] == True:
                 node_info["prometheus_port"] = node_details.ports["metrics"].number
             if prometheus_port != None:
@@ -210,7 +210,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
             node_info["ip_address"] = node_details.ip_address
             node_info["prometheus"] = node["prometheus"]
-            node_info["node-type"] = node["node-type"]
+            node_info["node_type"] = node["node_type"]
             if node["prometheus"] == True:
                 node_info["prometheus_port"] = node_details.ports["metrics"].number
             if prometheus_port != None:

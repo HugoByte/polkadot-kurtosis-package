@@ -59,7 +59,7 @@ def start_relay_chain(plan, chain_type, chain_name, relay_nodes):
         relay_node_details["service_name"] = service_details.name
         relay_node_details["prometheus"] = relay_node["prometheus"]
         relay_node_details["ip_address"] = service_details.ip_address
-        relay_node_details["node-type"] = relay_node["node-type"]
+        relay_node_details["node_type"] = relay_node["node_type"]
         if relay_node["prometheus"] == True:
             relay_node_details["prometheus_port"] = service_details.ports["metrics"].number
         if prometheus_port != None:
@@ -117,7 +117,7 @@ def start_relay_chains_local(plan, chain_type, chain_name, relay_nodes):
         relay_detail["service_name"] = service_details.name
         relay_detail["prometheus"] = node["prometheus"]
         relay_detail["ip_address"] = service_details.ip_address
-        relay_detail["node-type"] = node["node-type"]
+        relay_detail["node_type"] = node["node_type"]
         if node["prometheus"]:
             relay_detail["prometheus_port"] = service_details.ports["metrics"].number
         if prometheus_port != None:

@@ -87,19 +87,19 @@ def check_config_validity(plan, chain_type, relaychain, parachains):
     if len(relaychain) != 0:
         for node in relay_nodes:
             if len(node) != 0:
-                if node["node-type"] in ["validator",  "full", "archive"]:
+                if node["node_type"] in ["validator",  "full", "archive"]:
                     plan.print("config for relaynodes is valid")
                 else:
-                    return fail("relaychain node-type can be only validator/full")
+                    return fail("relaychain node_type can be only validator/full")
     
     if len(parachains) != 0:
         for para in parachains:
             if len(para["nodes"]) != 0:
                 for node in para["nodes"]:
-                    if node["node-type"] in ["validator",  "full", "collator"]:
+                    if node["node_type"] in ["validator",  "full", "collator"]:
                             plan.print("config for parachain is valid")
                     else:
-                        return fail("parachain node-type can be only validator/full/collator")
+                        return fail("parachain node_type can be only validator/full/collator")
 
 def upload_files(plan):
     plan.upload_files(src = "../parachain/static_files/configs", name = "configs")
@@ -111,13 +111,13 @@ def convert_to_lowercase(chain_type, relaychain, parachains):
     relaychain["name"] = relaychain["name"].lower()
     for node in relaychain["nodes"]:
         node["name"] = node["name"].lower()
-        node["node-type"] = node["node-type"].lower()
+        node["node_type"] = node["node_type"].lower()
 
     for para in parachains:
         para["name"] = para["name"].lower()
         for node in para["nodes"]:
             node["name"] = node["name"].lower()
-            node["node-type"] = node["node-type"].lower()
+            node["node_type"] = node["node_type"].lower()
 
     return chain_type, relaychain, parachains
     

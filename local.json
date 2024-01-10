@@ -5,12 +5,12 @@
     "nodes": [
       {
         "name": "alice",
-        "node-type": "validator",
+        "node_type": "validator",
         "prometheus": false
       },
       {
         "name": "bob",
-        "node-type": "full",
+        "node_type": "full",
         "prometheus": true
 
       }
@@ -23,13 +23,13 @@
       "nodes": [
         {
           "name": "alice",
-          "node-type": "validator",
+          "node_type": "validator",
           "prometheus": false
 
         },
         {
           "name": "bob",
-          "node-type": "full",
+          "node_type": "full",
           "prometheus": true
         }
       ]

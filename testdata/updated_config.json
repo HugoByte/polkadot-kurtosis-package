@@ -5,12 +5,12 @@
          "nodes": [
            {
              "name": "alice",
-             "node-type": "validator",
+             "node_type": "validator",
              "port": 9944
            },
            {
              "name": "bob",
-             "node-type": "full",
+             "node_type": "full",
              "port": 9945
            }
          ]
@@ -20,11 +20,11 @@
            "nodes": [
              {
                "name": "alice",
-               "node-type": "collator"
+               "node_type": "collator"
              },
              {
                "name": "bob",
-               "node-type": "full"
+               "node_type": "full"
              }
            ]
          }

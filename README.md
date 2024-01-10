@@ -114,13 +114,13 @@ To use the Polkadot-kurtosis-package, you need to create a configuration file sp
     "nodes": [
       {
         "name": "alice",
-        "node-type": "validator",
+        "node_type": "validator",
         "port": 9944,
         "prometheus": false
       },
       {
         "name": "bob",
-        "node-type": "full",
+        "node_type": "full",
         "port": 9945,
         "prometheus": false
       }
@@ -132,12 +132,12 @@ To use the Polkadot-kurtosis-package, you need to create a configuration file sp
       "nodes": [
         {
           "name": "alice",
-          "node-type": "validator",
+          "node_type": "validator",
           "prometheus": false
         },
         {
           "name": "bob",
-          "node-type": "full",
+          "node_type": "full",
           "prometheus": false
         }
       ]
@@ -158,14 +158,14 @@ To use the Polkadot-kurtosis-package, you need to create a configuration file sp
   - **name:** Name of the relay chain (e.g., "rococo-local", "rococo", "polkadot" or "kusama").
   - **nodes:** List of nodes on the relay chain, each with:
     - **name:** Node name (e.g., "alice").
-    - **node-type:** Node type, can be "validator" or "full".
+    - **node_type:** Node type, can be "validator" or "full".
     - **port:** Port number for the node (e.g., 9944).
     - **prometheus:** Whether Prometheus monitoring is enabled (true/false).
 - **para:** List of parachains, each with:
   - **name:** Parachain name (e.g., "kilt").
   - **nodes:** List of nodes on the parachain, similar to relay chain nodes.
     - **name:** Node name (e.g., "alice").
-    - **node-type:** Node type, can be "callator" or "full".
+    - **node_type:** Node type, can be "callator" or "full".
     - **prometheus:** Whether Prometheus monitoring is enabled (true/false).
 - **chopstick:** Configuration for Chopstick integration.
   - **xcm:** Whether XCM (Cross-Chain Messaging) is enabled (true/false).
