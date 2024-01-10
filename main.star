@@ -71,13 +71,3 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
 
         service_details.update(explorer_service_details)
     return service_details
-    
-def convert_to_lowercase(data):
-    if type(data) == dict:
-        return {key: convert_to_lowercase(value) for key, value in data.items()}
-    elif type(data) == list:
-        return [convert_to_lowercase(item) for item in data]
-    elif type(data) == str:
-        return data.lower()
-    else:
-        return data
