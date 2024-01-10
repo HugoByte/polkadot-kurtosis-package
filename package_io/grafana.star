@@ -24,7 +24,7 @@ def prometheus_grafana_service(plan, service_name, image, port, command, build_f
 
     return service
 
-def launch_grafana(plan, args):
+def launch_grafana(plan):
     command = ["/run.sh"]
     service = prometheus_grafana_service(plan, "grafana", "grafana/grafana-dev:10.3.0-147071", 3000, command, None)
 

@@ -66,7 +66,7 @@ def run_testnet_node_with_command(plan, prometheus, image, chain_name, execute_c
 
     return parachain
 
-def spawn_parachain(plan, prometheus, chain_name, image, command, build_file, rpc_port = None, prometheus_port = None, lib2lib_port = None):
+def spawn_parachain(plan, prometheus, image, chain_name, execute_command, build_file, rpc_port = None, prometheus_port = None, lib2lib_port = None):
     """Spawn a parachain node with specified configuration.
 
     Args:
@@ -111,7 +111,7 @@ def spawn_parachain(plan, prometheus, chain_name, image, command, build_file, rp
             files = files,
             ports = ports,
             public_ports = public_ports,
-            entrypoint = command,
+            entrypoint = execute_command,
         ),
     )
 

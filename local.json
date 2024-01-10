@@ -1,7 +1,7 @@
 {
-  "chain-type": "local",
+  "chain_type": "local",
   "relaychain": {
-    "name": "rococo",
+    "name": "rococo-local",
     "nodes": [
       {
         "name": "alice",
@@ -17,7 +17,7 @@
     ]
   },
 
-  "para": [
+  "parachains": [
     {
       "name":"acala",
       "nodes": [
