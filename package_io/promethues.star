@@ -20,12 +20,10 @@ USED_PORTS = {
 
 def launch_prometheus(
         plan,
-        args,
         service_details
     ):
     template_data = new_config_template_data(
         plan,
-        args,
         service_details,
     )
 
@@ -80,10 +78,10 @@ def get_config(config_files_artifact_name):
         ],
     )
 
-def new_config_template_data(plan, args, service_details):
+def new_config_template_data(plan, service_details):
     metrics_jobs = []
     for service in service_details:
-        if service_details[service]["prometheus"] == True:
+        if "prometheus" in service_details[service] and service_details[service]["prometheus"] == True:
             ip = service_details[service]["ip_address"]
             port_number = service_details[service]["prometheus_port"]
             endpoint = "{0}:{1}".format(ip, port_number)

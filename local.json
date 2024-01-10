@@ -1,35 +1,35 @@
 {
-  "chain-type": "local",
+  "chain_type": "local",
   "relaychain": {
-    "name": "rococo",
+    "name": "rococo-local",
     "nodes": [
       {
         "name": "alice",
-        "node-type": "validator",
+        "node_type": "validator",
         "prometheus": false
       },
       {
         "name": "bob",
-        "node-type": "full",
+        "node_type": "full",
         "prometheus": true
 
       }
     ]
   },
 
-  "para": [
+  "parachains": [
     {
       "name":"acala",
       "nodes": [
         {
           "name": "alice",
-          "node-type": "validator",
+          "node_type": "validator",
           "prometheus": false
 
         },
         {
           "name": "bob",
-          "node-type": "full",
+          "node_type": "full",
           "prometheus": true
         }
       ]
