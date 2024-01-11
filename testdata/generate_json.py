@@ -8,17 +8,17 @@ def update_config(original_config, relay_chain, para_chain, network):
         config_data = json.load(file)
     
     if network == "testnet":
-        config_data["chain-type"] = "testnet"
+        config_data["chain_type"] = "testnet"
         config_data["relaychain"]["name"] = "rococo"
     elif network == "mainnet":
-        config_data["chain-type"] = "mainnet"
+        config_data["chain_type"] = "mainnet"
         config_data["relaychain"]["name"] = relay_chain.lower()
     else:
         # Update the original JSON data
-        config_data["chain-type"] = "local"
-        config_data["relaychain"]["name"] = relay_chain
+        config_data["chain_type"] = "local"
+        config_data["relaychain"]["name"] = "rococo-local"
 
-    for para in config_data["para"]:
+    for para in config_data["parachains"]:
         para["name"] = para_chain
 
     # config_data["para"][para_chain] = config_data["para"].pop(name)
