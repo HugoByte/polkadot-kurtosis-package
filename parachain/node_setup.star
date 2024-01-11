@@ -122,7 +122,7 @@ def spawn_parachain(plan, prometheus, image, chain_name, execute_command, build_
     
     ports = {
         "ws": PortSpec(9946, transport_protocol = "TCP", application_protocol = "http"),
-        "lib": PortSpec(30333, transport_protocol = "TCP", application_protocol = "http"),
+        "lib2lib": PortSpec(30333, transport_protocol = "TCP", application_protocol = "http"),
     }
 
     public_ports = {}
