@@ -45,13 +45,6 @@ def create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_
     result = plan.exec(service_name = chain_name + "raw", recipe = command)
     plan.verify(result["code"], "==", 0)
 
-    # command = ExecRecipe(command = [
-    #     "/bin/sh",
-    #     "-c",
-    #     "cp /build/{0}.json   /tmp/{0}.json".format(chain_name),
-    # ])
-    # plan.exec(service_name = chain_name+"raw", recipe = command)
-
     plan.store_service_files(service_name = chain_name + "raw", src = "/tmp/*", name = chain_name + "raw")
     plan.stop_service(chain_name + "raw")
 

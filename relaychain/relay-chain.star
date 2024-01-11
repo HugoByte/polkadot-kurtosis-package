@@ -1,17 +1,21 @@
 utils = import_module("../package_io/utils.star")
 
 
-def start_relay_chain(plan, chain_type, chain_name, relay_nodes):
+def start_relay_chain(plan, chain_type, relaychain):
     """
     Starts relay chain nodes based on the provided arguments.
 
     Args:
         plan (object): The Kurtosis plan object for orchestrating the test.
-        args (dict): Dictionary containing arguments for configuring the relay chain setup.
-
+        chain_type (str): The type of chain (local, testnet or mainnet).
+        relaychain (dict): A dict containing data for relay chain config.
+        
     Returns:
         list: List of dictionaries containing service details of started relay chain nodes.
     """
+    chain_name = relaychain["name"]
+    relay_nodes = relaychain["nodes"]
+
     final_details = {}
 
     ports = {
@@ -72,33 +76,37 @@ def start_relay_chain(plan, chain_type, chain_name, relay_nodes):
 
     return final_details
 
-def start_test_main_net_relay_nodes(plan, chain_type, chain_name, relay_nodes):
+def start_test_main_net_relay_nodes(plan, chain_type, relaychain):
     """
     Starts testnet/mainnet relay nodes based on the provided arguments.
 
     Args:
         plan (object): The Kurtosis plan object for orchestrating the test.
-        args (dict): Dictionary containing arguments for configuring the relay node setup.
+        chain_type (str): The type of chain (local, testnet or mainnet).
+        relaychain (dict): A dict containing data for relay chain config.
 
     Returns:
         list: List of dictionaries containing service details of started relay nodes.
     """
 
-    relay_node_details = start_relay_chain(plan, chain_type, chain_name, relay_nodes)
+    relay_node_details = start_relay_chain(plan, chain_type, relaychain)
 
     return relay_node_details
 
-def start_relay_chains_local(plan, chain_type, chain_name, relay_nodes):
+def start_relay_chains_local(plan, relaychain):
     """
     Starts local relay chain nodes based on the provided arguments.
 
     Args:
         plan (object): The Kurtosis plan object for orchestrating the test.
-        args (dict): Dictionary containing arguments for configuring the relay chain setup.
+        relaychain (dict): A dict containing data for relay chain config.
 
     Returns:
         list: List of dictionaries containing sevice details of started relay chain nodes.
     """
+    chain_name = relaychain["name"]
+    relay_nodes = relaychain["nodes"]
+    
     final_details = {}
     for node in relay_nodes:
         relay_detail = {}
@@ -135,8 +143,13 @@ def start_relay_chain_local(plan, chain_name, node_name, prometheus, rpc_port = 
     Starts a local relay chain node based on the provided arguments.
 
     Args:
-        plan (object): The Kurtosis plan
-        name (str): Name of the relay chain node.
+        plan (object): The Kurtosis plan object for orchestrating the test.
+        chain_name (str): Name of relay chain.
+        node_name (str): Name of node.
+        prometheus (bool): Boolean value to enable metrics for a given node.
+        rpc_port (int, optional): The RPC port value. Defaults to None.
+        prometheus_port (int, optional): The Prometheus port value. Defaults to None.
+        lib2lib_port (int, optional): The lib2lib port value. Defaults to None.
 
     Returns:
         object: Service details of the started relay chain node.

@@ -6,12 +6,13 @@ node_setup = import_module("./node_setup.star")
 utils = import_module("../package_io/utils.star")
 
 def start_local_parachain_node(plan, chain_type, parachain, para_id):
-    """Start local parachain nodes based on configuration.
+    """
+    Start local parachain nodes based on configuration.
 
     Args:
         plan (object): The Kurtosis plan.
-        args (dict): arguments for configuration.
-        parachain_config (dict): Configuration for the parachain.
+        chain_type (str): The type of chain (local, testnet or mainnet).
+        parachains (dict): A dict containing data for para chain config.
         para_id (int): Parachain ID.
 
     Returns:
@@ -71,11 +72,13 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip):
-    """Start multiple parachain nodes.
+    """
+    Start multiple parachain nodes.
 
     Args:
         plan (object): The kurtosis plan.
-        args (dict): arguments for configuration.
+        chain_type (str): The type of chain (local, testnet or mainnet).
+        parachains (list): A list containing data for para chain config.
         relay_chain_ip (str): IP address of the relay chain.
 
     Returns:
@@ -92,12 +95,14 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     return final_parachain_details
 
 def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
-    """Run a testnet or mainnet based on configuration.
+    """
+    Run a testnet or mainnet based on configuration.
 
     Args:
         plan (object): The kurtosis plan.
-        parachain (dict): Configuration for the parachain.
-        args (dict): arguments for configuration.
+        chain_type (str): The type of chain (local, testnet or mainnet).
+        relaychain_name (str): The name of relay chain.
+        parachain (dict): A dict containing data for para chain config.
 
     Returns:
         list: List of dictionaries containing details of each parachain node.

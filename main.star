@@ -5,14 +5,28 @@ promethues = import_module("./package_io/promethues.star")
 grafana = import_module("./package_io/grafana.star")
 explorer_js = import_module("./package_io/polkadot_js_app.star")
 utils = import_module("./package_io/utils.star")
+constant = import_module("./package_io/constant.star")
 
 def run(plan, chain_type = "local", relaychain = None, parachains = None, explorer = False):
     """
     Main function to run the Polkadot relay and parachain setup.
-
+    
     Args:
         plan (object): The Kurtosis plan object for orchestrating the test.
-        args (dict): Dictionary containing arguments for configuring the setup.
+        chain_type (str): The type of chain (local, testnet or mainnet). Default is local.
+        relaychain (dict): A dict containing data for relay chain config.
+            - name (str): Name of relay chain.
+            - node (dict): A dict of node details.
+                - name (str): Name of node.
+                - node_type (str): Type of node.
+                - prometheus (bool): Boolean value to enable metrics for a given node.
+        parachains (list): A list containing data for para chain config. Each item in the list has the following:
+            - name (str): Name of para chain.
+            - node (dict): A dict of node details.
+                - name (str): Name of node.
+                - node_type (str): Type of node.
+                - prometheus (bool): Boolean value to enable metrics for a given node.
+        explorer (bool): A boolean value indicating whether to enable polkadot js explorer or not.
 
     Returns:
         dict: Service details containing information about relay chains, parachains, and Prometheus.
@@ -27,7 +41,20 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
 
     Args:
         plan (object): The Kurtosis plan object for orchestrating the test.
-        args (dict): Dictionary containing arguments for configuring the setup.
+        chain_type (str): The type of chain (local, testnet or mainnet). Default is local.
+        relaychain (dict): A dict containing data for relay chain config.
+            - name (str): Name of relay chain.
+            - node (dict): A dict of node details.
+                - name (str): Name of node.
+                - node_type (str): Type of node.
+                - prometheus (bool): Boolean value to enable metrics for a given node.
+        parachains (list): A list containing data for para chain config. Each item in the list has the following:
+            - name (str): Name of para chain.
+            - node (dict): A dict of node details.
+                - name (str): Name of node.
+                - node_type (str): Type of node.
+                - prometheus (bool): Boolean value to enable metrics for a given node.
+        explorer (bool): A boolean value indicating whether to enable polkadot js explorer or not.
 
     Returns:
         dict: Service details containing information about relay chains, parachains, and Prometheus.
@@ -40,7 +67,7 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
     service_details = {}
 
     if chain_type == "local":
-        relay_chain_details = relay_chain.start_relay_chains_local(plan, chain_type, relaychain["name"], relaychain["nodes"])
+        relay_chain_details = relay_chain.start_relay_chains_local(plan, relaychain)
         polkadot_service_name = None
         for key in relay_chain_details:
             polkadot_service_name = key
@@ -50,10 +77,19 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
         service_details.update(parachain_details)
     else:
         if len(relaychain) != 0:
-            relay_node_details = relay_chain.start_test_main_net_relay_nodes(plan, chain_type, relaychain["name"], relaychain["nodes"])
+            relay_node_details = relay_chain.start_test_main_net_relay_nodes(plan, chain_type, relaychain)
             service_details.update(relay_node_details)
         for paras in parachains:
-            parachain_info = parachain.run_testnet_mainnet(plan, chain_type, relaychain["name"], paras)
+            if relaychain != {}:
+                relaychain_name = relaychain["name"]
+            elif chain_type == "testnet":
+                relaychain_name = "rococo"
+            elif paras["name"] in constant.POLKADOT_PARACHAINS:
+                relaychain_name = "polkadot"
+            elif paras["name"] in constant.KUSAMA_PARACHAINS:
+                relaychain_name = "kusama"
+
+            parachain_info = parachain.run_testnet_mainnet(plan, chain_type, relaychain_name, paras)
             service_details.update(parachain_info)
 
     #run prometheus , if it returs some endpoint then grafana will up

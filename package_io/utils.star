@@ -14,13 +14,6 @@ def path_base(path):
     split_path = path.split("/")
     return split_path[-1]
 
-def path_dir(path):
-    split_path = path.split("/")
-    if len(split_path) <= 1:
-        return "."
-    split_path = split_path[:-1]
-    return "/".join(split_path) or "/"
-
 def new_port_spec(
         number,
         transport_protocol,
@@ -40,22 +33,19 @@ def new_port_spec(
         wait = wait,
     )
 
-def read_file_from_service(plan, service_name, filename):
-    output = plan.exec(
-        service_name = service_name,
-        recipe = ExecRecipe(
-            command = ["/bin/sh", "-c", "cat {} | tr -d '\n'".format(filename)],
-        ),
-    )
-    return output["output"]
-
-
 def get_service_url(protocol ,ip_address, ports):
     url = "{0}://{1}:{2}".format(protocol, ip_address, ports)
     return url
 
 
 def check_config_validity(plan, chain_type, relaychain, parachains):
+
+    if chain_type != "local" and chain_type != "mainnet" and chain_type != "testnet":
+        return fail("Invalid chain type")
+
+    if chain_type == "local" and relaychain == {}:
+        return fail("relay config must be present for localnet")
+
     if relaychain != {}:
         chain_name = relaychain["name"] 
         relay_nodes = relaychain["nodes"]
@@ -108,10 +98,12 @@ def upload_files(plan):
 
 def convert_to_lowercase(chain_type, relaychain, parachains):
     chain_type = chain_type.lower()
-    relaychain["name"] = relaychain["name"].lower()
-    for node in relaychain["nodes"]:
-        node["name"] = node["name"].lower()
-        node["node_type"] = node["node_type"].lower()
+    if relaychain != {}:
+        relaychain["name"] = relaychain["name"].lower()
+        if len(relaychain["nodes"]) > 0:
+            for node in relaychain["nodes"]:
+                node["name"] = node["name"].lower()
+                node["node_type"] = node["node_type"].lower()
 
     for para in parachains:
         para["name"] = para["name"].lower()
