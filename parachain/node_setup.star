@@ -1,5 +1,20 @@
 def run_testnet_node_with_entrypoint(plan, prometheus, image, chain_name, execute_command, rpc_port = None, prometheus_port = None, lib2lib_port = None):
-        
+    """
+    Spawn a parachain node with specified configuration with entrypoint.
+
+    Args:
+        plan (object): The Kurtosis plan.
+        prometheus (bool): Boolean value to enable metrics for a given node.
+        image (str): Docker image for the parachain node.
+        chain_name (str): Name of the parachain.
+        execute_command (list): Command to execute inside service.
+        rpc_port (int, optional): The RPC port value. Defaults to None.
+        prometheus_port (int, optional): The Prometheus port value. Defaults to None.
+        lib2lib_port (int, optional): The lib2lib port value. Defaults to None.
+
+    Returns:
+        dict: The service details of spawned parachain node.
+    """  
     ports = {
         "ws": PortSpec(9947, transport_protocol = "TCP"),
         "lib2lib": PortSpec(30333, transport_protocol = "TCP")
@@ -33,7 +48,22 @@ def run_testnet_node_with_entrypoint(plan, prometheus, image, chain_name, execut
     return parachain
 
 def run_testnet_node_with_command(plan, prometheus, image, chain_name, execute_command, rpc_port = None, prometheus_port = None, lib2lib_port = None):
-    
+    """
+    Spawn a parachain node with specified configuration with command.
+
+    Args:
+        plan (object): The Kurtosis plan.
+        prometheus (bool): Boolean value to enable metrics for a given node.
+        image (str): Docker image for the parachain node.
+        chain_name (str): Name of the parachain.
+        execute_command (list): Command to execute inside service.
+        rpc_port (int, optional): The RPC port value. Defaults to None.
+        prometheus_port (int, optional): The Prometheus port value. Defaults to None.
+        lib2lib_port (int, optional): The lib2lib port value. Defaults to None.
+
+    Returns:
+        dict: The service details of spawned parachain node.
+    """
     ports = {
         "ws": PortSpec(9947, transport_protocol = "TCP"),
         "lib": PortSpec(30333)
@@ -67,14 +97,19 @@ def run_testnet_node_with_command(plan, prometheus, image, chain_name, execute_c
     return parachain
 
 def spawn_parachain(plan, prometheus, image, chain_name, execute_command, build_file, rpc_port = None, prometheus_port = None, lib2lib_port = None):
-    """Spawn a parachain node with specified configuration.
+    """
+    Spawn a parachain node with specified configuration.
 
     Args:
         plan (object): The Kurtosis plan.
-        chain_name (str): Name of the parachain.
+        prometheus (bool): Boolean value to enable metrics for a given node.
         image (str): Docker image for the parachain node.
-        command (list): Command to execute inside service.
+        chain_name (str): Name of the parachain.
+        execute_command (list): Command to execute inside service.
         build_file (str): Path to the build spec file.
+        rpc_port (int, optional): The RPC port value. Defaults to None.
+        prometheus_port (int, optional): The Prometheus port value. Defaults to None.
+        lib2lib_port (int, optional): The lib2lib port value. Defaults to None.
 
     Returns:
         dict: The service details of spawned parachain node.
