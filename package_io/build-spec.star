@@ -3,10 +3,9 @@ def create_service_for_build_spec(plan, service_name, image, build_file):
     """Create a service based on a build specification.
 
     Args:
-        plan (object): The execution plan to add the service to.
-        service_name (str): Name of the service.
-        image (str): Docker image for the service.
-        build_file (str): Path to the build file.
+        service_name (string): Name of the service.
+        image (string): Docker image for the service.
+        build_file (string): Path to the build file.
 
     Returns:
         object: The created service.
@@ -32,12 +31,11 @@ def create_edit_and_build_spec(plan, service_name, image, chain_name, command, b
     """Create, edit, and build a service based on a build specification.
 
     Args:
-        plan (object): The execution plan to add the service to.
-        service_name (str): Name of the service.
-        image (str): Docker image for the service.
-        chain_name (str): Name of the chain.
+        service_name (string): Name of the service.
+        image (string): Docker image for the service.
+        chain_name (string): Name of the chain.
         command (list): Command to execute inside the Docker container.
-        build_file (str): Path to the build file.
+        build_file (string): Path to the build file.
 
     Returns:
         object: The created and built service.

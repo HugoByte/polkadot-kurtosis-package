@@ -6,8 +6,7 @@ def start_relay_chain(plan, chain_type, relaychain):
     Starts relay chain nodes based on the provided arguments.
 
     Args:
-        plan (object): The Kurtosis plan object for orchestrating the test.
-        chain_type (str): The type of chain (local, testnet or mainnet).
+        chain_type (string): The type of chain (local, testnet or mainnet).
         relaychain (dict): A dict containing data for relay chain config.
         
     Returns:
@@ -81,8 +80,7 @@ def start_test_main_net_relay_nodes(plan, chain_type, relaychain):
     Starts testnet/mainnet relay nodes based on the provided arguments.
 
     Args:
-        plan (object): The Kurtosis plan object for orchestrating the test.
-        chain_type (str): The type of chain (local, testnet or mainnet).
+        chain_type (string): The type of chain (local, testnet or mainnet).
         relaychain (dict): A dict containing data for relay chain config.
 
     Returns:
@@ -98,7 +96,6 @@ def start_relay_chains_local(plan, relaychain):
     Starts local relay chain nodes based on the provided arguments.
 
     Args:
-        plan (object): The Kurtosis plan object for orchestrating the test.
         relaychain (dict): A dict containing data for relay chain config.
 
     Returns:
@@ -143,9 +140,8 @@ def start_relay_chain_local(plan, chain_name, node_name, prometheus, rpc_port = 
     Starts a local relay chain node based on the provided arguments.
 
     Args:
-        plan (object): The Kurtosis plan object for orchestrating the test.
-        chain_name (str): Name of relay chain.
-        node_name (str): Name of node.
+        chain_name (string): Name of relay chain.
+        node_name (string): Name of node.
         prometheus (bool): Boolean value to enable metrics for a given node.
         rpc_port (int, optional): The RPC port value. Defaults to None.
         prometheus_port (int, optional): The Prometheus port value. Defaults to None.
