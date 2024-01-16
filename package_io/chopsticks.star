@@ -8,7 +8,7 @@ def run_chopsticks_parachain(plan, para_chain):
 
     Args:
         plan: The Kurtosis plan.
-        para_chain (str): The parachain to configure for the chopstick network.
+        para_chain (string): The parachain to configure for the chopstick network.
     """
 
     service_config = ServiceConfig(
@@ -31,7 +31,7 @@ def run_chopsticks_xcm(plan, relay_chain, para_chains):
 
     Args:
         plan: The Kurtosis plan.
-        relay_chain (str): The relay chain for cross-chain messaging.
+        relay_chain (string): The relay chain for cross-chain messaging.
         para_chains (list): List of parachains to include in the network.
     """
 

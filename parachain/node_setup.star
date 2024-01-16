@@ -3,10 +3,9 @@ def run_testnet_node_with_entrypoint(plan, prometheus, image, chain_name, execut
     Spawn a parachain node with specified configuration with entrypoint.
 
     Args:
-        plan (object): The Kurtosis plan.
         prometheus (bool): Boolean value to enable metrics for a given node.
-        image (str): Docker image for the parachain node.
-        chain_name (str): Name of the parachain.
+        image (string): Docker image for the parachain node.
+        chain_name (string): Name of the parachain.
         execute_command (list): Command to execute inside service.
         rpc_port (int, optional): The RPC port value. Defaults to None.
         prometheus_port (int, optional): The Prometheus port value. Defaults to None.
@@ -52,10 +51,9 @@ def run_testnet_node_with_command(plan, prometheus, image, chain_name, execute_c
     Spawn a parachain node with specified configuration with command.
 
     Args:
-        plan (object): The Kurtosis plan.
         prometheus (bool): Boolean value to enable metrics for a given node.
-        image (str): Docker image for the parachain node.
-        chain_name (str): Name of the parachain.
+        image (string): Docker image for the parachain node.
+        chain_name (string): Name of the parachain.
         execute_command (list): Command to execute inside service.
         rpc_port (int, optional): The RPC port value. Defaults to None.
         prometheus_port (int, optional): The Prometheus port value. Defaults to None.
@@ -101,12 +99,11 @@ def spawn_parachain(plan, prometheus, image, chain_name, execute_command, build_
     Spawn a parachain node with specified configuration.
 
     Args:
-        plan (object): The Kurtosis plan.
         prometheus (bool): Boolean value to enable metrics for a given node.
-        image (str): Docker image for the parachain node.
-        chain_name (str): Name of the parachain.
+        image (string): Docker image for the parachain node.
+        chain_name (string): Name of the parachain.
         execute_command (list): Command to execute inside service.
-        build_file (str): Path to the build spec file.
+        build_file (string): Path to the build spec file.
         rpc_port (int, optional): The RPC port value. Defaults to None.
         prometheus_port (int, optional): The Prometheus port value. Defaults to None.
         lib2lib_port (int, optional): The lib2lib port value. Defaults to None.
