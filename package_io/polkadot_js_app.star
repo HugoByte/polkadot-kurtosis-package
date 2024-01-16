@@ -7,8 +7,7 @@ def run_pokadot_js_app(plan, ws_url):
     """ 
         This function will run the service for polkadot Js App
     Args:
-        plan (object): kurtosis plan object1 
-        ws_url (str): connect to a Polkadot node of given web socket URL 
+        ws_url (string): connect to a Polkadot node of given web socket URL 
     """
     service_config = ServiceConfig(
         image = "jacogr/polkadot-js-apps:latest",
