@@ -39,18 +39,11 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             lib2lib_port = None
             prometheus_port = None
 
-        if chain_name in constant.NO_WS_PORT:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
-        else:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9946 --port=30333 --rpc-port=9933 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
+        exec_comexec_commandmand = [
+            "/bin/bash",
+            "-c",
+            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+        ]
         
         build_file = raw_service.name
         parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port)
@@ -128,30 +121,15 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
     if base == None:
         fail("Tesnet is not there for {}".format(parachain["name"]))
 
-    if parachain["name"] in constant.NO_WS_PORT:
-        common_command = [
-            "--chain={0}".format(base),
-            "--port=30333",
-            "--rpc-port=9947",
-            "--prometheus-external",
-            "--rpc-cors=all",
-            "--rpc-external",
-            "--rpc-methods=unsafe",
-            "--unsafe-rpc-external",
-        ]
-    else:
-        common_command = [
-            "--chain={0}".format(base),
-            "--port=30333",
-            "--ws-port=9944",
-            "--rpc-port=9933",
-            "--prometheus-external",
-            "--rpc-cors=all",
-            "--rpc-external",
-            "--ws-external",
-            "--rpc-methods=unsafe",
-            "--unsafe-rpc-external",
-            "--unsafe-ws-external",
+    common_command = [
+        "--chain={0}".format(base),
+        "--port=30333",
+        "--rpc-port=9947",
+        "--prometheus-external",
+        "--rpc-cors=all",
+        "--rpc-external",
+        "--rpc-methods=unsafe",
+        "--unsafe-rpc-external",
         ]
 
     parachain_info = {parachain["name"]: {}}
