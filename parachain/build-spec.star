@@ -46,6 +46,6 @@ def create_raw_build_spec_genisis_state_genisis_wasm(plan, binary, image, chain_
     plan.verify(result["code"], "==", 0)
 
     plan.store_service_files(service_name = chain_name + "raw", src = "/tmp/*", name = chain_name + "raw")
-    # plan.stop_service(chain_name + "raw")
+    plan.stop_service(chain_name + "raw")
 
     return raw_service
