@@ -20,7 +20,8 @@ USED_PORTS = {
 
 def launch_prometheus(
         plan,
-        service_details
+        service_details,
+        http_port_number = None
     ):
     template_data = new_config_template_data(
         plan,
@@ -44,27 +45,38 @@ def launch_prometheus(
 
     prometheus_service_details = {}
     all_prometheus_service_details = {}
-    config = get_config(config_files_artifact_name)
+    config = get_config(config_files_artifact_name, http_port_number)
     prometheus_service = plan.add_service(SERVICE_NAME, config)
 
     private_ip_address = prometheus_service.ip_address
     prometheus_service_http_port = prometheus_service.ports[HTTP_PORT_ID].number
     prometheus_service_details["service_name"] = SERVICE_NAME
     prometheus_service_details["endpoint"] = "http://{0}:{1}".format(private_ip_address, prometheus_service_http_port)
-
+    if http_port_number != None:
+        prometheus_service_details["endpoint_public"] = "http://{0}:{1}".format("127.0.0.1", http_port_number)
+    
     all_prometheus_service_details[prometheus_service.name] = prometheus_service_details
-
     return all_prometheus_service_details
 
-def get_config(config_files_artifact_name):
+def get_config(config_files_artifact_name, http_port_number):
     config_file_path = shared_utils.path_join(
         CONFIG_DIR_MOUNTPOINT_ON_PROMETHEUS,
         shared_utils.path_base(CONFIG_FILENAME),
     )
+    if http_port_number == None:
+        public_ports = {}
+    else:
+        public_ports = { 
+            HTTP_PORT_ID: shared_utils.new_port_spec(
+                http_port_number,
+                "TCP",
+                "http",
+            ),
+        }
     return ServiceConfig(
         image = IMAGE_NAME,
         ports = USED_PORTS,
-        public_ports = USED_PORTS,
+        public_ports = public_ports,
         files = {CONFIG_DIR_MOUNTPOINT_ON_PROMETHEUS: config_files_artifact_name},
         cmd = [
             "--config.file=" + config_file_path,
