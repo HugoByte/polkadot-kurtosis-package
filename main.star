@@ -13,22 +13,22 @@ def run(plan, chain_type = "local", relaychain = None, parachains = None, explor
     
     Args:
         chain_type (string): The type of chain (local, testnet or mainnet). Default is local.
-        relaychain (dict): A dict containing data for relay chain config.
+        relaychain (json, optional): A json object containing data for relay chain config.
             - name (string): Name of relay chain.
-            - node (dict): A dict of node details.
+            - nodes (json): A json object containing node details.
                 - name (string): Name of node.
                 - node_type (string): Type of node.
                 - prometheus (bool): Boolean value to enable metrics for a given node.
-        parachains (list): A list containing data for para chain config. Each item in the list has the following:
+        parachains (json, optional): A json object containing data for para chain config. Each item in the list has the following:
             - name (string): Name of para chain.
-            - node (dict): A dict of node details.
+            - nodes (json): A json object containing node details.
                 - name (string): Name of node.
                 - node_type (string): Type of node.
                 - prometheus (bool): Boolean value to enable metrics for a given node.
-        explorer (bool): A boolean value indicating whether to enable polkadot js explorer or not.
+        explorer (bool, optional): A boolean value indicating whether to enable polkadot js explorer or not.
 
     Returns:
-        dict: Service details containing information about relay chains, parachains, and Prometheus.
+        service_details (json): Service details containing information about relay chains, parachains, and Prometheus.
     """
     service_details = run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer)
     return service_details
@@ -40,22 +40,22 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
 
     Args:
         chain_type (string): The type of chain (local, testnet or mainnet). Default is local.
-        relaychain (dict): A dict containing data for relay chain config.
+        relaychain (json): A json object containing data for relay chain config.
             - name (string): Name of relay chain.
-            - node (dict): A dict of node details.
+            - node (json): A json object of node details.
                 - name (string): Name of node.
                 - node_type (string): Type of node.
                 - prometheus (bool): Boolean value to enable metrics for a given node.
-        parachains (list): A list containing data for para chain config. Each item in the list has the following:
+        parachains (json): A json object containing data for para chain config. Each item in the list has the following:
             - name (string): Name of para chain.
-            - node (dict): A dict of node details.
+            - node (json): A json object of node details.
                 - name (string): Name of node.
                 - node_type (string): Type of node.
                 - prometheus (bool): Boolean value to enable metrics for a given node.
         explorer (bool): A boolean value indicating whether to enable polkadot js explorer or not.
 
     Returns:
-        dict: Service details containing information about relay chains, parachains, and Prometheus.
+        service_details (json): Service details containing information about relay chains, parachains, and Prometheus.
     """
 
     chain_type, relaychain, parachains = utils.convert_to_lowercase(chain_type, relaychain, parachains)

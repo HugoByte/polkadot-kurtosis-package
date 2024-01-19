@@ -108,7 +108,7 @@ parachain_images = {
     "encointer": {
         "image": "encointer/parachain:1.5.1",
         "entrypoint": "/usr/local/bin/encointer-collator",
-        "base": ["encointer-rococo-local", "encointer-rococo", "encointer-kusama"],
+        "base": ["encointer-rococo-local-dev", "encointer-rococo", "encointer-kusama"],
     },
     "altair": {
         "image": "centrifugeio/centrifuge-chain:test-PR1628-354d76c-23-11-28",
