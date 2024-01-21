@@ -11,7 +11,7 @@ def create_service_for_build_spec(plan, service_name, image, build_file):
         object: The created service.
     """
     files = {
-        "/app": "configs",
+        "/config": "configs",
     }
     if build_file != None:
         files["/build"] = build_file

@@ -98,7 +98,7 @@ parachain_images = {
     "subsocial": {
         "image": "dappforce/subsocial-parachain:latest",
         "entrypoint": "/usr/local/bin/subsocial-collator",
-        "base": ["local-rococo", "/app/soonsocial.json", ""],
+        "base": ["local-rococo", "/config/soonsocial.json", ""],
     },
     "zeitgeist": {
         "image": "zeitgeistpm/zeitgeist-node-parachain",
@@ -169,5 +169,10 @@ parachain_images = {
         "image": "oaknetwork/turing:latest",
         "entrypoint": "./oak-collator",
         "base": ["turing-dev", "turing-staging", "turing"],
+    },
+    "dwiz": {
+        "image": "hugobyte/dwiz-parachain",
+        "entrypoint": "/app/dwiz-parachain-node",
+        "base": ["local", None, None],
     },
 }

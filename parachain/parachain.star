@@ -41,7 +41,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
         exec_comexec_commandmand = [
             "/bin/bash",
             "-c",
-            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/config/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
         ]
         
         build_file = raw_service.name
