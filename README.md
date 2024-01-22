@@ -1,4 +1,4 @@
-![HugoByte](img/hugobyte_logo.jpeg)
+![HugoByte](img/hugobyte_logo.png)
 
 **Empower your Polkadot development with the Polkadot-kurtosis-package, an all-in-one solution for effortlessly spawning relay chains and parachains. Dive into a world of efficiency, reliability, and innovation, all meant to enhance your Polkadot experience. Welcome to the future of decentralized possibilities! Remember, the key to our existence is to distribute, decentralize, and democratize.**
 
@@ -11,10 +11,10 @@
     - [Kusama](#kusama)
     - [Parachains](#parachains)
     - [Explorer](#explorer)
-  - [Setup and Requirements](#setup-and-requirements)
+  - [Prerequisites](#prerequisites)
 - [Integrated Parachains Within the Polkadot-kurtosis-package](#integrated-parachains-within-the-polkadot-kurtosis-package)
   - [Overall List of Integrated Parachains](#overall-list-of-integrated-parachains)
-  - [Parachains Supported in Local](#parachains-supported-in-local)
+  - [Parachains Supported in Localnet](#parachains-supported-in-localnet)
   - [Parachains Supported in Testnet](#parachains-supported-in-testnet)
   - [Parachains Supported in Mainnet](#parachains-supported-in-mainnet)
 - [Configuration File Guidelines](#configuration-file-guidelines)
@@ -39,7 +39,9 @@
 
 # Introduction
 
-Polkadot-kurtosis-package is a tool built leveraging the power of Kurtosis, a developer platform for packaging and launching environments. This tool simplifies the process of setting up various local, testnet, and mainnet network configurations and scenarios for Polkadot and Kusama parachains.
+Polkadot-kurtosis-package is a tool built leveraging the power of Kurtosis, a developer platform for packaging and launching environments. This tool simplifies the process of setting up various localnet, testnet, and mainnet network configurations and scenarios for Polkadot and Kusama parachains.
+
+### Polkadot-kurtosis-package made easy with DIVE CLI! Click [here](https://github.com/HugoByte/DIVE) to know more.
 
 ## About
 
@@ -69,7 +71,7 @@ The Polkadot JS Explorer is a web-based application that serves as a comprehensi
 
 You can access the explorer [here](https://polkadot.js.org/).
 
-## Setup and Requirements
+## Prerequisites
 
 Ensure the following prerequisites are met before using the Polkadot-kurtosis-package:
 - [Docker](https://www.docker.com/): Make sure Docker is installed on your machine. You can [install it here](https://www.docker.com/).
@@ -82,92 +84,11 @@ A list of all the parachains supported by the package and the environments they 
 
 ## Overall List of Integrated Parachains 
 
-<center>
-<table border="1">
-  <tr>
-    <th>Polkadot</th>
-    <th>Kusama</th>
-  </tr>
-  <tr>
-    <td>acala</td>
-    <td>altair</td>
-  </tr>
-  <tr>
-    <td>ajuna</td>
-    <td>bajun</td>
-  </tr>
-  <tr>
-    <td>bifrost</td>
-    <td>bifrost</td>
-  </tr>
-  <tr>
-    <td>centrifuge</td>
-    <td>calamari</td>
-  </tr>
-  <tr>
-    <td>clover</td>
-    <td>encointer</td>
-  </tr>
-  <tr>
-    <td>frequency</td>
-    <td>karura</td>
-  </tr>
-  <tr>
-    <td>kilt</td>
-    <td>khala</td>
-  </tr>
-  <tr>
-    <td>kylin</td>
-    <td>integritee</td>
-  </tr>
-  <tr>
-    <td>litentry</td>
-    <td>litmus</td>
-  </tr>
-  <tr>
-    <td>manta</td>
-    <td>mangata</td>
-  </tr>
-  <tr>
-    <td>moonbeam</td>
-    <td>moonriver</td>
-  </tr>
-  <tr>
-    <td>moonsama</td>
-    <td>robonomics</td>
-  </tr>
-  <tr>
-    <td>nodle</td>
-    <td>subzero</td>
-  </tr>
-  <tr>
-    <td>parallel</td>
-    <td>turing</td>
-  </tr>
-  <tr>
-    <td>pendulum</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>phala</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>polkadex</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>subsocial</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>zeitgeist</td>
-    <td></td>
-  </tr>
-</table>
-</center>
+- **For Polkadot:** acala, ajuna, bifrost, centrifuge, clover, frequency, kilt, kylin, litentry, manta, moonbeam, moonsama, nodle, parallel, pendulum, phala, polkadex, subsocial, zeitgeist
 
-## Parachains Supported in Local:
+- **For Kusama:** altair, bajun, bifrost, calamari, encointer, karura, khala, integritee, litmus, mangata, moonriver, robonomics, subzero, turing
+
+## Parachains Supported in Localnet:
 
 - **For Polkadot:** acala, ajuna, bifrost, centrifuge, clover, frequency, kilt, kylin, litentry, manta, moonbeam, moonsama, nodle, parallel, pendulum, phala, polkadex, subsocial, zeitgeist
 
@@ -237,7 +158,7 @@ To use the Polkadot-kurtosis-package, you need to create a configuration file sp
 
 ## Configuration Fields:
 
-- **chain_type:** Specifies the type of the network (e.g., "local","testnet", "mainnet").
+- **chain_type:** Specifies the type of the network (e.g., "localnet","testnet", "mainnet").
 - **relaychain:** Configuration for the relay chain. (When chain_type is "testnet" or "mainenet", the "relaychain" can be an empty dictonary).
   - **name:** Name of the relay chain (e.g., "rococo-local", "rococo", "polkadot" or "kusama").
   - **nodes:** List of nodes on the relay chain, each with:
@@ -256,17 +177,17 @@ Feel free to modify this example configuration file based on your specific netwo
 
 ## Possible Values for Configuration Fields:
 
-- **chain_type:** local, mainnet, testnet
+- **chain_type:** localnet, mainnet, testnet
 - **relaychain name:** 
-  - for local: rococo-local
+  - for localnet: rococo-local
   - for testnet: rococo, westend
   - for mainnet: polkadot, kusama
 - **node_type:**
-  - for relaychain: validator, full 
+  - for relaychain: validator, full, archive
   - for parachain: collator, full
 - **parachain name:** 
-  - for polkadot: any valid parachain for polkadot from [this list](#integrated-parachains)
-  - for kusama: any valid parachain for kusama from [this list](#integrated-parachains)
+  - for polkadot: any valid parachain for polkadot from [this list](#overall-list-of-integrated-parachains)
+  - for kusama: any valid parachain for kusama from [this list](#overall-list-of-integrated-parachains)
 - **prometheus:** true or false
 - **explorer:** true or false
 - **node-name:** any
@@ -369,7 +290,7 @@ Consider this sample config file:
 
 ```json
 {
-  "chain_type": "local",
+  "chain_type": "localnet",
   "relaychain": {
     "name": "rococo-local",
     "nodes": [
@@ -411,7 +332,7 @@ You should also get the **user services** from kurtosis as follows:
 
 ![User Services](img/user_services.png)
 
-The service name 'frequency-alice-local' contains the details of the 'frequency' parachain node and the service names 'rococo-local-alice' and 'rococo-local-bob' contain the details of the relay chain nodes. Each node has its own service name and service details. 
+The service name 'frequency-alice-localnet' contains the details of the 'frequency' parachain node and the service names 'rococo-local-alice' and 'rococo-local-bob' contain the details of the relay chain nodes. Each node has its own service name and service details. 
 
 The 'polkadot-js-explorer' service contains the details of the explorer.
 
@@ -419,7 +340,7 @@ The 'prometheus' and 'grafana' services contain the details of required metrics.
 
 # Using Explorer with Service Details
 
-To use the explorer with the service details, open the given endpoint for 'polkadot-js-explorer' in the **user services**. In this case, it would be: 'http://127.0.0.1:32970'
+To use the explorer with the service details, open the given endpoint for 'polkadot-js-explorer' in the **user services**. In this case, it would be: 'http://127.0.0.1:80'
 
 A page like this should open:
 
@@ -427,19 +348,19 @@ A page like this should open:
 
 Click on the orange icon next to unknown. This should open a side-menu. Click on Development and replace the custom endpoint port with the port of the node for which you would like to view the explorer details.
 
-You can find the node in the **user services**. For example, consider port 32964. After passing the port in custom endpoint, your page should look like this:
+You can find the node in the **user services**. For example, consider port 33131. After passing the port in custom endpoint, your page should look like this:
 
 ![Explorer](img/explorer.png)
 
 # Using Grafana with Service Details
 
-Grafana is automatically enabled when prometheus for any node is given as true. To use the grafana with the service details, open the given endpoint for 'grafana' in the **user services**. In this case, it would be: 'http://127.0.0.1:32969'
+Grafana is automatically enabled when prometheus for any node is given as true. To use the grafana with the service details, open the given endpoint for 'grafana' in the **user services**. In this case, it would be: 'http://127.0.0.1:33136'
 
 A page like this should open:
 
 ![Grafana](img/grafana.png)
 
-Click on Data Sources, select Prometheus. In Connection field, enter the endpoint given in 'prometheus' service in **service details**. In this case it would be 'http://172.16.0.13:9090'. Scroll down and click on *save and test*.
+Click on Data Sources, select Prometheus. In Connection field, enter the endpoint given in 'prometheus' service in **service details**. In this case it would be 'http://172.16.0.12:9090'. Scroll down and click on *save and test*.
 
 Now, open the side menu and click on *Dashboards*. Click on *Create Dashboard* and then *import dashboard*. Type `13759` in the *Find and import dashboards for common applications* field and click on Load. You can also use your custom dashboards here.
 

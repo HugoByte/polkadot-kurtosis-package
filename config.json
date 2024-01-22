@@ -1,5 +1,5 @@
 {
-  "chain_type": "local",
+  "chain_type": "localnet",
   "relaychain": {
     "name": "rococo-local",
     "nodes": [
