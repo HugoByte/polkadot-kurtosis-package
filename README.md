@@ -41,6 +41,8 @@
 
 Polkadot-kurtosis-package is a tool built leveraging the power of Kurtosis, a developer platform for packaging and launching environments. This tool simplifies the process of setting up various localnet, testnet, and mainnet network configurations and scenarios for Polkadot and Kusama parachains.
 
+### Polkadot-kurtosis-package made easy with DIVE CLI! Click [here](https://github.com/HugoByte/DIVE) to know more.
+
 ## About
 
 The primary goal of this project is to streamline the setup of Polkadot and Kusama parachain environments using the Kurtosis platform. With just a few one-liners, developers can package and launch environments tailored to their needs.
