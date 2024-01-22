@@ -11,7 +11,7 @@
       {
         "name": "bob",
         "node_type": "full",
-        "prometheus": false
+        "prometheus": true
 
       }
     ]
@@ -19,16 +19,21 @@
 
   "parachains": [
     {
-      "name":"zeitgeist",
+      "name":"acala",
       "nodes": [
         {
           "name": "alice",
           "node_type": "validator",
           "prometheus": false
 
+        },
+        {
+          "name": "bob",
+          "node_type": "full",
+          "prometheus": true
         }
       ]
     }
   ],
-  "explorer": false
+  "explorer": true
 }
