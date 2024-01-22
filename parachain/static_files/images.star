@@ -31,9 +31,9 @@ parachain_images = {
         "base": ["frequency-rococo-local", "frequency-rococo", "frequency"],
     },
     "integritee": {
-        "image": "integritee/parachain",
-        "entrypoint": "/usr/local/bin/integritee-collator",
-        "base": ["integritee-rococo", "integritee-rococo", "integritee-polkadot"],
+        "image": "integritee/parachain:latest",
+        "entrypoint": "/usr/local/bin/integritee-node",
+        "base": ["integritee-rococo-local-dev", "integritee-rococo", "integritee-kusama"],
     },
     "interlay": {
         "image": "interlayhq/interbtc:latest",
@@ -101,7 +101,7 @@ parachain_images = {
         "base": ["local-rococo", "/app/soonsocial.json", ""],
     },
     "zeitgeist": {
-        "image": "zeitgeistpm/zeitgeist-node-parachain",
+        "image": "zeitgeistpm/zeitgeist-node-parachain:latest",
         "entrypoint": "/usr/local/bin/zeitgeist",
         "base": ["dev", "battery_station", "zeitgeist"],
     },

@@ -1,5 +1,5 @@
 {
-    "parachain": "acala",
+    "chain": "acala",
     "xcm": {
         "relaychain": "polkadot",
         "parachains": [
