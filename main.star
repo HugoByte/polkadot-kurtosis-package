@@ -7,12 +7,12 @@ explorer_js = import_module("./package_io/polkadot_js_app.star")
 utils = import_module("./package_io/utils.star")
 constant = import_module("./package_io/constant.star")
 
-def run(plan, chain_type = "local", relaychain = None, parachains = None, explorer = False):
+def run(plan, chain_type = "localnet", relaychain = None, parachains = None, explorer = False):
     """
     Main function to run the Polkadot relay and parachain setup.
     
     Args:
-        chain_type (string): The type of chain (local, testnet or mainnet). Default is local.
+        chain_type (string): The type of chain (localnet, testnet or mainnet). Default is localnet.
         relaychain (json): A json object containing data for relay chain config.
             - name (string): Name of relay chain.
             - nodes (json): A json object containing node details.
@@ -39,7 +39,7 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
     Main function to run the Polkadot relay and parachain setup.
 
     Args:
-        chain_type (string): The type of chain (local, testnet or mainnet). Default is local.
+        chain_type (string): The type of chain (localnet, testnet or mainnet). Default is localnet.
         relaychain (json): A json object containing data for relay chain config.
             - name (string): Name of relay chain.
             - node (json): A json object of node details.
@@ -64,7 +64,7 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
     
     service_details = {}
 
-    if chain_type == "local":
+    if chain_type == "localnet":
         relay_chain_details = relay_chain.start_relay_chains_local(plan, relaychain)
         polkadot_service_name = None
         for key in relay_chain_details:

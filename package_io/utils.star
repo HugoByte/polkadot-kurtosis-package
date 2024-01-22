@@ -40,10 +40,10 @@ def get_service_url(protocol ,ip_address, ports):
 
 def check_config_validity(plan, chain_type, relaychain, parachains):
 
-    if chain_type != "local" and chain_type != "mainnet" and chain_type != "testnet":
+    if chain_type != "localnet" and chain_type != "mainnet" and chain_type != "testnet":
         return fail("Invalid chain type")
 
-    if chain_type == "local" and relaychain == {}:
+    if chain_type == "localnet" and relaychain == {}:
         return fail("relay config must be present for localnet")
 
     if relaychain != {}:
@@ -56,7 +56,7 @@ def check_config_validity(plan, chain_type, relaychain, parachains):
         elif chain_type == "mainnet":
             if chain_name != "polkadot" and chain_name != "kusama":
                 return fail("Please provide polkadot or kusama as relaychain for mainnet")
-        elif chain_type == "local":
+        elif chain_type == "localnet":
             if chain_name != "rococo-local":
                 return fail("Please provide rococo-local as relaychain for localnet")
             elif len(relay_nodes) < 2:

@@ -10,7 +10,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     Start local parachain nodes based on configuration.
 
     Args:
-        chain_type (string): The type of chain (local, testnet or mainnet).
+        chain_type (string): The type of chain (localnet, testnet or mainnet).
         parachains (dict): A dict containing data for para chain config.
         para_id (int): Parachain ID.
 
@@ -41,7 +41,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
         exec_comexec_commandmand = [
             "/bin/bash",
             "-c",
-            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm --trie-cache-size=0 -- --chain=/config/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
         ]
         
         build_file = raw_service.name
@@ -68,7 +68,7 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     Start multiple parachain nodes.
 
     Args:
-        chain_type (string): The type of chain (local, testnet or mainnet).
+        chain_type (string): The type of chain (localnet, testnet or mainnet).
         parachains (list): A list containing data for para chain config.
         relay_chain_ip (string): IP address of the relay chain.
 
@@ -90,7 +90,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
     Run a testnet or mainnet based on configuration.
 
     Args:
-        chain_type (string): The type of chain (local, testnet or mainnet).
+        chain_type (string): The type of chain (localnet, testnet or mainnet).
         relaychain_name (string): The name of relay chain.
         parachain (dict): A dict containing data for para chain config.
 
