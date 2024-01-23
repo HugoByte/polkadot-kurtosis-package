@@ -76,7 +76,7 @@ parachain_images = {
         "base": ["local", "test", "main"],
     },
     "parallel": {
-        "image": "parallelfinance/parallel:latest",
+        "image": "parallelfinance/parallel:v1.9.0",
         "entrypoint": "/parallel/.entrypoint.sh",
         "base": ["parallel-dev", None, "parallel"],
     },
