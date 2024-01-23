@@ -33,19 +33,28 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             rpc_port = node["ports"]["rpc_port"]
             lib2lib_port = node["ports"]["lib2lib_port"]
             prometheus_port = node["ports"]["prometheus_port"] if node["prometheus"] else None
+            ws_port = node["ports"]["ws_port"] if parachain["name"] in constant.WS_PORT else None
         else:
             rpc_port = None
             lib2lib_port = None
             prometheus_port = None
+            ws_port = None
 
-        exec_comexec_commandmand = [
-            "/bin/bash",
-            "-c",
-            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-        ]
+        if chain_name in constant.WS_PORT:
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            ]
+        else:
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            ]
         
         build_file = raw_service.name
-        parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port)
+        parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port, ws_port)
         parachain_detail["service_name"] = parachain_spawn_detail.name
         parachain_detail["endpoint"] = utils.get_service_url("ws", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
         parachain_detail["ip_address"] = parachain_spawn_detail.ip_address
@@ -56,7 +65,9 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
         if prometheus_port != None:
             parachain_detail["prometheus_public_port"] = prometheus_port
             parachain_detail["endpoint_prometheus"] = utils.get_service_url("tcp", "127.0.0.1", prometheus_port)
-        if rpc_port != None:
+        if ws_port != None:
+            parachain_detail["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", ws_port)
+        elif rpc_port != None:
             parachain_detail["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", rpc_port)
 
         parachain_final[parachain_spawn_detail.name] = parachain_detail
@@ -118,15 +129,30 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
     if base == None:
         fail("Tesnet is not there for {}".format(parachain["name"]))
 
-    common_command = [
-        "--chain={0}".format(base),
-        "--port=30333",
-        "--rpc-port=9947",
-        "--prometheus-external",
-        "--rpc-cors=all",
-        "--rpc-external",
-        "--rpc-methods=unsafe",
-        "--unsafe-rpc-external",
+    if parachain["name"] in constant.WS_PORT:
+        common_command = [
+            "--chain={0}".format(base),
+            "--port=30333",
+            "--ws-port=9944",
+            "--rpc-port=9947",
+            "--prometheus-external",
+            "--rpc-cors=all",
+            "--rpc-external",
+            "--ws-external",
+            "--rpc-methods=unsafe",
+            "--unsafe-rpc-external",
+            "--unsafe-ws-external",
+        ]
+    else:
+        common_command = [
+            "--chain={0}".format(base),
+            "--port=30333",
+            "--rpc-port=9947",
+            "--prometheus-external",
+            "--rpc-cors=all",
+            "--rpc-external",
+            "--rpc-methods=unsafe",
+            "--unsafe-rpc-external",
         ]
 
     parachain_info = {parachain["name"]: {}}
@@ -144,10 +170,12 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             rpc_port = node["ports"]["rpc_port"]
             lib2lib_port = node["ports"]["lib2lib_port"]
             prometheus_port = node["ports"]["prometheus_port"] if node["prometheus"] else None
+            ws_port = node["ports"]["ws_port"] if parachain["name"] in constant.WS_PORT else None
         else:
             rpc_port = None
             lib2lib_port = None
             prometheus_port = None
+            ws_port = None
                 
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
@@ -167,7 +195,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             binary = parachain_details["entrypoint"]
             command = [binary] + command
             node_info = {}
-            node_details = node_setup.run_testnet_node_with_entrypoint(plan, node["prometheus"], image, "{0}-{1}-{2}".format(parachain["name"], node["name"], chain_type), command, rpc_port, prometheus_port, lib2lib_port)
+            node_details = node_setup.run_testnet_node_with_entrypoint(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(parachain["name"], node["name"], chain_type), command, rpc_port, prometheus_port, lib2lib_port, ws_port)
             node_info["service_name"] = node_details.name
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
             node_info["ip_address"] = node_details.ip_address
@@ -178,14 +206,16 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             if prometheus_port != None:
                 node_info["prometheus_public_port"] = prometheus_port
                 node_info["endpoint_prometheus"] = utils.get_service_url("tcp", "127.0.0.1", prometheus_port)
-            if rpc_port != None:
+            if ws_port != None:
+                node_info["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", ws_port)
+            elif rpc_port != None:
                 node_info["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", rpc_port)
 
             final_parachain_info[node_details.name] = node_info
 
         else:
             node_info = {}
-            node_details = node_setup.run_testnet_node_with_command(plan, node["prometheus"], image, "{0}-{1}-{2}".format(parachain["name"], node["name"], chain_type), command, rpc_port, prometheus_port, lib2lib_port)
+            node_details = node_setup.run_testnet_node_with_command(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(parachain["name"], node["name"], chain_type), command, rpc_port, prometheus_port, lib2lib_port, ws_port)
             node_info["service_name"] = node_details.name
             node_info["endpoint"] = utils.get_service_url("ws", node_details.ip_address, node_details.ports["ws"].number)
             node_info["ip_address"] = node_details.ip_address
@@ -196,7 +226,9 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             if prometheus_port != None:
                 node_info["prometheus_public_port"] = prometheus_port
                 node_info["endpoint_prometheus"] = utils.get_service_url("tcp", "127.0.0.1", prometheus_port)
-            if rpc_port != None:
+            if ws_port != None:
+                node_info["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", ws_port)
+            elif rpc_port != None:
                 node_info["endpoint_public"] = utils.get_service_url("ws", "127.0.0.1", rpc_port)
 
             final_parachain_info[node_details.name] = node_info
