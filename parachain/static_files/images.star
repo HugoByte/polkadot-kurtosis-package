@@ -83,7 +83,7 @@ parachain_images = {
     "pendulum": {
         "image": "pendulumchain/pendulum-collator:latest",
         "entrypoint": "/usr/local/bin/pendulum-collator",
-        "base": ["dev", "foucoco", "pendulum"],
+        "base": ["dev", "foucoco", "/app/pendulum-spec-raw.json"],
     },
     "phala": {
         "image": "phalanetwork/phala-node:latest",
