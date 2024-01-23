@@ -83,7 +83,7 @@ parachain_images = {
     "pendulum": {
         "image": "pendulumchain/pendulum-collator:latest",
         "entrypoint": "/usr/local/bin/pendulum-collator",
-        "base": ["dev", "foucoco", "pendulum"],
+        "base": ["dev", "foucoco", "/app/pendulum-spec-raw.json"],
     },
     "phala": {
         "image": "phalanetwork/phala-node:latest",
@@ -148,7 +148,7 @@ parachain_images = {
     "mangata": {
         "image": "mangatasolutions/mangata-node:feature-post-3rdparty-rewards-fast",
         "entrypoint": "/mangata/node",
-        "base": ["mangata-rococo-local", "mangata-rococo", "mangata-kusama"],
+        "base": ["mangata-rococo-local", "mangata-rococo", "/app/mangata-kusama-mainnet.json"],
     },
     "moonriver": {
         "image": "moonbeamfoundation/moonbeam:sha-519bd694",
@@ -158,12 +158,12 @@ parachain_images = {
     "robonomics": {
         "image": "robonomics/robonomics:latest",
         "entrypoint": "/usr/local/bin/robonomics",
-        "base": ["alpha-dev", "ipci-dev", "ipci"],
+        "base": ["alpha-dev", "ipci-dev", ""],
     },
     "subzero": {
         "image": "playzero/subzero:latest",
         "entrypoint": "/usr/local/bin/subzero",
-        "base": ["dev", None, ""],
+        "base": ["dev", None, "subzero"],
     },
     "turing": {
         "image": "oaknetwork/turing:latest",
