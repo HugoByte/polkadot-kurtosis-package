@@ -1,0 +1,10 @@
+{
+    "chain": "acala",
+    "xcm": {
+        "relaychain": "polkadot",
+        "parachains": [
+            "acala",
+            "moonbeam"
+        ]
+    }
+}
