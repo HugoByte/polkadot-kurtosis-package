@@ -94,7 +94,7 @@ A list of all the parachains supported by the package and the environments they 
 
 - **For Kusama:** altair, bajun, bifrost, calamari, encointer, karura, khala, integritee, litmus, mangata, moonriver, robonomics, subzero, turing
 
-## Parachains Supported in Testnet:
+## Parachains Supported in Testnet (Beta):
 
 - **For Polkadot:** ajuna, bifrost, frequency, kilt, litentry, moonbeam, nodle, pendulum, phala, zeitgeist
 
@@ -104,7 +104,7 @@ A list of all the parachains supported by the package and the environments they 
 
 - **No Testnet available:** parallel, subzero
 
-## Parachains Supported in Mainnet:
+## Parachains Supported in Mainnet (Beta):
 
 - **For Polkadot:** acala, ajuna, bifrost, centrifuge, clover, frequency, kilt, kylin, litentry, manta, moonbeam, moonsama, nodle, parallel, pendulum, phala, polkadex, subsocial, zeitgeist
 
