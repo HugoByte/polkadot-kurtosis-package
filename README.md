@@ -2,7 +2,7 @@
 
 **Empower your Polkadot development with the Polkadot-kurtosis-package, an all-in-one solution for effortlessly spawning relay chains and parachains. Dive into a world of efficiency, reliability, and innovation, all meant to enhance your Polkadot experience. Welcome to the future of decentralized possibilities! Remember, the key to our existence is to distribute, decentralize, and democratize.**
 
-[![Discord](https://img.shields.io/badge/Discord-hugobyte-00FF00?style=flat&logo=discord&logoColor=00FF00&labelColor=black)](https://discord.gg/GyRQSBN3Cu)
+[![Discord](https://img.shields.io/badge/Discord-hugobyte-2FC252?style=flat&logo=discord&labelColor=black)](https://discord.gg/GyRQSBN3Cu)
 
 # Table of Contents
 - [Introduction](#introduction)
