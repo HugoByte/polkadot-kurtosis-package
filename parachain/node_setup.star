@@ -52,7 +52,7 @@ def run_testnet_node_with_entrypoint(plan, prometheus, image, chain_name, servic
         ports = ports,        
         public_ports = public_ports,
         files = {
-            "/app": "configs",
+            "/config": "configs",
         },
         entrypoint = execute_command,
     )
@@ -111,7 +111,7 @@ def run_testnet_node_with_command(plan, prometheus, image, chain_name, service_n
         ports = ports,        
         public_ports = public_ports,
         files = {
-            "/app": "configs",
+            "/config": "configs",
         },
         cmd = execute_command,
     )
@@ -138,7 +138,7 @@ def spawn_parachain(plan, prometheus, image, chain_name, service_name, execute_c
         dict: The service details of spawned parachain node.
     """
     files = {
-        "/app": "configs",
+        "/config": "configs",
     }
     if build_file != None:
         files["/build"] = build_file
