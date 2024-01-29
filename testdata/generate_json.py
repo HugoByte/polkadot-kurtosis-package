@@ -15,7 +15,7 @@ def update_config(original_config, relay_chain, para_chain, network):
         config_data["relaychain"]["name"] = relay_chain.lower()
     else:
         # Update the original JSON data
-        config_data["chain_type"] = "local"
+        config_data["chain_type"] = "localnet"
         config_data["relaychain"]["name"] = "rococo-local"
 
     for para in config_data["parachains"]:
@@ -39,7 +39,7 @@ def main():
     parser.add_argument('--network', type=str, help='test environment')
 
     args = parser.parse_args()
-    update_config("./local.json", args.relay, args.para, args.network)
+    update_config("./config.json", args.relay, args.para, args.network)
 
 if __name__ == "__main__":
     main()
