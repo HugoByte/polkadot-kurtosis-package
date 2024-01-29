@@ -28,8 +28,8 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
     for node in parachain["nodes"]:
         parachain_detail = {}
-        
-        if "ports" in node: 
+
+        if "ports" in node:
             rpc_port = node["ports"]["rpc_port"]
             lib2lib_port = node["ports"]["lib2lib_port"]
             prometheus_port = node["ports"]["prometheus_port"] if node["prometheus"] else None
@@ -38,12 +38,19 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             lib2lib_port = None
             prometheus_port = None
 
-        exec_comexec_commandmand = [
-            "/bin/bash",
-            "-c",
-            "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-        ]
-        
+        if node["node_type"] == "conduit":
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --conduit --provider_url={3} --request_id={4} --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/config/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"], node["provider_url"], node["request_id"]),
+            ]
+        else:
+            exec_comexec_commandmand = [
+                "/bin/bash",
+                "-c",
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9946 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/config/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+            ]
+
         build_file = raw_service.name
         parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port)
         parachain_detail["service_name"] = parachain_spawn_detail.name
@@ -76,13 +83,13 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
         list: List of dictionaries containing service details of each parachain.
     """
     final_parachain_details = {}
-    
+
     for parachain in parachains:
-        para_id = register_para_slot.register_para_id(plan, relay_chain_ip)        
+        para_id = register_para_slot.register_para_id(plan, relay_chain_ip)
         parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.update(parachain_details)
-    
+
     return final_parachain_details
 
 def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
@@ -127,7 +134,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
         "--rpc-external",
         "--rpc-methods=unsafe",
         "--unsafe-rpc-external",
-        ]
+    ]
 
     parachain_info = {parachain["name"]: {}}
     if parachain["name"] == "altair" or parachain["name"] == "centrifuge":
@@ -139,8 +146,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
     final_parachain_info = {}
     for node in parachain["nodes"]:
-        
-        if "ports" in node: 
+        if "ports" in node:
             rpc_port = node["ports"]["rpc_port"]
             lib2lib_port = node["ports"]["lib2lib_port"]
             prometheus_port = node["ports"]["prometheus_port"] if node["prometheus"] else None
@@ -148,7 +154,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             rpc_port = None
             lib2lib_port = None
             prometheus_port = None
-                
+
         command = common_command
         command = command + ["--name={0}".format(node["name"])]
         if node["node_type"] == "collator":

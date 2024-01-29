@@ -23,9 +23,10 @@
       "nodes": [
         {
           "name": "alice",
-          "node_type": "validator",
-          "prometheus": false
-
+          "node_type": "collator",
+          "prometheus": false,
+          "provider_url": "http://127.0.0.1:8000",
+          "request_id": 0
         },
         {
           "name": "bob",

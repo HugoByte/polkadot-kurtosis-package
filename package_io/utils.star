@@ -86,10 +86,10 @@ def check_config_validity(plan, chain_type, relaychain, parachains):
         for para in parachains:
             if len(para["nodes"]) != 0:
                 for node in para["nodes"]:
-                    if node["node_type"] in ["validator",  "full", "collator"]:
+                    if node["node_type"] in ["validator",  "full", "collator", "conduit"]:
                             plan.print("config for parachain is valid")
                     else:
-                        return fail("parachain node_type can be only validator/full/collator")
+                        return fail("parachain node_type can be only validator/full/collator/conduit")
 
 def upload_files(plan):
     plan.upload_files(src = "../parachain/static_files/configs", name = "configs")
