@@ -32,7 +32,7 @@ parachain_images = {
     },
     "integritee": {
         "image": "integritee/parachain:latest",
-        "entrypoint": "/usr/local/bin/integritee-node",
+        "entrypoint": "/usr/local/bin/integritee-collator",
         "base": ["integritee-rococo-local-dev", "integritee-rococo", "integritee-kusama"],
     },
     "interlay": {
