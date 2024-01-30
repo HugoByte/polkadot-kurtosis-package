@@ -13,10 +13,10 @@ def run_pokadot_js_app(plan, ws_url):
         image = "jacogr/polkadot-js-apps:latest",
         
         ports = {
-            "TCP" : PortSpec(80)
+            "http" : PortSpec(80)
         },
         public_ports = {
-            "TCP" : PortSpec(80)
+            "http" : PortSpec(80)
         },
         env_vars = {
             "WS_URL": ws_url,
