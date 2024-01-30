@@ -53,7 +53,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
                 "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
             ]
         
-        build_file = raw_service.name
+        build_file = raw_service
         parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port, ws_port)
         parachain_detail["service_name"] = parachain_spawn_detail.name
         parachain_detail["endpoint"] = utils.get_service_url("ws", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
@@ -89,7 +89,7 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     final_parachain_details = {}
     
     for parachain in parachains:
-        para_id = register_para_slot.register_para_id(plan, relay_chain_ip)        
+        para_id = register_para_slot.register_para_id(plan, relay_chain_ip) 
         parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.update(parachain_details)
