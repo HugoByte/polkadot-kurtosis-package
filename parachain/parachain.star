@@ -22,7 +22,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
     chain_base = parachain_details["base"][0]
-    raw_service = build_spec.create_parachain_build_spec_with_para_ids(plan, image, binary, chain_name, chain_base, para_id)
+    raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
 
     parachain_final = {}
 
@@ -89,9 +89,9 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     final_parachain_details = {}
     
     for parachain in parachains:
-        para_id = register_para_slot.register_para_ids(plan, relay_chain_ip) 
+        para_id = register_para_slot.register_para_id(plan, relay_chain_ip) 
         parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id)
-        register_para_slot.run_onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
+        register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.update(parachain_details)
     
     return final_parachain_details
