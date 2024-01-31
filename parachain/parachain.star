@@ -89,7 +89,7 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     final_parachain_details = {}
     
     for parachain in parachains:
-        para_id = register_para_slot.register_para_id(plan, relay_chain_ip) 
+        para_id = register_para_slot.register_para_id(plan, relay_chain_ip, parachain["name"]) 
         parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.update(parachain_details)

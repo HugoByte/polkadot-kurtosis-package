@@ -1,7 +1,7 @@
 build_spec = import_module("../package_io/build-spec.star")
 constant = import_module("../package_io/constant.star")
 
-def register_para_id(plan, alice_ip):
+def register_para_id(plan, alice_ip, chain_name):
     files = {
         "/app": "configs",
         "/build": "javascript",
@@ -11,14 +11,14 @@ def register_para_id(plan, alice_ip):
         run = "cd /build && npm i && node register ws://{0}:9944 //Alice".format(alice_ip),
         image = constant.NODE_IMAGE,
         files = files,
-        store = [StoreSpec(src = "/tmp/para.json", name = "parathread_id")],
+        store = [StoreSpec(src = "/tmp/para.json", name = "parathread_id_{}".format(chain_name))],
     )
 
     id = plan.run_sh(
         run = "cat /build/para.json | tr -d '\n\r'",
         image = "badouralix/curl-jq",
         files = {
-            "/build": "parathread_id",
+            "/build": "parathread_id_{}".format(chain_name),
         },
     )
     return id.output
