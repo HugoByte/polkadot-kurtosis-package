@@ -10,7 +10,7 @@
       },
       {
         "name": "bob",
-        "node_type": "full",
+        "node_type": "validator",
         "prometheus": true
 
       }
@@ -33,7 +33,24 @@
           "prometheus": true
         }
       ]
+    },
+    {
+      "name":"frequency",
+      "nodes": [
+        {
+          "name": "alice",
+          "node_type": "validator",
+          "prometheus": false
+
+        },
+        {
+          "name": "bob",
+          "node_type": "full",
+          "prometheus": true
+        }
+      ]
     }
   ],
-  "explorer": true
+  "explorer": true,
+  "without_registration" : true
 }
