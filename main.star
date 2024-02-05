@@ -6,11 +6,12 @@ grafana = import_module("./package_io/grafana.star")
 explorer_js = import_module("./package_io/polkadot_js_app.star")
 utils = import_module("./package_io/utils.star")
 constant = import_module("./package_io/constant.star")
+parachain_without_registration = import_module("./parachain/parachain_without_registration.star")
 
-def run(plan, chain_type = "localnet", relaychain = None, parachains = None, explorer = False):
+def run(plan, chain_type = "localnet", relaychain = None, parachains = None, explorer = False, without_registration = False):
     """
     Main function to run the Polkadot relay and parachain setup.
-    
+
     Args:
         chain_type (string): The type of chain (localnet, testnet or mainnet). Default is localnet.
         relaychain (json): A json object containing data for relay chain config.
@@ -30,11 +31,10 @@ def run(plan, chain_type = "localnet", relaychain = None, parachains = None, exp
     Returns:
         service_details (json): Service details containing information about relay chains, parachains, and Prometheus.
     """
-    service_details = run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer)
+    service_details = run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration)
     return service_details
-    
 
-def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
+def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration):
     """
     Main function to run the Polkadot relay and parachain setup.
 
@@ -61,18 +61,22 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer):
     chain_type, relaychain, parachains = utils.convert_to_lowercase(chain_type, relaychain, parachains)
     utils.check_config_validity(plan, chain_type, relaychain, parachains)
     utils.upload_files(plan)
-    
+
     service_details = {}
 
     if chain_type == "localnet":
-        relay_chain_details = relay_chain.start_relay_chains_local(plan, relaychain)
-        polkadot_service_name = None
-        for key in relay_chain_details:
-            polkadot_service_name = key
-            break
-        service_details.update(relay_chain_details)
-        parachain_details = parachain.start_nodes(plan, chain_type, parachains, relay_chain_details[polkadot_service_name]["ip_address"])
-        service_details.update(parachain_details)
+        if without_registration == False:
+            relay_chain_details = relay_chain.start_relay_chains_local(plan, relaychain)
+            polkadot_service_name = None
+            for key in relay_chain_details:
+                polkadot_service_name = key
+                break
+            service_details.update(relay_chain_details)
+            parachain_details = parachain.start_nodes(plan, chain_type, parachains, relay_chain_details[polkadot_service_name]["ip_address"])
+            service_details.update(parachain_details)
+        else:
+            parachain_details = parachain_without_registration.start_nodes(plan, chain_type, relaychain, parachains)
+            service_details.update(parachain_details)
     else:
         if len(relaychain) != 0:
             relay_node_details = relay_chain.start_test_main_net_relay_nodes(plan, chain_type, relaychain)
