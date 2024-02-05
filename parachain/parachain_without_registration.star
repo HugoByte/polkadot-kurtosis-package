@@ -161,11 +161,6 @@ def start_relay_chain(plan, chain_type, relaychain, chain_spec):
 
         command = "polkadot --chain=/config/polkadot-raw.json --validator --rpc-external --port=30333 --rpc-cors=all --{0} --rpc-methods=unsafe --execution=wasm --prometheus-external --insecure-validator-i-know-what-i-do".format(relay_node["name"])
 
-        # if relay_node["node_type"] == "validator":
-        #     command = command + " --validator --insecure-validator-i-know-what-i-do"
-        # elif relay_node["node_type"] == "archive":
-        #     command = command +  " --pruning=archive"
-
         exec_command = ["bin/sh", "-c", command]
 
         service_details = plan.add_service(
