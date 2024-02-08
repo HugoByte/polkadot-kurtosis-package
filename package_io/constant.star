@@ -23,7 +23,7 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "acala": "acala/mandala-node:2.22.0",
 }
 
-CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt", "mangata", "litentry", "kylin"]
+CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt", "mangata", "litentry", "kylin", "acala", "karura"]
 
 KUSAMA_PARACHAINS = ["altair", "bajun", "bifrost", "calamari", "encointer", "karura", "khala", "kintsugi-btc", "integritee", "litmus", "mangata", "moonriver", "subzero", "turing"]
 POLKADOT_PARACHAINS = ["acala", "ajuna", "bifrost", "centrifuge", "clover", "frequency", "interlay", "kilt", "kylin", "litentry", "manta", "moonbeam", "moonsama", "nodle", "parallel", "pendulum", "phala", "polkadex", "subsocial", "zeitgeist", "robonomics"]
