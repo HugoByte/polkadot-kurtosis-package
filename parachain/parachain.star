@@ -155,6 +155,9 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             "--unsafe-rpc-external",
         ]
 
+    if chain_type == "testnet" and parachain["name"] == "litentry":
+        common_command = common_command + ["--bootnodes=/dns/rpc.rococo-parachain.litentry.io/tcp/40333/ws/p2p/12D3KooWD9t5jsf5m2g4acXfyVf2KxR5j11F9SLC5wKhv6JRquyv"]
+    
     parachain_info = {parachain["name"]: {}}
     if parachain["name"] == "altair" or parachain["name"] == "centrifuge":
         common_command = common_command + ["--database=auto"]
@@ -186,7 +189,10 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
             command = command + ["--validator"]
 
         if parachain["name"] in constant.CHAIN_COMMAND:
-            command = command + ["--", "--chain={0}".format(relaychain_name)]
+            if parachain["name"] in ["acala", "karura"] and chain_type == "testnet":
+                command = command + ["--", "--chain={0}".format("/rococo-mandala.json")]
+            else:
+                command = command + ["--", "--chain={0}".format(relaychain_name)]
 
         if parachain["name"] == "kilt-spiritnet" and chain_type == "testnet":
             command = command + ["--", "--chain=/node/dev-specs/kilt-parachain/peregrine-relay.json"]
