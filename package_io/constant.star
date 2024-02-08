@@ -25,5 +25,5 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt", "mangata", "litentry", "kylin"]
 
-KUSAMA_PARACHAINS = ["altair", "bajun", "bifrost", "calamari", "encointer", "karura", "khala", "kintsugi-btc", "integritee", "litmus", "mangata", "moonriver", "robonomics", "subzero", "turing"]
-POLKADOT_PARACHAINS = ["acala", "ajuna", "bifrost", "centrifuge", "clover", "frequency", "interlay", "kilt", "kylin", "litentry", "manta", "moonbeam", "moonsama", "nodle", "parallel", "pendulum", "phala", "polkadex", "subsocial", "zeitgeist"]
+KUSAMA_PARACHAINS = ["altair", "bajun", "bifrost", "calamari", "encointer", "karura", "khala", "kintsugi-btc", "integritee", "litmus", "mangata", "moonriver", "subzero", "turing"]
+POLKADOT_PARACHAINS = ["acala", "ajuna", "bifrost", "centrifuge", "clover", "frequency", "interlay", "kilt", "kylin", "litentry", "manta", "moonbeam", "moonsama", "nodle", "parallel", "pendulum", "phala", "polkadex", "subsocial", "zeitgeist", "robonomics"]
