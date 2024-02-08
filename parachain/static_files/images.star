@@ -58,7 +58,7 @@ parachain_images = {
     "manta": {
         "image": "mantanetwork/manta:latest",
         "entrypoint": "/usr/local/bin/manta",
-        "base": ["manta-local", "=manta-testnet", "manta"],
+        "base": ["manta-local", "manta-testnet", "manta"],
     },
     "moonbeam": {
         "image": "moonbeamfoundation/moonbeam:sha-32933811",
