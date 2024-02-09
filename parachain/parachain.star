@@ -44,13 +44,13 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key=No
             exec_comexec_commandmand = [
                 "/bin/bash",
                 "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
             ]
         else:
             exec_comexec_commandmand = [
                 "/bin/bash",
                 "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
             ]
         
         build_file = raw_service
@@ -73,8 +73,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key=No
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
         if sudo_key != None:
-            http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
-            insert_keys(plan, parachain_spawn_detail.name, sudo_key["private_phrase"], sudo_key["public_key_hex"], http_uri)
+            insert_keys(plan, "aura", sudo_key["private_phrase"], sudo_key["public_key_hex"], parachain_detail["endpoint"])
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip, sudo_key=None):
@@ -245,11 +244,13 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
 
 
-def insert_keys(plan, service_name, private_phrase, sudo_key_in_hex, uri):
-    original_command = 'curl -vH \'Content-Type: application/json\' --data \'{{"jsonrpc":"2.0", "method":"author_insertKey", "params":["aura", "{0}", "{1}"], "id":1}}\' {2}'
-    modified_command = original_command.format(private_phrase, sudo_key_in_hex, uri)
-    plan.print(modified_command)
+def insert_keys(plan, key_type, private_phrase, sudo_key_in_hex, uri):
+    files = {
+    "/javascript": "javascript",
+    }
+
     plan.run_sh(
-        run=modified_command,
-        image="curlimages/curl:latest"
+        run = 'cd /javascript && npm i && node insert_key.js "{0}" "{1}" "{2}"'.format(key_type, private_phrase, uri),
+        image = constant.NODE_IMAGE,
+        files = files,
     )

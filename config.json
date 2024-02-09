@@ -24,22 +24,32 @@
         {
           "name": "alice",
           "node_type": "collator",
-          "prometheus": false
+          "prometheus": false,
+          "key":{
+            "private_phrase":"dizzy rose offer wall social glory debris gift govern seminar almost bicycle" ,
+            "public_key_hex":"0xb0571932b80c2c7b592757630d7efc2133223eb2b72be914da729e4b1d65335d",
+            "public_key":"5G3vA9UC6J7hPN5Jqfiz4qFNqYAfahHxffbuQf6dcZZx3Yx6"
+          }
 
         },
         {
           "name": "bob",
           "node_type": "full",
-          "prometheus": false
+          "prometheus": false,
+          "key": {
+            "private_phrase":"diamond crane pioneer aisle conduct media news cup price olive dust light" ,
+            "public_key_hex":"0xcc94ef97d4a8ae8ac1478dfba90079359f238f4cd886ccf5d32fb6635de12e65",
+            "public_key":"5GgwsM48CCT7oPUyFTTpE5L1t7Fjpe7D8SDNKxJxug15YEKy"
+          }
         }
       ]
     }
   ],
-  "explorer": false,
-  "without_registration" : false,
   "sudo_key": {
     "private_phrase":"dizzy rose offer wall social glory debris gift govern seminar almost bicycle" ,
     "public_key_hex":"0xb0571932b80c2c7b592757630d7efc2133223eb2b72be914da729e4b1d65335d",
     "public_key":"5G3vA9UC6J7hPN5Jqfiz4qFNqYAfahHxffbuQf6dcZZx3Yx6"
-  }
+  },
+  "explorer": false,
+  "without_registration" : false
 }
