@@ -49,17 +49,32 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             ws_port = None
 
         if chain_name in constant.WS_PORT:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
+            if len(node["key"]) != 0:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+            else:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
         else:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
+            if len(node["key"]) != 0:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+            else:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+
         
         build_file = raw_service
         parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port, ws_port)
