@@ -73,14 +73,8 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key=No
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
         if sudo_key != None:
-            http_uri = ""
             http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
-            # if ws_port != None:
-            #     http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, ws_port)
-            # elif rpc_port != None:
-            #     http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, rpc_port)
             insert_keys(plan, parachain_spawn_detail.name, sudo_key["private_phrase"], sudo_key["public_key_hex"], http_uri)
-
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip, sudo_key=None):
