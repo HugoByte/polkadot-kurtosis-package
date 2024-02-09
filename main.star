@@ -72,7 +72,7 @@ def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, witho
                 polkadot_service_name = key
                 break
             service_details.update(relay_chain_details)
-            parachain_details = parachain.start_nodes(plan, chain_type, parachains, relay_chain_details[polkadot_service_name]["ip_address"], sudo_key)
+            parachain_details = parachain.start_nodes(plan, chain_type, parachains, relay_chain_details[polkadot_service_name]["ip_address"])
             service_details.update(parachain_details)
         else:
             parachain_details = parachain_without_registration.start_nodes(plan, chain_type, relaychain, parachains)

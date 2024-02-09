@@ -1,7 +1,7 @@
 build_spec = import_module("../package_io/build-spec.star")
 constant = import_module("../package_io/constant.star")
 
-def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key=None):
+def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key, collators_keys):
     files = {
         "/app": "configs",
     }
@@ -19,14 +19,9 @@ def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, ch
         "/javascript": "javascript",
     }
 
-    #start
-    #if Sudo key is given, we will add it to chain_spec
-    run_command = ""
-    if sudo_key != None:
-        run_command = "cd /javascript && npm i && node edit_parachain_plain.js /build/{0}.json {1} {2}".format(chain_name, para_id, sudo_key["public_key"])
-    else:
-        run_command = "cd /javascript && npm i && node edit_parachain_plain.js /build/{0}.json {1}".format(chain_name, para_id)
 
+    run_command = "cd /javascript && npm i && node edit_parachain_plain.js /build/{0}.json {1} \"{2}\" \'{3}\'".format(chain_name, para_id, sudo_key, collators_keys)
+    plan.print(run_command)
     plan.run_sh(
         run = run_command,
         image = constant.NODE_IMAGE,
