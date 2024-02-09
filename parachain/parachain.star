@@ -252,9 +252,10 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
 
 def insert_keys(plan, service_name, private_phrase, sudo_key_in_hex, uri):
-    original_command = 'curl -vH \'Content-Type: application/json\' --data \'{{ "jsonrpc":"2.0", "method":"author_insertKey", "params":["aura", {0}, {1}],"id":1 }}\' {2}'
+    original_command = 'curl -vH \'Content-Type: application/json\' --data \'{{"jsonrpc":"2.0", "method":"author_insertKey", "params":["aura", "{0}", "{1}"], "id":1}}\' {2}'
     modified_command = original_command.format(private_phrase, sudo_key_in_hex, uri)
+    plan.print(modified_command)
     plan.run_sh(
-            run = modified_command,
-            image = "curlimages/curl:latest"
+        run=modified_command,
+        image="curlimages/curl:latest"
     )
