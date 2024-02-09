@@ -40,13 +40,14 @@
             "public_key":"5GgwsM48CCT7oPUyFTTpE5L1t7Fjpe7D8SDNKxJxug15YEKy"
           }
         }
-      ]
+      ],
+      "sudo_key": {
+        "private_phrase":"dizzy rose offer wall social glory debris gift govern seminar almost bicycle" ,
+        "public_key":"5G3vA9UC6J7hPN5Jqfiz4qFNqYAfahHxffbuQf6dcZZx3Yx6"
+      }
     }
   ],
-  "sudo_key": {
-    "private_phrase":"dizzy rose offer wall social glory debris gift govern seminar almost bicycle" ,
-    "public_key":"5G3vA9UC6J7hPN5Jqfiz4qFNqYAfahHxffbuQf6dcZZx3Yx6"
-  },
+  
   "explorer": false,
   "without_registration" : false
 }
