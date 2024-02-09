@@ -5,7 +5,7 @@ parachain_list = import_module("./static_files/images.star")
 node_setup = import_module("./node_setup.star")
 utils = import_module("../package_io/utils.star")
 
-def start_local_parachain_node(plan, chain_type, parachain, para_id):
+def start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key=None):
     """
     Start local parachain nodes based on configuration.
 
@@ -22,7 +22,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
     chain_base = parachain_details["base"][0]
-    raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
+    raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key)
 
     parachain_final = {}
 
@@ -72,9 +72,18 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
+        if sudo_key != None:
+            http_uri = ""
+            http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, parachain_spawn_detail.ports["ws"].number)
+            # if ws_port != None:
+            #     http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, ws_port)
+            # elif rpc_port != None:
+            #     http_uri = utils.get_service_url("http", parachain_spawn_detail.ip_address, rpc_port)
+            insert_keys(plan, parachain_spawn_detail.name, sudo_key["private_phrase"], sudo_key["public_key_hex"], http_uri)
+
     return parachain_final
 
-def start_nodes(plan, chain_type, parachains, relay_chain_ip):
+def start_nodes(plan, chain_type, parachains, relay_chain_ip, sudo_key=None):
     """
     Start multiple parachain nodes.
 
@@ -90,7 +99,7 @@ def start_nodes(plan, chain_type, parachains, relay_chain_ip):
     
     for parachain in parachains:
         para_id = register_para_slot.register_para_id(plan, relay_chain_ip, parachain["name"]) 
-        parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id)
+        parachain_details = start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key)
         register_para_slot.onboard_genesis_state_and_wasm(plan, para_id, parachain["name"], relay_chain_ip)
         final_parachain_details.update(parachain_details)
     
@@ -239,3 +248,13 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
             final_parachain_info[node_details.name] = node_info
     return final_parachain_info
+
+
+
+def insert_keys(plan, service_name, private_phrase, sudo_key_in_hex, uri):
+    original_command = 'curl -vH \'Content-Type: application/json\' --data \'{{ "jsonrpc":"2.0", "method":"author_insertKey", "params":["aura", {0}, {1}],"id":1 }}\' {2}'
+    modified_command = original_command.format(private_phrase, sudo_key_in_hex, uri)
+    plan.run_sh(
+            run = modified_command,
+            image = "curlimages/curl:latest"
+    )

@@ -1,7 +1,7 @@
 build_spec = import_module("../package_io/build-spec.star")
 constant = import_module("../package_io/constant.star")
 
-def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id):
+def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key=None):
     files = {
         "/app": "configs",
     }
@@ -16,13 +16,24 @@ def create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, ch
     files = {
         "/app": "configs",
         "/build": chain_name + "plain",
+        "/javascript": "javascript",
     }
+
+    #start
+    #if Sudo key is given, we will add it to chain_spec
+    run_command = ""
+    if sudo_key != None:
+        run_command = "cd /javascript && npm i && node edit_parachain_plain.js /build/{0}.json {1} {2}".format(chain_name, para_id, sudo_key["public_key"])
+    else:
+        run_command = "cd /javascript && npm i && node edit_parachain_plain.js /build/{0}.json {1}".format(chain_name, para_id)
+
     plan.run_sh(
-        run = "sed -e 's/\"parachainId\": *[0-9]\\+/\"parachainId\": {0}/' -e 's/\"para_id\": [0-9]*,/\"para_id\": {0},/' -e 's/\"paraId\": [0-9]*,/\"paraId\": {0},/' -e 's/\"parachain_id\": [0-9]*,/\"parachain_id\": {0},/' /build/{1}.json >  /tmp/{1}.json".format(para_id, chain_name),
-        image = constant.CURL_JQ_IMAGE,
+        run = run_command,
+        image = constant.NODE_IMAGE,
         files = files,
-        store = [StoreSpec(src = "/tmp/{0}.json".format(chain_name), name = chain_name + "edit")],
+        store = [StoreSpec(src = "/build/{0}.json".format(chain_name), name = chain_name + "edit")],
     )
+   
 
     raw_service = create_raw_build_spec_genisis_state_genisis_wasm_for_parachain(plan, binary, image, chain_name)
 
