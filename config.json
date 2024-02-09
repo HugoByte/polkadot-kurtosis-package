@@ -11,7 +11,7 @@
       {
         "name": "bob",
         "node_type": "validator",
-        "prometheus": true
+        "prometheus": false
 
       }
     ]
@@ -19,38 +19,27 @@
 
   "parachains": [
     {
-      "name":"acala",
-      "nodes": [
-        {
-          "name": "alice",
-          "node_type": "validator",
-          "prometheus": false
-
-        },
-        {
-          "name": "bob",
-          "node_type": "full",
-          "prometheus": true
-        }
-      ]
-    },
-    {
       "name":"frequency",
       "nodes": [
         {
           "name": "alice",
-          "node_type": "validator",
+          "node_type": "collator",
           "prometheus": false
 
         },
         {
           "name": "bob",
           "node_type": "full",
-          "prometheus": true
+          "prometheus": false
         }
       ]
     }
   ],
-  "explorer": true,
-  "without_registration" : true
+  "explorer": false,
+  "without_registration" : false,
+  "sudo_key": {
+    "private_phrase":"dizzy rose offer wall social glory debris gift govern seminar almost bicycle" ,
+    "public_key_hex":"0xb0571932b80c2c7b592757630d7efc2133223eb2b72be914da729e4b1d65335d",
+    "public_key":"5G3vA9UC6J7hPN5Jqfiz4qFNqYAfahHxffbuQf6dcZZx3Yx6"
+  }
 }
