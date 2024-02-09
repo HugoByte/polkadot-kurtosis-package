@@ -73,7 +73,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id, sudo_key=No
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
         if sudo_key != None:
-            insert_keys(plan, "aura", sudo_key["private_phrase"], sudo_key["public_key_hex"], parachain_detail["endpoint"])
+            insert_keys(plan, "aura", sudo_key["private_phrase"], parachain_detail["endpoint"])
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip, sudo_key=None):
@@ -244,7 +244,7 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
 
 
-def insert_keys(plan, key_type, private_phrase, sudo_key_in_hex, uri):
+def insert_keys(plan, key_type, private_phrase, uri):
     files = {
     "/javascript": "javascript",
     }
