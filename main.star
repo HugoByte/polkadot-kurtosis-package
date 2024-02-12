@@ -8,7 +8,7 @@ utils = import_module("./package_io/utils.star")
 constant = import_module("./package_io/constant.star")
 parachain_without_registration = import_module("./parachain/parachain_without_registration.star")
 
-def run(plan, chain_type = "localnet", relaychain = None, parachains = None, explorer = False, without_registration = False, sudo_key=None):
+def run(plan, chain_type = "localnet", relaychain = None, parachains = None, explorer = False, without_registration = False):
     """
     Main function to run the Polkadot relay and parachain setup.
 
@@ -31,10 +31,10 @@ def run(plan, chain_type = "localnet", relaychain = None, parachains = None, exp
     Returns:
         service_details (json): Service details containing information about relay chains, parachains, and Prometheus.
     """
-    service_details = run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration, sudo_key)
+    service_details = run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration)
     return service_details
 
-def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration, sudo_key):
+def run_polkadot_setup(plan, chain_type, relaychain, parachains, explorer, without_registration):
     """
     Main function to run the Polkadot relay and parachain setup.
 

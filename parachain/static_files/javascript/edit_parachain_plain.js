@@ -1,37 +1,48 @@
 const fs = require("fs");
+const { Keyring } = require('@polkadot/keyring');
+const { encodeAddress, cryptoWaitReady } = require('@polkadot/util-crypto');
 
-function updateParachainSpec(PARA_SPEC_FILE, PARA_ID, NEW_SUDO_KEY, INITIAL_COLLATORS) {
+async function updateParachainSpec(paraSpecFile, paraId, newSudoKeyPhrase, initialCollatorsPhrase) {
   try {
-    const rawdata = fs.readFileSync(PARA_SPEC_FILE);
+    const rawdata = fs.readFileSync(paraSpecFile);
     const chainSpec = JSON.parse(rawdata);
-    const collators = JSON.parse(INITIAL_COLLATORS);
+    const collators = JSON.parse(initialCollatorsPhrase);
     
-    chainSpec.para_id = PARA_ID;
-    chainSpec.genesis.runtime.parachainInfo.parachainId = PARA_ID;
+    chainSpec.para_id = paraId;
+    chainSpec.genesis.runtime.parachainInfo.parachainId = paraId;
     
 
-    if (NEW_SUDO_KEY.length > 0) {
-      chainSpec.genesis.runtime.sudo.key = NEW_SUDO_KEY;
+    await cryptoWaitReady();
+    const keyring = new Keyring({ type: 'sr25519' });
+    
+    let newSudoKey = ''; // Declaring newSudoKey as let instead of const
+
+    if (newSudoKeyPhrase.length > 0) {
+      const newSudoAccount = keyring.addFromUri(newSudoKeyPhrase);
+      newSudoKey = newSudoAccount.address;
+      chainSpec.genesis.runtime.sudo.key = newSudoKey;
       
       const SESSION_KEYS = [
-        NEW_SUDO_KEY,
-        NEW_SUDO_KEY,
-        { aura: NEW_SUDO_KEY }
+        newSudoKey,
+        newSudoKey,
+        { aura: newSudoKey }
       ];
       chainSpec.genesis.runtime.session.keys.push(SESSION_KEYS);
       
       const BALANCE = [
-        NEW_SUDO_KEY,
+        newSudoKey,
         chainSpec.genesis.runtime.balances.balances[0][1]
       ];
       chainSpec.genesis.runtime.balances.balances.push(BALANCE);
-      console.log("changed sudo key:", NEW_SUDO_KEY);
+      console.log("changed sudo key:", newSudoKey);
     }
 
-    if (collators.length > 0) {
-      collators.forEach(collator => {
+    if (initialCollatorsPhrase.length > 0) {
+      collators.forEach(collatorPhrase => {
+        var collatorAccount = keyring.addFromUri(collatorPhrase);
+        var collator = collatorAccount.address;
         //adding this condition to prevent adding duplicate keys
-        if(collator!=NEW_SUDO_KEY){
+        if(collatorPhrase!=newSudoKeyPhrase){
           console.log("updating collator:", collator);
           const sessionKey = [
             collator,
@@ -53,7 +64,7 @@ function updateParachainSpec(PARA_SPEC_FILE, PARA_ID, NEW_SUDO_KEY, INITIAL_COLL
       });
     } 
 
-    fs.writeFileSync(PARA_SPEC_FILE, JSON.stringify(chainSpec, null, 2));
+    fs.writeFileSync(paraSpecFile, JSON.stringify(chainSpec, null, 2));
 
     console.log("✓ Updated sudo key and session keys in parachain spec");
   } catch (error) {

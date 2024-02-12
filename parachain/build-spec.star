@@ -48,3 +48,4 @@ def create_raw_build_spec_genisis_state_genisis_wasm_for_parachain(plan, binary,
     )
 
     return chain_name + "raw"
+    

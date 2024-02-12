@@ -25,9 +25,9 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
     sudo_key = ""
     if len(parachain["sudo_key"]) != 0:
-        sudo_key = parachain["sudo_key"]["public_key"]
+        sudo_key = parachain["sudo_key"]["private_phrase"]
     
-    public_keys = [node.get("key", {}).get("public_key", "") for node in parachain["nodes"] if node.get("key")]
+    public_keys = [node.get("key", {}).get("private_phrase", "") for node in parachain["nodes"] if node.get("key")]
     collators_keys = "[" + ", ".join(["\"{}\"".format(key) for key in public_keys]) + "]"
 
     raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key, collators_keys)
@@ -97,6 +97,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
         if len(node["key"]) != 0:
             insert_keys(plan, "aura", node["key"]["private_phrase"], parachain_detail["endpoint"])
+            
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip):
