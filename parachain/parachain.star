@@ -24,7 +24,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     chain_base = parachain_details["base"][0]
 
     sudo_key = ""
-    if len(parachain["sudo_key"]) != 0:
+    if parachain.get("sudo_key") != None and len(parachain["sudo_key"]) != 0:
         sudo_key = parachain["sudo_key"]["private_phrase"]
     
     public_keys = [node.get("key", {}).get("private_phrase", "") for node in parachain["nodes"] if node.get("key")]
@@ -49,7 +49,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             ws_port = None
 
         if chain_name in constant.WS_PORT:
-            if len(node["key"]) != 0:
+            if node.get("key") != None and len(node["key"]) != 0:
                 exec_comexec_commandmand = [
                     "/bin/bash",
                     "-c",
@@ -62,7 +62,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
                     "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
                 ]
         else:
-            if len(node["key"]) != 0:
+            if node.get("key") != None and len(node["key"]) != 0:
                 exec_comexec_commandmand = [
                     "/bin/bash",
                     "-c",
@@ -95,7 +95,7 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
-        if len(node["key"]) != 0:
+        if node.get("key") != None and len(node["key"]) != 0:
             insert_keys(plan, "aura", node["key"]["private_phrase"], parachain_detail["endpoint"])
             
     return parachain_final
