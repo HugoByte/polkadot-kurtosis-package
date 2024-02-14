@@ -22,7 +22,15 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
     image = parachain_details["image"]
     binary = parachain_details["entrypoint"]
     chain_base = parachain_details["base"][0]
-    raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
+
+    sudo_key = ""
+    if parachain.get("sudo_key") != None and len(parachain["sudo_key"]) != 0:
+        sudo_key = parachain["sudo_key"]["private_phrase"]
+    
+    public_keys = [node.get("key", {}).get("private_phrase", "") for node in parachain["nodes"] if node.get("key")]
+    collators_keys = "[" + ", ".join(["\"{}\"".format(key) for key in public_keys]) + "]"
+
+    raw_service = build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key, collators_keys)
 
     parachain_final = {}
 
@@ -41,17 +49,32 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
             ws_port = None
 
         if chain_name in constant.WS_PORT:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
+            if node.get("key") != None and len(node["key"]) != 0:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+            else:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --ws-port=9944 --port=30333 --rpc-port=9947 --ws-external --rpc-external --prometheus-external --rpc-cors=all --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
         else:
-            exec_comexec_commandmand = [
-                "/bin/bash",
-                "-c",
-                "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
-            ]
+            if node.get("key") != None and len(node["key"]) != 0:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --name={2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+            else:
+                exec_comexec_commandmand = [
+                    "/bin/bash",
+                    "-c",
+                    "{0} --base-path=/tmp/{1} --chain=/build/{1}-raw.json --rpc-port=9947 --port=30333 --rpc-external --rpc-cors=all --prometheus-external --{2} --collator --rpc-methods=unsafe --force-authoring --execution=wasm -- --chain=/app/raw-polkadot.json --execution=wasm".format(binary, chain_name, node["name"]),
+                ]
+
         
         build_file = raw_service
         parachain_spawn_detail = node_setup.spawn_parachain(plan, node["prometheus"], image, parachain["name"], "{0}-{1}-{2}".format(chain_name, node["name"], chain_type), exec_comexec_commandmand, build_file, rpc_port, prometheus_port, lib2lib_port, ws_port)
@@ -72,6 +95,9 @@ def start_local_parachain_node(plan, chain_type, parachain, para_id):
 
         parachain_final[parachain_spawn_detail.name] = parachain_detail
 
+        if node.get("key") != None and len(node["key"]) != 0:
+            insert_keys(plan, "aura", node["key"]["private_phrase"], parachain_detail["endpoint"])
+            
     return parachain_final
 
 def start_nodes(plan, chain_type, parachains, relay_chain_ip):
@@ -239,3 +265,16 @@ def run_testnet_mainnet(plan, chain_type, relaychain_name, parachain):
 
             final_parachain_info[node_details.name] = node_info
     return final_parachain_info
+
+
+
+def insert_keys(plan, key_type, private_phrase, uri):
+    files = {
+    "/javascript": "javascript",
+    }
+
+    plan.run_sh(
+        run = 'cd /javascript && npm i && node insert_key.js "{0}" "{1}" "{2}"'.format(key_type, private_phrase, uri),
+        image = constant.NODE_IMAGE,
+        files = files,
+    )
