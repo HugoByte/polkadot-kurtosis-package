@@ -22,8 +22,15 @@ def start_nodes(plan, chain_type, relaychain, parachains):
         binary = parachain_details["entrypoint"]
         chain_base = parachain_details["base"][0]
 
+        sudo_key = ""
+        if parachain.get("sudo_key") != None and len(parachain["sudo_key"]) != 0:
+            sudo_key = parachain["sudo_key"]["private_phrase"]
+
+        public_keys = [node.get("key", {}).get("private_phrase", "") for node in parachain["nodes"] if node.get("key")]
+        collators_keys = "[" + ", ".join(["\"{}\"".format(key) for key in public_keys]) + "]"
+
         # Creating the genisis state genesis wasm and raw build spec for parachain
-        build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id)
+        build_spec.create_parachain_build_spec_with_para_id(plan, image, binary, chain_name, chain_base, para_id, sudo_key, collators_keys)
 
         #  if parachain are more than one, adding the genisis state genesis wasm to relay(polkadot) chain spec
         if counter > 0:
