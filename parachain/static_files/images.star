@@ -148,7 +148,7 @@ parachain_images = {
     "mangata": {
         "image": "mangatasolutions/mangata-node:feature-post-3rdparty-rewards-fast",
         "entrypoint": "/mangata/node",
-        "base": ["mangata-rococo-local", "mangata-rococo", "/app/mangata-kusama-mainnet.json"],
+        "base": ["mangata-rococo-local", "/app/rococo_raw_managata.json", "/app/mangata-kusama-mainnet.json"],
     },
     "moonriver": {
         "image": "moonbeamfoundation/moonbeam:sha-519bd694",

@@ -21,6 +21,7 @@ DIFFERENT_IMAGES_FOR_TESTNET = {
     "subsocial": "dappforce/subsocial-parachain:latest",
     "altair": "centrifugeio/centrifuge-chain:main-latest",
     "acala": "acala/mandala-node:2.22.0",
+    "mangata": "mangatasolutions/mangata-node:rococo-v0.33.0"
 }
 
 CHAIN_COMMAND = ["manta", "moonsama", "interlay", "kintsugi-btc", "polkadex", "centrifuge", "altair", "robonomics", "kilt", "mangata", "litentry", "kylin", "acala", "karura"]
