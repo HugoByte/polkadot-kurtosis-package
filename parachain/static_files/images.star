@@ -26,7 +26,7 @@ parachain_images = {
         "base": ["dev", "iris", "clover"],
     },
     "frequency": {
-        "image": "frequencychain/collator-node-local:latest",
+        "image": "frequencychain/collator-node-local:v1.10.0",
         "entrypoint": "/frequency/target/release/frequency",
         "base": ["frequency-rococo-local", "frequency-rococo", "frequency"],
     },
@@ -41,7 +41,7 @@ parachain_images = {
         "base": ["interlay-dev", "interlay-testnet-latest", "interlay-latest"],
     },
     "kilt": {
-        "image": "kiltprotocol/kilt-node:latest",
+        "image": "kiltprotocol/kilt-node:1.12.1",
         "entrypoint": "/usr/local/bin/node-executable",
         "base": ["dev", "/node/dev-specs/kilt-parachain/peregrine-kilt.json", "spiritnet"],
     },
