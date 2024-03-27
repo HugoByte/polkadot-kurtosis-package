@@ -6,7 +6,7 @@ parachain_images = {
         "base": ["acala-local", "/mandala.json", "acala"],
     },
     "ajuna": {
-        "image": "ajuna/parachain-ajuna:0.2.3",
+        "image": "ajuna/parachain-ajuna:0.1.20-stable",
         "entrypoint": "/usr/local/bin/ajuna",
         "base": ["dev", "/bajun/rococo/bajun-raw.json", "/ajuna/ajuna-raw.json"],
     },
@@ -71,7 +71,7 @@ parachain_images = {
         "base": ["dev", "template-rococo", "moonsama"],
     },
     "nodle": {
-        "image": "nodlecode/chain:sha-9a3a7cc",
+        "image": "nodlecode/chain:sha-0981bcc",
         "entrypoint": "nodle-parachain",
         "base": ["local", "test", "main"],
     },
@@ -81,8 +81,8 @@ parachain_images = {
         "base": ["parallel-dev", None, "parallel"],
     },
     "pendulum": {
-        "image": "pendulumchain/pendulum-collator:v0.9.42",
-        "entrypoint": "/usr/local/bin/pendulum-collator",
+        "image": "pendulumchain/pendulum-collator:v0.9.40",
+        "entrypoint": "/usr/local/bin/amplitude-collator",
         "base": ["dev", "foucoco", "/app/pendulum-spec-raw.json"],
     },
     "phala": {
@@ -116,7 +116,7 @@ parachain_images = {
         "base": ["altair-local", "catalyst", "altair"],
     },
     "bajun": {
-        "image": "ajuna/parachain-bajun:buildcache",
+        "image": "ajuna/parachain-bajun:0.3.0-rc1",
         "entrypoint": "/usr/local/bin/ajuna",
         "base": ["local", "/bajun/rococo/bajun-raw.json", "/bajun/bajun-raw.json"],
     },
@@ -166,7 +166,7 @@ parachain_images = {
         "base": ["dev", None, "subzero"],
     },
     "turing": {
-        "image": "oaknetwork/turing:2.1.0",
+        "image": "oaknetwork/turing:1.9.0.2",
         "entrypoint": "./oak-collator",
         "base": ["turing-dev", "turing-staging", "turing"],
     },
